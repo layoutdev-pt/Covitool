@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import Home from './pages/Home' // Importando sua página Home
+import App from './App'
 import './index.css' // Importando o Tailwind v4
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Home />
+    <App />
   </React.StrictMode>,
 )

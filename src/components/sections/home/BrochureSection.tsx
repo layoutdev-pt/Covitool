@@ -1,48 +1,76 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { supabase } from '../../../services/supabase'; // Ajusta o caminho se necessário
 
 const BrochureSection: React.FC = () => {
+  const [destaque, setDestaque] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchDestaque = async () => {
+      setLoading(true);
+      // Vamos buscar apenas o último destaque adicionado
+      const { data, error } = await supabase
+        .from('destaque_mensal')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(1);
+
+      if (error) {
+        console.error("Erro ao carregar destaque mensal:", error);
+      } else if (data && data.length > 0) {
+        setDestaque(data[0]);
+      }
+      setLoading(false);
+    };
+
+    fetchDestaque();
+  }, []);
+
+  // Se estiver a carregar ou se não houver dados, não renderiza a secção
+  if (loading || !destaque) return null;
+
   return (
-    <section className="max-w-7xl mx-auto px-8 py-20">
-      {/* Container com bordas bem arredondadas [40px] e fundo azul da marca */}
-      <div className="flex flex-col md:flex-row items-stretch bg-[#004BFF] rounded-[40px] overflow-hidden shadow-xl border border-blue-600/20">
+    <section className="container mx-auto px-4 py-8">
+      {/* Fundo totalmente Verde Lima vibrante */}
+      <div className="bg-[#B5D318] rounded-[40px] overflow-hidden flex flex-col lg:flex-row items-center shadow-lg relative">
         
-        {/* Lado da Imagem */}
-        <div className="w-full md:w-1/2 h-[400px] md:h-[500px]">
+        {/* Padrão decorativo subtil no fundo */}
+        <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#153A81_1px,transparent_1px)] [background-size:20px_20px]"></div>
+
+        <div className="w-full lg:w-1/2 p-12 lg:p-16 text-[#153A81] relative z-10">
+          <span className="bg-[#153A81] text-[#B5D318] px-4 py-1.5 rounded-full text-xs font-black tracking-widest uppercase mb-6 inline-block shadow-sm">
+            {destaque.etiqueta}
+          </span>
+          <h2 className="text-4xl md:text-5xl font-black mb-6 tracking-tight">
+            {destaque.titulo}
+          </h2>
+          <p className="text-[#153A81]/80 text-lg md:text-xl font-medium leading-relaxed mb-10 max-w-lg">
+            {destaque.descricao}
+          </p>
+          
+          <div className="flex flex-wrap gap-4">
+            {/* Botão de Download */}
+            <a href={destaque.pdf_url} download className="bg-[#153A81] hover:bg-[#0d2657] text-[#B5D318] px-8 py-4 rounded-full font-bold flex items-center gap-2 transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1">
+              <span className="material-symbols-outlined text-xl">download</span>
+              Download PDF
+            </a>
+            {/* Botão de Ver Online */}
+            <a href={destaque.pdf_url} target="_blank" rel="noreferrer" className="bg-transparent border-2 border-[#153A81] hover:bg-[#153A81] hover:text-[#B5D318] text-[#153A81] px-8 py-4 rounded-full font-bold transition-all">
+              Ver Online
+            </a>
+          </div>
+        </div>
+
+        <div className="w-full lg:w-1/2 p-12 flex justify-center items-center relative z-10 min-h-[400px]">
+          {/* Efeito de brilho escuro para dar profundidade à capa */}
+          <div className="absolute bg-[#153A81] w-64 h-64 rounded-full blur-[90px] opacity-20"></div>
           <img 
-            className="w-full h-full object-cover" 
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0Zqv2DcI8Wny0u5vWe4MstJqrfYSJVlLc8W_y6UhonlqhdIcavCzrQsvO1xygfCdUCNS6b9oowuzywZIDXYmS0bIza4FBdG0ZrJs24cQ89z5Tr1QpVKExIb1YZ6HwcTS74jOtfkeB23xdqr0mE_LMTlGh2W9XmJXcHWABNWnnBtmZyeUCtqD3XRP2XWBsqUoXDilVH-pF6tVStdn3dimfhxcu9LdHwjysH8dR6EuKkANogXMPcRWeZoxxbJjnDxqSAMa8-OaroZtx" 
-            alt="Folheto Mensal de Peças" 
+            src={destaque.capa_url} 
+            alt={destaque.titulo} 
+            className="relative z-10 w-64 md:w-80 rounded-xl shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-500 border-4 border-white"
           />
         </div>
 
-        {/* Lado do Texto com fundo Azul */}
-        <div className="w-full md:w-1/2 p-16 text-white flex flex-col justify-center gap-6">
-          <div>
-            <span className="font-label-caps text-white/70 uppercase text-xs font-bold tracking-[0.2em]">
-              Oportunidades
-            </span>
-            <h2 className="font-h1 text-white mt-4 text-4xl font-black leading-tight">
-              Folheto Mensal
-            </h2>
-          </div>
-          
-          <p className="font-body-lg text-white/90 text-base max-w-lg leading-relaxed">
-            Descubra as promoções exclusivas deste mês em óleos, filtros, sistemas de travagem e muito mais. Não perca os descontos de até 40% em marcas selecionadas.
-          </p>
-
-          <div className="flex flex-wrap gap-4 mt-6">
-            {/* Botão Verde de Destaque */}
-            <button className="bg-[#008554] text-white px-8 py-4 rounded-full font-bold text-sm hover:bg-[#006b43] transition-all flex items-center gap-3 shadow-lg active:scale-95">
-              <span className="material-symbols-outlined text-lg">download</span> 
-              Download PDF
-            </button>
-            
-            {/* Botão Vazado Branco */}
-            <button className="border-2 border-white/30 text-white px-8 py-4 rounded-full font-bold text-sm hover:bg-white/10 transition-all active:scale-95">
-              Ver Online
-            </button>
-          </div>
-        </div>
       </div>
     </section>
   );

@@ -2,53 +2,61 @@ import React from 'react';
 
 const CustomerJourney: React.FC = () => {
   return (
-    /* py-24 para dar o distanciamento das outras seções (respiro) */
-    <section className="bg-white w-full py-24 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-8">
+    <section className="bg-white w-full py-28 overflow-hidden relative">
+      <div className="max-w-7xl mx-auto px-8 relative z-10">
         
-        {/* Cabeçalho com bom espaçamento inferior */}
-        <div className="text-center mb-20">
-          <h2 className="font-h2 text-[#1e293b] text-3xl font-extrabold">Como Trabalhamos</h2>
-          <p className="font-body-lg text-gray-500 max-w-2xl mx-auto mt-6">
+        <div className="text-center mb-24">
+          <h2 className="text-[#153A81] text-4xl font-extrabold">Como Trabalhamos</h2>
+          <p className="text-gray-500 max-w-2xl mx-auto mt-4 text-lg">
             Um processo simplificado para que receba as suas peças com total conveniência e confiança.
           </p>
         </div>
 
-        <div className="relative flex flex-col md:flex-row justify-between items-center gap-12 md:gap-4">
+        <div className="relative flex flex-col md:flex-row justify-between items-center gap-16 md:gap-4">
           
-          {/* Linha Conectora Verde - Posicionada exatamente no centro dos ícones (top-10 que é metade de h-20) */}
-          <div className="hidden md:block absolute top-10 left-20 right-20 h-[2px] bg-[#008554]/30 z-0"></div>
+          {/* Linha Conectora com Gradiente */}
+          <div className="hidden md:block absolute top-12 left-32 right-32 h-[2px] bg-gradient-to-r from-transparent via-[#B5D318] to-transparent opacity-50 z-0"></div>
           
-          {/* Passo 1 - shopping_cart */}
+          {/* Passo 1 */}
           <div className="relative z-10 flex flex-col items-center text-center max-w-[280px] group">
-            <div className="w-20 h-20 bg-white shadow-md rounded-full flex items-center justify-center mb-6 border-4 border-[#008554] transition-transform duration-300 group-hover:scale-105">
-              <span className="material-symbols-outlined text-[#008554] text-4xl">shopping_cart</span>
+            <div className="relative flex items-center justify-center mb-8">
+              <div className="absolute inset-0 bg-[#B5D318] rounded-full blur-xl opacity-0 group-hover:opacity-40 transition-opacity duration-500"></div>
+              <div className="absolute inset-0 rounded-full border border-[#B5D318] animate-ping opacity-20"></div>
+              <div className="w-24 h-24 bg-white shadow-lg rounded-full flex items-center justify-center border-4 border-[#153A81] group-hover:border-[#B5D318] transition-colors duration-300 relative z-10">
+                <span className="material-symbols-outlined text-[#153A81] group-hover:text-[#B5D318] text-4xl transition-colors">shopping_cart</span>
+              </div>
             </div>
-            <h4 className="font-h3 text-[#1e293b] mb-3 text-lg font-bold">Encomenda no Site</h4>
-            <p className="font-body-sm text-gray-500 text-sm leading-relaxed">
-              Escolha entre milhares de referências originais e equivalentes.
+            <h4 className="text-[#153A81] mb-3 text-xl font-bold">Encomenda no Site</h4>
+            <p className="text-gray-500 text-sm leading-relaxed">
+              Escolha entre milhares de referências originais e equivalentes com a máxima facilidade.
             </p>
           </div>
 
-          {/* Passo 2 - settings */}
+          {/* Passo 2 */}
           <div className="relative z-10 flex flex-col items-center text-center max-w-[280px] group">
-            <div className="w-20 h-20 bg-white shadow-md rounded-full flex items-center justify-center mb-6 border-4 border-[#008554] transition-transform duration-300 group-hover:scale-105">
-              <span className="material-symbols-outlined text-[#008554] text-4xl">settings</span>
+            <div className="relative flex items-center justify-center mb-8">
+              <div className="absolute inset-0 bg-[#B5D318] rounded-full blur-xl opacity-0 group-hover:opacity-40 transition-opacity duration-500"></div>
+              <div className="w-24 h-24 bg-white shadow-lg rounded-full flex items-center justify-center border-4 border-[#153A81] group-hover:border-[#B5D318] transition-colors duration-300 relative z-10">
+                <span className="material-symbols-outlined text-[#153A81] group-hover:text-[#B5D318] text-4xl transition-colors">settings</span>
+              </div>
             </div>
-            <h4 className="font-h3 text-[#1e293b] mb-3 text-lg font-bold">Processamento Técnico</h4>
-            <p className="font-body-sm text-gray-500 text-sm leading-relaxed">
-              A nossa equipa valida a compatibilidade com o seu veículo.
+            <h4 className="text-[#153A81] mb-3 text-xl font-bold">Processamento Técnico</h4>
+            <p className="text-gray-500 text-sm leading-relaxed">
+              A nossa equipa de especialistas valida a compatibilidade exata com o seu veículo.
             </p>
           </div>
 
-          {/* Passo 3 - local_shipping */}
+          {/* Passo 3 */}
           <div className="relative z-10 flex flex-col items-center text-center max-w-[280px] group">
-            <div className="w-20 h-20 bg-white shadow-md rounded-full flex items-center justify-center mb-6 border-4 border-[#008554] transition-transform duration-300 group-hover:scale-105">
-              <span className="material-symbols-outlined text-[#008554] text-4xl">local_shipping</span>
+            <div className="relative flex items-center justify-center mb-8">
+              <div className="absolute inset-0 bg-[#B5D318] rounded-full blur-xl opacity-0 group-hover:opacity-40 transition-opacity duration-500"></div>
+              <div className="w-24 h-24 bg-white shadow-lg rounded-full flex items-center justify-center border-4 border-[#153A81] group-hover:border-[#B5D318] transition-colors duration-300 relative z-10">
+                <span className="material-symbols-outlined text-[#153A81] group-hover:text-[#B5D318] text-4xl transition-colors">local_shipping</span>
+              </div>
             </div>
-            <h4 className="font-h3 text-[#1e293b] mb-3 text-lg font-bold">Entrega Rápida</h4>
-            <p className="font-body-sm text-gray-500 text-sm leading-relaxed">
-              Envio expresso para sua casa ou oficina em 24/48 horas.
+            <h4 className="text-[#153A81] mb-3 text-xl font-bold">Entrega Rápida</h4>
+            <p className="text-gray-500 text-sm leading-relaxed">
+              Envio expresso otimizado para a sua empresa ou oficina no menor tempo possível.
             </p>
           </div>
 

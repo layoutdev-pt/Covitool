@@ -29,9 +29,6 @@ const Hero: React.FC = () => {
             Especialistas em componentes premium para veículos que exigem o melhor em tecnologia, segurança e durabilidade.
           </p>
           
-          <button className="bg-[#008554] text-white px-10 py-4 rounded-full font-bold hover:bg-[#006b43] transition-all scale-100 hover:scale-105 active:scale-95 shadow-lg shadow-green-900/30">
-            Explorar Catálogo
-          </button>
         </div>
       </div>
     </section>

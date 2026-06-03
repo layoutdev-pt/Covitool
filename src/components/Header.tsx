@@ -1,34 +1,66 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 const Header: React.FC = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const getLinkClasses = (path: string) => {
+    const isActive = location.pathname === path;
+    return isActive
+      // Verde Lima para a página ativa
+      ? "text-[#153A81] border-b-[3px] border-[#B5D318] pb-1 text-sm font-black tracking-tight"
+      // Hover fica Verde Lima
+      : "text-gray-600 hover:text-[#B5D318] transition-colors text-sm font-bold tracking-tight";
+  };
+
   return (
-    /* O fixed top-6 garante que a barra flutue sobre o Hero */
-    <header className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-7xl">
-      <div className="bg-white/85 backdrop-blur-md border border-white/40 shadow-sm rounded-full flex justify-between items-center px-8 py-4 transition-all duration-300">
+    <header 
+      className={`fixed left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-7xl transition-all duration-500 ${
+        isScrolled ? 'top-2 w-full max-w-full px-4' : 'top-6'
+      }`}
+    >
+      <div 
+        className={`bg-white/90 backdrop-blur-md border border-gray-100 transition-all duration-500 ${
+          isScrolled 
+            ? 'rounded-xl px-6 py-2 shadow-lg' 
+            : 'rounded-full px-8 py-4 shadow-sm'
+        } flex justify-between items-center`}
+      >
         
-        {/* Logo */}
-        <div className="text-2xl font-black text-[#004BFF] tracking-tighter flex items-center gap-1">
-          AutoParts <span className="font-medium text-gray-500">Premium</span>
-        </div>
+        {/* Logo em Imagem com redimensionamento suave no scroll */}
+        <Link to="/" className="flex items-center transition-all duration-500">
+          <img 
+            src="/logo.png" /* Coloca o teu ficheiro logo.png dentro da pasta 'public' */
+            alt="Covitool Logo" 
+            className={`transition-all duration-500 object-contain ${
+              isScrolled ? 'h-8' : 'h-10 md:h-12'
+            }`}
+          />
+        </Link>
 
         {/* Links de Navegação */}
         <nav className="hidden lg:flex items-center gap-8">
-          <a className="text-[#004BFF] border-b-2 border-[#008554] pb-1 text-sm font-bold tracking-tight" href="#">Home</a>
-          <a className="text-gray-600 hover:text-[#004BFF] transition-colors text-sm font-semibold tracking-tight" href="#">Marcas</a>
-          <a className="text-gray-600 hover:text-[#004BFF] transition-colors text-sm font-semibold tracking-tight" href="#">Sobre Nós</a>
-          <a className="text-gray-600 hover:text-[#004BFF] transition-colors text-sm font-semibold tracking-tight" href="#">Novidades</a>
-          <a className="text-gray-600 hover:text-[#004BFF] transition-colors text-sm font-semibold tracking-tight" href="#">Folhetos</a>
-          <a className="text-gray-600 hover:text-[#004BFF] transition-colors text-sm font-semibold tracking-tight" href="#">Contacte-nos</a>
+          <Link className={getLinkClasses("/")} to="/">Home</Link>
+          <Link className={getLinkClasses("/marcas")} to="/marcas">Marcas</Link>
+          <Link className={getLinkClasses("/sobre-nos")} to="/sobre-nos">Sobre Nós</Link>
+          <Link className={getLinkClasses("/folhetos")} to="/folhetos">Folhetos</Link>
         </nav>
 
-        {/* Ícones da Direita */}
+        {/* Botão Admin destacado em Verde Lima */}
         <div className="flex items-center gap-3">
-          <button className="p-2 text-gray-600 hover:text-[#004BFF] hover:bg-white/50 rounded-full transition-all">
-            <span className="material-symbols-outlined text-[22px]">shopping_cart</span>
-          </button>
-          <button className="p-2 text-gray-600 hover:text-[#004BFF] hover:bg-white/50 rounded-full transition-all">
-            <span className="material-symbols-outlined text-[22px]">account_circle</span>
-          </button>
+          <Link to="/admin" className="p-2.5 bg-[#B5D318] text-[#153A81] hover:bg-[#a0bb15] hover:shadow-md rounded-full transition-all flex items-center justify-center font-bold">
+            <span className="material-symbols-outlined text-[22px]">admin_panel_settings</span>
+          </Link>
         </div>
       </div>
     </header>

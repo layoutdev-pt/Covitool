@@ -1,26 +1,27 @@
 import React from 'react';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
 import Hero from '../components/sections/home/Hero';
 import BentoGrid from '../components/sections/home/BentoGrid';
 import FeaturedProducts from '../components/sections/home/FeaturedProducts';
 import CustomerJourney from '../components/sections/home/CustomerJourney';
 import BrochureSection from '../components/sections/home/BrochureSection';
+import LocationMap from '../components/sections/SobreNos/LocationMap'; // Ajusta o caminho conforme a tua estrutura
 import ContactForm from '../components/sections/home/ContactForm';
 
 const Home: React.FC = () => {
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-grow">
-        <Hero />
-        <BentoGrid />
-        <FeaturedProducts />
-        <CustomerJourney />
-        <BrochureSection />
-        <ContactForm />
-      </main>
-      <Footer />
+    <div className="w-full">
+      <Hero />
+      <BentoGrid />
+      <FeaturedProducts />
+      <CustomerJourney />
+      <BrochureSection />
+      
+      {/* O Mapa entra aqui, entre o Folheto e o Formulário de Contacto */}
+      <section className="container mx-auto px-4 py-16">
+        <LocationMap />
+      </section>
+      
+      <ContactForm />
     </div>
   );
 };
