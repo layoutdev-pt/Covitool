@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Marcas from './pages/Marcas';
 import SobreNos from './pages/SobreNos';
 import Folhetos from './pages/Folhetos';
+import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminLayout from './components/AdminLayout';
 import AdminFolhetos from './pages/admin/AdminFolhetos';
 import AdminProdutos from './pages/admin/AdminProdutos'; 
@@ -32,7 +33,7 @@ function App() {
         </Route>
 
         <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<div>Página Inicial do Admin (Não sei o que colocar aqui, qualquer coisa eu retiro.)</div>} />
+          <Route index element={<AdminDashboard />} />
           <Route path="folhetos" element={<AdminFolhetos />} />
           <Route path="produtos" element={<AdminProdutos />} /> 
           <Route path="destaque-home" element={<AdminDestaque />} />
