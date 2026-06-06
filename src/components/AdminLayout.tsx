@@ -37,6 +37,7 @@ const AdminLayout: React.FC = () => {
     { path: '/admin', icon: 'dashboard', label: 'Visão Geral' },
     { path: '/admin/destaque-home', icon: 'star', label: 'Destaque Mensal' },
     { path: '/admin/produtos', icon: 'shopping_bag', label: 'Produtos (Home)' },
+    { path: '/admin/marcas', icon: 'verified', label: 'Marcas da Grelha' },
     { path: '/admin/folhetos', icon: 'auto_stories', label: 'Gerir Folhetos' },
     { path: '/', icon: 'public', label: 'Ver Site' },
   ];

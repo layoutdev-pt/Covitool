@@ -8,6 +8,7 @@ import AdminLayout from './components/AdminLayout';
 import AdminFolhetos from './pages/admin/AdminFolhetos';
 import AdminProdutos from './pages/admin/AdminProdutos'; 
 import AdminDestaque from './pages/admin/AdminDestaque';
+import AdminMarcas from './pages/admin/AdminMarcas'; 
 
 const PublicLayout = () => (
   <>
@@ -35,6 +36,7 @@ function App() {
           <Route path="folhetos" element={<AdminFolhetos />} />
           <Route path="produtos" element={<AdminProdutos />} /> 
           <Route path="destaque-home" element={<AdminDestaque />} />
+          <Route path="marcas" element={<AdminMarcas />} />
         </Route>
 
       </Routes>
