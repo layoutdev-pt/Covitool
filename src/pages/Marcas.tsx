@@ -47,7 +47,7 @@ export default function Marcas() {
           <div className=" rounded-3xl h-80 flex flex-col justify-end p-10 text-white relative overflow-hidden group">
             {/* Overlay em tons de azul para escurecer a imagem de fundo */}
             <div className="absolute inset-0 bg-[#153A81]/6 z-0.1 transition-opacity duration-500 group-hover:bg-[#153A81]/5"></div>
-            <img src="https://images.unsplash.com/photo-1617531653332-bd46c24f2068?auto=format&fit=crop&q=80&w=800" alt="Peças" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 mix-blend-multiply" />
+            <img src="public/imagens/componentes-de-carros.webp" alt="Peças" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 mix-blend-multiply" />
             <div className="relative z-20">
               <span className="inline-block px-3 py-1 bg-[#B5D318] text-[#153A81] text-xs font-black tracking-widest uppercase rounded-full mb-4 shadow-sm">Qualidade Certificada</span>
               <h1 className="text-4xl lg:text-5xl font-bold mb-2 tracking-tight">Peças Originais</h1>
