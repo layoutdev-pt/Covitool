@@ -17,10 +17,8 @@ const Header: React.FC = () => {
   const getLinkClasses = (path: string) => {
     const isActive = location.pathname === path;
     return isActive
-      // Verde Lima para a página ativa
       ? "text-[#153A81] border-b-[3px] border-[#B5D318] pb-1 text-sm font-black tracking-tight"
-      // Hover fica Verde Lima
-      : "text-gray-600 hover:text-[#B5D318] transition-colors text-sm font-bold tracking-tight";
+      : "text-[#153A81] hover:text-[#B5D318] transition-colors text-sm font-bold tracking-tight";
   };
 
   return (
@@ -29,20 +27,21 @@ const Header: React.FC = () => {
         isScrolled ? 'top-2 w-full max-w-full px-4' : 'top-6'
       }`}
     >
+      {/* w-full adicionado aqui para garantir que ocupa todo o espaço do container */}
       <div 
-        className={`bg-white/90 backdrop-blur-md border border-gray-100 transition-all duration-500 ${
+        className={`bg-white/90 backdrop-blur-md border border-gray-100 transition-all duration-500 w-full ${
           isScrolled 
             ? 'rounded-xl px-6 py-2 shadow-lg' 
-            : 'rounded-full px-8 py-4 shadow-sm'
+            : 'rounded-full px-8 py-3 shadow-sm'
         } flex justify-between items-center`}
       >
         
-        {/* Logo em Imagem com redimensionamento suave no scroll */}
-        <Link to="/" className="flex items-center transition-all duration-500">
+        {/* Logo - shrink-0 impede que a imagem seja esmagada pelos outros elementos */}
+        <Link to="/" className="flex items-center shrink-0 transition-all duration-500">
           <img 
-            src="/logo.png" /* Coloca o teu ficheiro logo.png dentro da pasta 'public' */
+            src="/logo.png"
             alt="Covitool Logo" 
-            className={`transition-all duration-500 object-contain ${
+            className={`transition-all duration-500 object-contain object-left ${
               isScrolled ? 'h-8' : 'h-10 md:h-12'
             }`}
           />
@@ -56,12 +55,8 @@ const Header: React.FC = () => {
           <Link className={getLinkClasses("/folhetos")} to="/folhetos">Folhetos</Link>
         </nav>
 
-        {/* Botão Admin destacado em Verde Lima */}
-        <div className="flex items-center gap-3">
-          <Link to="/admin" className="p-2.5 bg-[#B5D318] text-[#153A81] hover:bg-[#a0bb15] hover:shadow-md rounded-full transition-all flex items-center justify-center font-bold">
-            <span className="material-symbols-outlined text-[22px]">admin_panel_settings</span>
-          </Link>
-        </div>
+        {/* Div invisível apenas para equilibrar o flexbox no desktop e manter o logo à esquerda e menu ao centro/direita */}
+        <div className="hidden lg:block w-12 shrink-0"></div>
       </div>
     </header>
   );

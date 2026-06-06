@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // Importação necessária para o redirecionamento
 
 const Hero: React.FC = () => {
   return (
@@ -28,6 +29,15 @@ const Hero: React.FC = () => {
           <p className="font-body-lg text-white/80 max-w-xl mb-10 text-lg leading-relaxed">
             Especialistas em componentes premium para veículos que exigem o melhor em tecnologia, segurança e durabilidade.
           </p>
+          
+          {/* BOTÃO ADICIONADO: Redireciona para o formulário de contacto */}
+          <Link 
+            to="/sobre-nos#contacto" 
+            className="inline-flex items-center gap-3 bg-[#B5D318] hover:bg-[#a1bc12] text-[#153A81] px-8 py-4 rounded-full font-bold text-lg transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1"
+          >
+            <span className="material-symbols-outlined text-2xl">support_agent</span>
+            Fale com um Especialista
+          </Link>
           
         </div>
       </div>
