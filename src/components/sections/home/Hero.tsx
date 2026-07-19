@@ -15,7 +15,7 @@ const Hero: React.FC = () => {
           playsInline 
           className="absolute inset-0 w-full h-full object-cover"
         >
-          <source src="/hero-video.mp4" type="video/mp4" />
+          <source src="videos/covitool_vid_compressed.mp4" type="video/mp4" />
         </video>
         
         <div className="absolute inset-0 bg-gradient-to-r from-[#153A81]/90 via-[#153A81]/50 to-transparent"></div>
