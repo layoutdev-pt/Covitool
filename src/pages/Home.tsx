@@ -5,7 +5,6 @@ import FeaturedProducts from '../components/sections/home/FeaturedProducts';
 import CustomerJourney from '../components/sections/home/CustomerJourney';
 import BrochureSection from '../components/sections/home/BrochureSection';
 import LocationMap from '../components/sections/SobreNos/LocationMap'; // Ajusta o caminho conforme a tua estrutura
-import ContactForm from '../components/sections/home/ContactForm';
 
 const Home: React.FC = () => {
   return (
@@ -21,7 +20,7 @@ const Home: React.FC = () => {
         <LocationMap />
       </section>
       
-      <ContactForm />
+      
     </div>
   );
 };

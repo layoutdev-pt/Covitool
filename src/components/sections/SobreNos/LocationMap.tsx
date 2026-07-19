@@ -26,7 +26,7 @@ export default function LocationMap() {
               <h3 className="font-bold text-white mb-1">Covitool Lda.</h3>
               <p className="text-sm text-blue-100 leading-relaxed font-light">
                 Parque Industrial da Covilhã<br />
-                Lote C4-B, 6200-027 Covilhã
+                Lote C4-B, 6200-027
               </p>
             </div>
           </div>
@@ -35,7 +35,10 @@ export default function LocationMap() {
           <button className="bg-[#B5D318] hover:bg-[#a1bc12] text-[#153A81] transition-all duration-300 p-5 rounded-2xl flex items-center justify-between group shadow-lg hover:-translate-y-1 cursor-pointer">
             <div className="flex items-center gap-4">
               <span className="material-symbols-outlined text-2xl">call</span>
-              <span className="font-black text-lg tracking-wide">+351 800 123 456</span>
+              <div className="flex flex-col items-start">
+                <span className="font-black text-lg tracking-wide">+351 275 322 030</span>
+                <span className="text-[10px] font-bold text-[#153A81]/70 leading-none mt-1">(Chamada para rede fixa nacional)</span>
+              </div>
             </div>
             <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform font-bold">arrow_forward</span>
           </button>
@@ -45,7 +48,7 @@ export default function LocationMap() {
             <div className="text-[#B5D318]">
               <span className="material-symbols-outlined text-2xl">mail</span>
             </div>
-            <span className="text-blue-100 text-sm font-medium">geral@covitool.pt</span>
+            <span className="text-blue-100 text-sm font-medium">covitool@sapo.pt</span>
           </div>
         </div>
 
@@ -62,7 +65,7 @@ export default function LocationMap() {
         {/* Iframe do Google Maps */}
         <iframe 
           title="Mapa de Localização"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3056.240404098485!2d-7.4815411!3d40.1420788!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd3d18080f837bd3%3A0x8681284d72855139!2sZona%20Industrial%20do%20Fund%C3%A3o!5e0!3m2!1spt-PT!2spt!4v1700000000000!5m2!1spt-PT!2spt" 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3847.7829320360556!2d-7.485304287857375!3d40.2900854632177!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd3d2230ce1d6e7b%3A0x15f3f95eae2b8a0f!2sCovitool-Com%C3%A9rcio%20de%20M%C3%A1quinas%20e%20Ferramentas%20Profissionais%20Lda!5e1!3m2!1spt-PT!2spt!4v1784390397660!5m2!1spt-PT!2spt" 
           width="100%" 
           height="100%" 
           style={{ border: 0, position: 'absolute', top: 0, left: 0 }} 

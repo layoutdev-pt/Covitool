@@ -49,9 +49,11 @@ export default function Marcas() {
             <div className="absolute inset-0 bg-[#153A81]/6 z-0.1 transition-opacity duration-500 group-hover:bg-[#153A81]/5"></div>
             <img src="/imagens/componentes-de-carros.webp" alt="Peças" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 mix-blend-multiply" />
             <div className="relative z-20">
-              <span className="inline-block px-3 py-1 bg-[#B5D318] text-[#153A81] text-xs font-black tracking-widest uppercase rounded-full mb-4 shadow-sm">Qualidade Certificada</span>
-              <h1 className="text-4xl lg:text-5xl font-bold mb-2 tracking-tight">Peças Originais</h1>
-              <p className="text-blue-100 font-light max-w-sm">A máxima performance garantida pelos melhores fabricantes.</p>
+              <span className="inline-block px-3 py-1 bg-[#B5D318] text-[#153A81] text-xs font-black tracking-widest uppercase rounded-full mb-4 shadow-sm">
+                Marcas Certificadas
+              </span>
+                <h1 className="text-4xl lg:text-5xl font-bold mb-2 tracking-tight">Equipamento Profissional</h1>
+                <p className="text-blue-100 font-light max-w-sm">A máxima fiabilidade e precisão, garantidas pelos melhores fabricantes do mercado.</p>
             </div>
           </div>
 

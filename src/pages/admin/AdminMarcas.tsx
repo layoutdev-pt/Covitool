@@ -29,7 +29,10 @@ export default function AdminMarcas() {
   const [corTexto, setCorTexto] = useState('#153A81');
   const [sombreado, setSombreado] = useState(40);
   
-  // NOVOS ESTADOS - Efeito Hover (Overlay)
+  // NOVO ESTADO - Exibir Logótipo em vez do Nome
+  const [exibirLogo, setExibirLogo] = useState(false);
+  
+  // Estados - Efeito Hover (Overlay)
   const [corOverlay, setCorOverlay] = useState('#153A81');
   const [opacidadeOverlay, setOpacidadeOverlay] = useState(80);
 
@@ -93,11 +96,30 @@ export default function AdminMarcas() {
     try {
       const url = await uploadFicheiro(imagemGridFile, 'grelha');
       await supabase.from('marcas_grelha').insert([{
-        nome, descricao, tipo_fundo: tipoFundo, cor_fundo: corFundo, cor_texto: corTexto, sombreado,
-        cor_overlay: corOverlay, opacidade_overlay: opacidadeOverlay, imagem_url: url
+        nome, 
+        descricao, 
+        tipo_fundo: tipoFundo, 
+        cor_fundo: corFundo, 
+        cor_texto: corTexto, 
+        sombreado,
+        cor_overlay: corOverlay, 
+        opacidade_overlay: opacidadeOverlay, 
+        imagem_url: url,
+        exibir_logo: exibirLogo // Guarda a preferência de mostrar logo
       }]);
       alert("Marca adicionada à grelha!");
-      setNome(''); setDescricao(''); setImagemGridFile(null); setCorFundo('#ffffff'); setCorTexto('#153A81'); setSombreado(40); setCorOverlay('#153A81'); setOpacidadeOverlay(80);
+      
+      // Resetar todos os campos
+      setNome(''); 
+      setDescricao(''); 
+      setImagemGridFile(null); 
+      setCorFundo('#ffffff'); 
+      setCorTexto('#153A81'); 
+      setSombreado(40); 
+      setCorOverlay('#153A81'); 
+      setOpacidadeOverlay(80);
+      setExibirLogo(false);
+      
       if (imagemGridRef.current) imagemGridRef.current.value = '';
       fetchData();
     } catch (error: any) { alert(error.message); } finally { setLoading(false); }
@@ -160,6 +182,23 @@ export default function AdminMarcas() {
             <div className="bg-gray-50 p-6 rounded-xl border border-gray-200 flex flex-col gap-4">
               <h3 className="font-bold text-[#153A81]">Aparência em Repouso</h3>
               
+              {/* O QUE MOSTRAR NO CENTRO (TEXTO OU LOGO) */}
+              <div className="flex flex-col gap-2 mb-2 pb-4 border-b border-gray-200">
+                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Centro do Cartão</label>
+                <div className="flex gap-6">
+                  <label className="flex items-center gap-2 cursor-pointer font-medium text-sm">
+                    <input type="radio" checked={!exibirLogo} onChange={() => setExibirLogo(false)} className="w-4 h-4 text-[#B5D318]" /> 
+                    Mostrar Nome (Texto)
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer font-medium text-sm">
+                    <input type="radio" checked={exibirLogo} onChange={() => setExibirLogo(true)} className="w-4 h-4 text-[#B5D318]" /> 
+                    Mostrar Imagem (Logo s/ fundo)
+                  </label>
+                </div>
+              </div>
+
+              {/* FUNDO */}
+              <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Fundo do Cartão</label>
               <div className="flex gap-6">
                 <label className="flex items-center gap-2 cursor-pointer font-medium">
                   <input type="radio" checked={tipoFundo === 'cor'} onChange={() => setTipoFundo('cor')} className="w-5 h-5 text-[#B5D318]" /> Cor Sólida
@@ -170,16 +209,21 @@ export default function AdminMarcas() {
               </div>
 
               <div className="flex flex-wrap gap-6 mt-2">
-                <div className="flex flex-col gap-1">
-                  <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Cor do Título</label>
-                  <input type="color" value={corTexto} onChange={(e) => setCorTexto(e.target.value)} className="w-16 h-10 cursor-pointer rounded border" />
-                </div>
+                {/* Mostra Cor do Título apenas se estiver a usar Texto no centro */}
+                {!exibirLogo && (
+                  <div className="flex flex-col gap-1">
+                    <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Cor do Título</label>
+                    <input type="color" value={corTexto} onChange={(e) => setCorTexto(e.target.value)} className="w-16 h-10 cursor-pointer rounded border" />
+                  </div>
+                )}
+
                 {tipoFundo === 'cor' && (
                   <div className="flex flex-col gap-1">
                     <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Cor Fundo</label>
                     <input type="color" value={corFundo} onChange={(e) => setCorFundo(e.target.value)} className="w-16 h-10 cursor-pointer rounded border" />
                   </div>
                 )}
+
                 {tipoFundo === 'imagem' && (
                   <div className="flex flex-col gap-1 flex-1">
                     <label className="text-xs font-bold text-gray-500 uppercase tracking-wider flex justify-between">
@@ -191,7 +235,7 @@ export default function AdminMarcas() {
               </div>
             </div>
 
-            {/* SEÇÃO 2: EFEITO HOVER (NOVO) */}
+            {/* SEÇÃO 2: EFEITO HOVER */}
             <div className="bg-blue-50 p-6 rounded-xl border border-blue-100 flex flex-col gap-4">
               <h3 className="font-bold text-[#153A81]">Efeito ao Passar o Rato (Overlay)</h3>
               
@@ -229,18 +273,25 @@ export default function AdminMarcas() {
               
               {/* ESTADO DE REPOUSO */}
               <div 
-                className={`absolute inset-0 transition-opacity duration-500 group-hover:opacity-0 ${tipoFundo === 'cor' ? 'flex items-center justify-center' : ''}`}
+                className={`absolute inset-0 transition-opacity duration-500 group-hover:opacity-0 flex items-center justify-center`}
                 style={tipoFundo === 'cor' ? { backgroundColor: corFundo } : {}}
               >
+                {/* Imagem de Fundo (Se aplicável) */}
                 {tipoFundo === 'imagem' && previewImgUrl && (
                   <>
-                    <img src={previewImgUrl} alt="Preview" className="absolute inset-0 w-full h-full object-cover" />
+                    <img src={previewImgUrl} alt="Preview Background" className="absolute inset-0 w-full h-full object-cover" />
                     <div className="absolute inset-0 transition-opacity duration-300" style={{ backgroundColor: `rgba(0,0,0, ${sombreado / 100})` }}></div>
                   </>
                 )}
-                <span className="font-black text-xl tracking-widest relative z-10 px-2 text-center w-full block drop-shadow-sm" style={{ color: corTexto }}>
-                  {nome || 'MARCA'}
-                </span>
+                
+                {/* Exibição Central: Logótipo OU Nome */}
+                {exibirLogo && previewImgUrl ? (
+                  <img src={previewImgUrl} alt="Logo" className="w-1/2 object-contain relative z-10 drop-shadow-sm" />
+                ) : (
+                  <span className="font-black text-xl tracking-widest relative z-10 px-2 text-center w-full block drop-shadow-sm" style={{ color: corTexto }}>
+                    {nome || 'MARCA'}
+                  </span>
+                )}
               </div>
 
               {/* ESTADO AO PASSAR O RATO */}
@@ -267,6 +318,7 @@ export default function AdminMarcas() {
         </div>
       </div>
 
+      {/* LISTA DE MARCAS */}
       <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
         <h2 className="text-xl font-bold mb-4">Marcas Atuais na Grelha</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">

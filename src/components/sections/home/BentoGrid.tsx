@@ -21,10 +21,10 @@ const BentoGrid: React.FC = () => {
 
             <div className="absolute bottom-0 left-0 p-10 z-10">
               <h3 className="font-h3 text-white mb-3 text-2xl font-bold tracking-tight">
-                Controlo de Qualidade
+                Marcas de confiança
               </h3>
               <p className="font-body-sm text-white/90 text-[13px] max-w-xs leading-relaxed font-medium">
-                Testes rigorosos em cada componente para garantir a máxima performance na estrada.
+                Trabalhamos com marcas de confiança para garantir a qualidade que o seu trabalho exige.
               </p>
             </div>
           </div>
@@ -66,9 +66,9 @@ const BentoGrid: React.FC = () => {
             <div className="absolute inset-0 bg-[#005a3c]/55 backdrop-blur-[1px]"></div>
             
             <div className="absolute inset-0 flex flex-col justify-center items-center p-8 text-center z-10">
-              <h4 className="text-white font-bold text-lg mb-1">Stock Permanente</h4>
+              <h4 className="text-white font-bold text-lg mb-1">Stock Disponível</h4>
               <p className="text-white/90 text-xs leading-relaxed max-w-[140px]">
-                Envio imediato disponível.
+                Ampla variedade de máquinas e ferramentas prontas para levantamento.
               </p>
             </div>
           </div>

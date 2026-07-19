@@ -6,10 +6,7 @@ const Header: React.FC = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -17,46 +14,47 @@ const Header: React.FC = () => {
   const getLinkClasses = (path: string) => {
     const isActive = location.pathname === path;
     return isActive
-      ? "text-[#153A81] border-b-[3px] border-[#B5D318] pb-1 text-sm font-black tracking-tight"
-      : "text-[#153A81] hover:text-[#B5D318] transition-colors text-sm font-bold tracking-tight";
+      ? "text-[#153A81] border-b-[3px] border-[#B5D318] pb-1 text-base font-black tracking-tight"
+      : "text-[#153A81] hover:text-[#B5D318] transition-colors text-base font-bold tracking-tight";
   };
 
   return (
     <header 
-      className={`fixed left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-7xl transition-all duration-500 ${
-        isScrolled ? 'top-2 w-full max-w-full px-4' : 'top-6'
+      className={`fixed left-1/2 -translate-x-1/2 z-50 transition-all duration-500 ${
+        isScrolled ? 'top-4 w-[95%] max-w-7xl' : 'top-0 w-full max-w-full'
       }`}
     >
-      {/* w-full adicionado aqui para garantir que ocupa todo o espaço do container */}
       <div 
-        className={`bg-white/90 backdrop-blur-md border border-gray-100 transition-all duration-500 w-full ${
+        className={`bg-white/95 backdrop-blur-md transition-all duration-500 flex justify-between items-center ${
           isScrolled 
-            ? 'rounded-xl px-6 py-2 shadow-lg' 
-            : 'rounded-full px-8 py-3 shadow-sm'
-        } flex justify-between items-center`}
+            ? 'rounded-2xl px-6 py-2 shadow-lg border border-gray-100' 
+            : 'px-10 py-5 shadow-sm border-b border-gray-200'
+        }`}
       >
-        
-        {/* Logo - shrink-0 impede que a imagem seja esmagada pelos outros elementos */}
+        {/* Logo um pouco maior no topo */}
         <Link to="/" className="flex items-center shrink-0 transition-all duration-500">
           <img 
             src="/logo.png"
             alt="Covitool Logo" 
             className={`transition-all duration-500 object-contain object-left ${
-              isScrolled ? 'h-8' : 'h-10 md:h-12'
+              isScrolled ? 'h-10' : 'h-14'
             }`}
           />
         </Link>
 
         {/* Links de Navegação */}
-        <nav className="hidden lg:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-10">
           <Link className={getLinkClasses("/")} to="/">Home</Link>
           <Link className={getLinkClasses("/marcas")} to="/marcas">Marcas</Link>
           <Link className={getLinkClasses("/sobre-nos")} to="/sobre-nos">Sobre Nós</Link>
           <Link className={getLinkClasses("/folhetos")} to="/folhetos">Folhetos</Link>
         </nav>
 
-        {/* Div invisível apenas para equilibrar o flexbox no desktop e manter o logo à esquerda e menu ao centro/direita */}
-        <div className="hidden lg:block w-12 shrink-0"></div>
+        {/* Novo Bloco de Contacto à Direita */}
+        <div className="hidden lg:flex flex-col items-end shrink-0">
+          <span className="font-black text-[#153A81] text-lg tracking-tight">+351 275 322 030</span>
+          <span className="text-[10px] text-gray-500 font-semibold">(Chamada para rede fixa nacional)</span>
+        </div>
       </div>
     </header>
   );

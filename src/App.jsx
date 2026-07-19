@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import Header from './components/Header';
+import Footer from './components/Footer'; // Importação do Footer
 import Home from './pages/Home';
 import Marcas from './pages/Marcas';
 import SobreNos from './pages/SobreNos';
@@ -11,13 +12,15 @@ import AdminProdutos from './pages/admin/AdminProdutos';
 import AdminDestaque from './pages/admin/AdminDestaque';
 import AdminMarcas from './pages/admin/AdminMarcas'; 
 
+// Layout Público (Com Header e Footer)
 const PublicLayout = () => (
-  <>
+  <div className="flex flex-col min-h-screen">
     <Header />
-    <main className="flex-grow pt-32 min-h-screen bg-gray-50">
+    <main className="flex-grow pt-32 bg-gray-50">
       <Outlet />
     </main>
-  </>
+    <Footer /> {/* O Footer entra aqui, logo a seguir ao conteúdo principal! */}
+  </div>
 );
 
 function App() {
@@ -25,6 +28,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         
+        {/* Rotas Públicas */}
         <Route element={<PublicLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/marcas" element={<Marcas />} />
@@ -32,6 +36,7 @@ function App() {
           <Route path="/folhetos" element={<Folhetos />} />
         </Route>
 
+        {/* Rotas de Administração */}
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />
           <Route path="folhetos" element={<AdminFolhetos />} />

@@ -1,22 +1,22 @@
 import React, { useEffect, useRef } from 'react';
 
-const passos = [
+  const passos = [
   {
     id: 1,
-    titulo: "Encomenda no Site",
-    descricao: "Escolha entre milhares de referências originais e equivalentes com a máxima facilidade.",
-    icone: "shopping_cart",
+    titulo: "Descubra as Nossas Soluções",
+    descricao: "Explore as marcas que comercializamos e os folhetos com as novidades no nosso site. Se preferir, ligue-nos diretamente para saber o que temos disponível e pedir aconselhamento.",
+    icone: "manage_search",
   },
   {
     id: 2,
-    titulo: "Processamento Técnico",
-    descricao: "A nossa equipa de especialistas valida a compatibilidade exata com o seu veículo.",
-    icone: "settings",
+    titulo: "Faça a sua Encomenda",
+    descricao: "Após escolher o material, faça o seu pedido de forma simples por telefone. Pode optar por levantar as ferramentas na nossa loja física ou solicitar o envio por transportadora.",
+    icone: "shopping_cart_checkout",
   },
   {
     id: 3,
-    titulo: "Entrega Rápida",
-    descricao: "Envio expresso otimizado para a sua empresa ou oficina no menor tempo possível.",
+    titulo: "Receba o seu Material",
+    descricao: "Seja ao nosso balcão na Covilhã ou através da entrega na sua morada, garantimos que a sua encomenda chega até si com a maior brevidade possível para que o trabalho não pare.",
     icone: "local_shipping",
   }
 ];

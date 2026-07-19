@@ -12,8 +12,7 @@ const FeaturedProducts: React.FC = () => {
       const { data, error } = await supabase
         .from('produtos_destaque')
         .select('*')
-        .order('created_at', { ascending: false })
-        .limit(3);
+        .order('created_at', { ascending: false });
 
       if (error) {
         console.error("Erro ao carregar produtos:", error);
@@ -27,17 +26,34 @@ const FeaturedProducts: React.FC = () => {
   }, []);
 
   return (
-    <section className="bg-[#f8f9fa] py-24">
+    <section className="bg-[#f8f9fa] py-24 overflow-hidden">
+      
+      {/* CSS embutido para esconder a barra de scroll padrão do navegador (mantendo o funcionamento) */}
+      <style>{`
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      `}</style>
+
       <div className="container mx-auto px-4 max-w-7xl">
         
         {/* Cabeçalho */}
-        <div className="mb-12">
-          <span className="text-[#153A81] text-xs font-black tracking-widest uppercase mb-2 block">
-            Destaques
-          </span>
-          <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">
-            Produtos em Evidência
-          </h2>
+        <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div>
+            <span className="text-[#153A81] text-xs font-black tracking-widest uppercase mb-2 block">
+              Destaques
+            </span>
+            <h2 className="text-3xl font-extrabold text-gray-900 tracking-tight">
+              Produtos em Evidência
+            </h2>
+          </div>
+
+          {/* Dica visual para usar o carrossel, só aparece se houver mais de 3 produtos */}
+          {produtos.length > 3 && (
+            <div className="hidden md:flex items-center gap-2 text-gray-400 bg-white px-4 py-2 rounded-full shadow-sm border border-gray-100">
+              <span className="material-symbols-outlined text-sm">swipe</span>
+              <span className="text-xs font-bold uppercase tracking-wider">Deslize para ver mais</span>
+            </div>
+          )}
         </div>
 
         {/* Estado de Carregamento */}
@@ -54,43 +70,51 @@ const FeaturedProducts: React.FC = () => {
             <p className="text-gray-500 mt-2">Os produtos em evidência aparecerão aqui.</p>
           </div>
         ) : (
-          /* Grelha Dinâmica */
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          /* CARROSSEL NATIVO */
+          <div className="flex overflow-x-auto gap-6 md:gap-8 pb-8 snap-x snap-mandatory hide-scrollbar cursor-grab active:cursor-grabbing">
             {produtos.map((produto) => {
-              // Verificações condicionais para Preço e Descrição
               const temPreco = produto.preco && produto.preco.trim() !== '';
               const temDescricao = produto.descricao && produto.descricao.trim() !== '';
+              const temMarca = produto.marca && produto.marca.trim() !== ''; 
 
               return (
-                <div key={produto.id} className="bg-white rounded-[32px] p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
+                /* CORREÇÃO AQUI: Troquei 'min-w' por 'w' fixo (w-[85vw] no telemóvel e w-[380px] no PC) */
+                <div key={produto.id} className="w-[85vw] sm:w-[320px] md:w-[380px] snap-start shrink-0 bg-white rounded-[32px] p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
                   
                   <div className="bg-gray-100 rounded-2xl h-64 mb-6 overflow-hidden flex items-center justify-center p-4">
                     <img 
                       src={produto.imagem_url} 
                       alt={produto.titulo} 
-                      className="object-cover w-full h-full rounded-xl mix-blend-multiply group-hover:scale-105 transition-transform duration-500" 
+                      className="object-contain w-full h-full rounded-xl mix-blend-multiply group-hover:scale-110 transition-transform duration-500" 
                     />
                   </div>
                   
-                  {/* Título: Se não houver descrição, o título ganha o flex-grow para empurrar o rodapé para baixo */}
-                  <h3 className={`font-bold text-xl text-gray-900 group-hover:text-[#153A81] transition-colors ${!temDescricao ? 'mb-6 flex-grow' : 'mb-2'}`}>
-                    {produto.titulo}
-                  </h3>
+                  {/* Título e Marca */}
+                  <div className={`flex flex-col ${!temDescricao ? 'mb-6 flex-grow' : 'mb-3'}`}>
+                    <h3 className="font-bold text-xl text-gray-900 group-hover:text-[#153A81] transition-colors leading-tight line-clamp-2">
+                      {produto.titulo}
+                    </h3>
+                    
+                    {temMarca && (
+                      <span className="text-[#B5D318] font-black text-sm uppercase tracking-widest mt-2 block">
+                        {produto.marca}
+                      </span>
+                    )}
+                  </div>
                   
                   {/* Descrição Condicional */}
                   {temDescricao && (
-                    <p className="text-gray-500 text-sm leading-relaxed mb-6 flex-grow">
+                    <p className="text-gray-500 text-sm leading-relaxed mb-6 flex-grow line-clamp-3">
                       {produto.descricao}
                     </p>
                   )}
                   
-                  {/* Rodapé Condicional (Preço e Botão) */}
+                  {/* Rodapé Condicional (Preço) */}
                   <div className={`flex items-center mt-auto pt-5 border-t border-gray-100 ${temPreco ? 'justify-between' : 'justify-end'}`}>
                     {temPreco && (
                       <span className="text-[#153A81] font-black text-2xl">{produto.preco}</span>
                     )}
-                    
-
                   </div>
                 </div>
               );
