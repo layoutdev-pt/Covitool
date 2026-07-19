@@ -1,9 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { supabase } from '../../../services/supabase'; // Ajusta o caminho conforme necessário
 
 const FeaturedProducts: React.FC = () => {
   const [produtos, setProdutos] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Referências para a lógica de arrastar (Drag to Scroll)
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const isDragging = useRef(false);
+  const startX = useRef(0);
+  const scrollLeft = useRef(0);
 
   useEffect(() => {
     const fetchProdutos = async () => {
@@ -25,10 +31,41 @@ const FeaturedProducts: React.FC = () => {
     fetchProdutos();
   }, []);
 
+  // --- FUNÇÕES DE ARRASTAR (DRAG TO SCROLL) ---
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!carouselRef.current) return;
+    isDragging.current = true;
+    // Captura a posição inicial do clique e a posição atual do scroll
+    startX.current = e.pageX - carouselRef.current.offsetLeft;
+    scrollLeft.current = carouselRef.current.scrollLeft;
+    // Desativa o "snap" temporariamente para um deslize perfeito com o rato
+    carouselRef.current.style.scrollSnapType = 'none';
+  };
+
+  const handleMouseLeave = () => {
+    isDragging.current = false;
+    if (carouselRef.current) carouselRef.current.style.scrollSnapType = 'x mandatory';
+  };
+
+  const handleMouseUp = () => {
+    isDragging.current = false;
+    if (carouselRef.current) carouselRef.current.style.scrollSnapType = 'x mandatory';
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging.current || !carouselRef.current) return;
+    e.preventDefault(); // Previne comportamentos padrão indesejados
+    
+    // Calcula a distância do movimento
+    const x = e.pageX - carouselRef.current.offsetLeft;
+    const walk = (x - startX.current) * 1.5; // Multiplicador para a velocidade do arrasto
+    carouselRef.current.scrollLeft = scrollLeft.current - walk;
+  };
+
   return (
     <section className="bg-[#f8f9fa] py-24 overflow-hidden">
       
-      {/* CSS embutido para esconder a barra de scroll padrão do navegador (mantendo o funcionamento) */}
+      {/* CSS embutido para esconder a barra de scroll padrão */}
       <style>{`
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -37,7 +74,7 @@ const FeaturedProducts: React.FC = () => {
       <div className="container mx-auto px-4 max-w-7xl">
         
         {/* Cabeçalho */}
-        <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4 select-none">
           <div>
             <span className="text-[#153A81] text-xs font-black tracking-widest uppercase mb-2 block">
               Destaques
@@ -47,7 +84,7 @@ const FeaturedProducts: React.FC = () => {
             </h2>
           </div>
 
-          {/* Dica visual para usar o carrossel, só aparece se houver mais de 3 produtos */}
+          {/* Dica visual para usar o carrossel */}
           {produtos.length > 3 && (
             <div className="hidden md:flex items-center gap-2 text-gray-400 bg-white px-4 py-2 rounded-full shadow-sm border border-gray-100">
               <span className="material-symbols-outlined text-sm">swipe</span>
@@ -71,18 +108,25 @@ const FeaturedProducts: React.FC = () => {
           </div>
         ) : (
           
-          /* CARROSSEL NATIVO */
-          <div className="flex overflow-x-auto gap-6 md:gap-8 pb-8 snap-x snap-mandatory hide-scrollbar cursor-grab active:cursor-grabbing">
+          /* CARROSSEL COM MECÂNICA DE DRAG ADICIONADA */
+          <div 
+            ref={carouselRef}
+            onMouseDown={handleMouseDown}
+            onMouseLeave={handleMouseLeave}
+            onMouseUp={handleMouseUp}
+            onMouseMove={handleMouseMove}
+            className="flex overflow-x-auto gap-6 md:gap-8 pb-8 snap-x snap-mandatory hide-scrollbar cursor-grab active:cursor-grabbing select-none"
+          >
             {produtos.map((produto) => {
               const temPreco = produto.preco && produto.preco.trim() !== '';
               const temDescricao = produto.descricao && produto.descricao.trim() !== '';
               const temMarca = produto.marca && produto.marca.trim() !== ''; 
 
               return (
-                /* CORREÇÃO AQUI: Troquei 'min-w' por 'w' fixo (w-[85vw] no telemóvel e w-[380px] no PC) */
                 <div key={produto.id} className="w-[85vw] sm:w-[320px] md:w-[380px] snap-start shrink-0 bg-white rounded-[32px] p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
                   
-                  <div className="bg-gray-100 rounded-2xl h-64 mb-6 overflow-hidden flex items-center justify-center p-4">
+                  {/* Impedir que o rato "puxe" a imagem como um ficheiro fantasma e cancele o arrasto do container */}
+                  <div className="bg-gray-100 rounded-2xl h-64 mb-6 overflow-hidden flex items-center justify-center p-4 pointer-events-none">
                     <img 
                       src={produto.imagem_url} 
                       alt={produto.titulo} 
