@@ -9,6 +9,17 @@ const gerarGradiente = (hex: string, opacidadePercentual: number) => {
   return `linear-gradient(to top, rgba(${r},${g},${b},${op}), rgba(${r},${g},${b},${op * 0.7}), rgba(${r},${g},${b},0.1))`;
 };
 
+// NOVA FUNÇÃO: Extrai o caminho do ficheiro a partir do URL público para o podermos apagar
+const extrairCaminhoStorage = (url: string) => {
+  if (!url) return null;
+  // Procura onde começa a string '/public/folhetos/' (o nome do teu bucket)
+  const parts = url.split('/public/folhetos/');
+  if (parts.length === 2) {
+    return parts[1]; // Retorna apenas o caminho (ex: marcas/grelha/123-imagem.png)
+  }
+  return null;
+};
+
 export default function AdminMarcas() {
   const [marcas, setMarcas] = useState<any[]>([]);
   const [marcaMes, setMarcaMes] = useState<any>(null);
@@ -40,13 +51,12 @@ export default function AdminMarcas() {
   // Estados do Overlay Hover
   const [corOverlay, setCorOverlay] = useState('#153A81');
   const [opacidadeOverlay, setOpacidadeOverlay] = useState(80);
-  const [corTextoHover, setCorTextoHover] = useState('#ffffff'); // NOVO ESTADO
+  const [corTextoHover, setCorTextoHover] = useState('#ffffff');
   const [imagemGridFile, setImagemGridFile] = useState<File | null>(null);
   const imagemGridRef = useRef<HTMLInputElement>(null);
   const [previewImgUrl, setPreviewImgUrl] = useState('');
 
   const fetchData = async () => {
-    // Ordenado de mais antigo para mais recente no painel também
     const { data: gridData } = await supabase.from('marcas_grelha').select('*').order('created_at', { ascending: true });
     if (gridData) setMarcas(gridData);
     
@@ -127,12 +137,36 @@ export default function AdminMarcas() {
     
     setLoading(true);
     try {
-      let urlCard = previewImgUrl; // Mantém a url antiga se não houver ficheiro novo
+      let urlCard = previewImgUrl; 
       let urlLogo = previewLogoUrl;
+      const pathsParaApagar: string[] = [];
+
+      // Identificar a marca antiga para sabermos que ficheiros existiam
+      const marcaAntiga = marcas.find(m => m.id === editId);
       
-      if (imagemGridFile) urlCard = await uploadFicheiro(imagemGridFile, 'grelha');
-      if (exibirLogo && logoFile) urlLogo = await uploadFicheiro(logoFile, 'grelha');
+      // Upload de nova imagem de card (Fundo/Hover)
+      if (imagemGridFile) {
+        urlCard = await uploadFicheiro(imagemGridFile, 'grelha');
+        if (editId && marcaAntiga?.imagem_url) {
+          const pathAntigo = extrairCaminhoStorage(marcaAntiga.imagem_url);
+          if (pathAntigo) pathsParaApagar.push(pathAntigo);
+        }
+      }
       
+      // Upload de novo logótipo
+      if (exibirLogo && logoFile) {
+        urlLogo = await uploadFicheiro(logoFile, 'grelha');
+        if (editId && marcaAntiga?.logo_url) {
+          const pathAntigo = extrairCaminhoStorage(marcaAntiga.logo_url);
+          if (pathAntigo) pathsParaApagar.push(pathAntigo);
+        }
+      }
+      
+      // Apagar as imagens antigas do bucket (se houver novas)
+      if (pathsParaApagar.length > 0) {
+        await supabase.storage.from('folhetos').remove(pathsParaApagar);
+      }
+
       const payload = {
         nome, descricao, tipo_fundo: tipoFundo, cor_fundo: corFundo, cor_texto: corTexto, sombreado,
         cor_overlay: corOverlay, opacidade_overlay: opacidadeOverlay, cor_texto_hover: corTextoHover,
@@ -153,7 +187,24 @@ export default function AdminMarcas() {
   };
 
   const apagarMarcaGrelha = async (id: string) => {
-    if(window.confirm("Apagar esta marca?")) {
+    if(window.confirm("Tem a certeza que quer apagar esta marca? A imagem também será eliminada do servidor.")) {
+      
+      // 1. Encontrar a marca para apagar os ficheiros
+      const marca = marcas.find(m => m.id === id);
+      if (marca) {
+        const pathsParaApagar: string[] = [];
+        const pathImagem = extrairCaminhoStorage(marca.imagem_url);
+        const pathLogo = extrairCaminhoStorage(marca.logo_url);
+        
+        if (pathImagem) pathsParaApagar.push(pathImagem);
+        if (pathLogo) pathsParaApagar.push(pathLogo);
+        
+        if (pathsParaApagar.length > 0) {
+          await supabase.storage.from('folhetos').remove(pathsParaApagar);
+        }
+      }
+
+      // 2. Apagar da Base de Dados
       await supabase.from('marcas_grelha').delete().eq('id', id);
       fetchData();
     }
@@ -165,8 +216,23 @@ export default function AdminMarcas() {
     setLoading(true);
     try {
       const url = await uploadFicheiro(imagemMesFile, 'mes');
+      
+      // 1. Procurar as marcas do mês antigas e apagar a imagem do storage
+      const { data: marcasAntigas } = await supabase.from('marca_mes').select('imagem_url');
+      if (marcasAntigas && marcasAntigas.length > 0) {
+        const pathsParaApagar = marcasAntigas
+          .map(m => extrairCaminhoStorage(m.imagem_url))
+          .filter(Boolean) as string[];
+          
+        if (pathsParaApagar.length > 0) {
+          await supabase.storage.from('folhetos').remove(pathsParaApagar);
+        }
+      }
+
+      // 2. Apagar da base de dados e inserir a nova
       await supabase.from('marca_mes').delete().neq('id', '00000000-0000-0000-0000-000000000000');
       await supabase.from('marca_mes').insert([{ titulo: tituloMes, descricao: descricaoMes, imagem_url: url }]);
+      
       alert("Marca do Mês substituída com sucesso!");
       setTituloMes(''); setDescricaoMes(''); setImagemMesFile(null);
       if (imagemMesRef.current) imagemMesRef.current.value = '';

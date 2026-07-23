@@ -1,13 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { supabase } from '../../services/supabase';
 
+// NOVA FUNÇÃO: Extrai o caminho do ficheiro a partir do URL público para o podermos apagar do bucket 'produtos'
+const extrairCaminhoStorage = (url: string) => {
+  if (!url) return null;
+  const parts = url.split('/public/produtos/');
+  if (parts.length === 2) {
+    return parts[1]; // Retorna a pasta e o ficheiro (ex: imagens/123-foto.jpg)
+  }
+  return null;
+};
+
 export default function AdminProdutos() {
   const [produtos, setProdutos] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
   // Estados do Formulário
   const [titulo, setTitulo] = useState('');
-  const [marca, setMarca] = useState(''); // NOVO: Estado para a Marca
+  const [marca, setMarca] = useState(''); 
   const [descricao, setDescricao] = useState('');
   const [preco, setPreco] = useState('');
   
@@ -56,7 +66,6 @@ export default function AdminProdutos() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Se não estiver em modo de edição, a imagem é obrigatória
     if (!editId && !imagemFile) {
       alert('Por favor, selecione a imagem do produto.');
       return;
@@ -70,12 +79,23 @@ export default function AdminProdutos() {
       // Só faz upload se o utilizador escolheu uma nova imagem
       if (imagemFile) {
         urlImagem = await uploadImagem(imagemFile);
+        
+        // Se estivermos a editar e houver uma imagem NOVA, apagamos a ANTIGA do Storage
+        if (editId) {
+          const produtoAntigo = produtos.find(p => p.id === editId);
+          if (produtoAntigo && produtoAntigo.imagem_url) {
+            const pathAntigo = extrairCaminhoStorage(produtoAntigo.imagem_url);
+            if (pathAntigo) {
+              await supabase.storage.from('produtos').remove([pathAntigo]);
+            }
+          }
+        }
       }
 
       if (editId) {
         // MODO ATUALIZAÇÃO
         const updateData: any = { titulo, marca, descricao, preco };
-        if (urlImagem) updateData.imagem_url = urlImagem; // Atualiza a imagem só se houver uma nova
+        if (urlImagem) updateData.imagem_url = urlImagem; // Atualiza a URL só se houver uma nova
 
         const { error } = await supabase.from('produtos_destaque').update(updateData).eq('id', editId);
         if (error) throw error;
@@ -114,13 +134,23 @@ export default function AdminProdutos() {
     setImagemFile(null);
     if (imagemInputRef.current) imagemInputRef.current.value = '';
     
-    // Fazer scroll suave para o topo (onde está o formulário)
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // Apagar produto
   const handleDelete = async (id: string) => {
-    if(window.confirm("Tem a certeza que deseja apagar este produto?")) {
+    if(window.confirm("Tem a certeza que deseja apagar este produto? A imagem também será eliminada do servidor.")) {
+      
+      // 1. Procurar o produto para podermos apagar o ficheiro físico
+      const produto = produtos.find(p => p.id === id);
+      if (produto && produto.imagem_url) {
+        const pathImagem = extrairCaminhoStorage(produto.imagem_url);
+        if (pathImagem) {
+          await supabase.storage.from('produtos').remove([pathImagem]);
+        }
+      }
+
+      // 2. Apagar o registo da Base de Dados
       const { error } = await supabase.from('produtos_destaque').delete().eq('id', id);
       if (!error) fetchProdutos();
     }
