@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../services/supabase';
 
-// Função auxiliar para gerar o gradiente
 const gerarGradiente = (hex: string, opacidadePercentual: number) => {
-  if(!hex) hex = '#153A81'; // Fallback de segurança
+  if(!hex) hex = '#153A81';
   const r = parseInt(hex.slice(1, 3), 16) || 21;
   const g = parseInt(hex.slice(3, 5), 16) || 58;
   const b = parseInt(hex.slice(5, 7), 16) || 129;
@@ -17,12 +16,13 @@ export default function Marcas() {
   const [marcasGrid, setMarcasGrid] = useState<any[]>([]);
   const [marcaMes, setMarcaMes] = useState<any>(null);
   
-  const categorias = ['Todas'];
+  const categorias = ['Todas', 'Motor', 'Travagem', 'Suspensão', 'Iluminação', 'Óleos e Fluidos'];
   const parceiros = ['BOSCH', 'BREMBO', 'CASTROL', 'MAGNETI', 'MANN', 'VALEO', 'SACHS', 'SKF'];
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data: gridData } = await supabase.from('marcas_grelha').select('*').order('created_at', { ascending: false });
+      // Ordenação alterada: da primeira a ser adicionada para a mais recente (ascending: true)
+      const { data: gridData } = await supabase.from('marcas_grelha').select('*').order('created_at', { ascending: true });
       if (gridData) setMarcasGrid(gridData);
 
       const { data: mesData } = await supabase.from('marca_mes').select('*').order('created_at', { ascending: false }).limit(1);
@@ -41,19 +41,15 @@ export default function Marcas() {
       `}</style>
 
       {/* Secção Inicial */}
-         <section className="container mx-auto px-4">
+      <section className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Bloco Esquerdo: Imagem com Título (Agora em Azul Marinho) */}
-          <div className=" rounded-3xl h-80 flex flex-col justify-end p-10 text-white relative overflow-hidden group">
-            {/* Overlay em tons de azul para escurecer a imagem de fundo */}
-            <div className="absolute inset-0 bg-[#153A81]/6 z-0.1 transition-opacity duration-500 group-hover:bg-[#153A81]/5"></div>
-            <img src="/imagens/componentes-de-carros.webp" alt="Peças" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 mix-blend-multiply" />
+          <div className="bg-[#153A81] rounded-3xl h-80 flex flex-col justify-end p-10 text-white relative overflow-hidden group">
+            <div className="absolute inset-0 bg-[#153A81]/60 z-10 transition-opacity duration-500 group-hover:bg-[#153A81]/75"></div>
+            <img src="https://images.unsplash.com/photo-1617531653332-bd46c24f2068?auto=format&fit=crop&q=80&w=800" alt="Peças" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 mix-blend-multiply" />
             <div className="relative z-20">
-              <span className="inline-block px-3 py-1 bg-[#B5D318] text-[#153A81] text-xs font-black tracking-widest uppercase rounded-full mb-4 shadow-sm">
-                Marcas Certificadas
-              </span>
-                <h1 className="text-4xl lg:text-5xl font-bold mb-2 tracking-tight">Equipamento Profissional</h1>
-                <p className="text-blue-100 font-light max-w-sm">A máxima fiabilidade e precisão, garantidas pelos melhores fabricantes do mercado.</p>
+              <span className="inline-block px-3 py-1 bg-[#B5D318] text-[#153A81] text-xs font-black tracking-widest uppercase rounded-full mb-4 shadow-sm">Marcas Certificadas</span>
+              <h1 className="text-4xl lg:text-5xl font-bold mb-2 tracking-tight">Equipamento Profissional</h1>
+              <p className="text-blue-100 font-light max-w-sm">A máxima fiabilidade e precisão, garantidas pelos melhores fabricantes do mercado.</p>
             </div>
           </div>
 
@@ -102,6 +98,7 @@ export default function Marcas() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 lg:gap-6 items-start">
           {marcasGrid.map((marca) => {
             const shaderOpacity = marca.sombreado !== undefined ? marca.sombreado / 100 : 0.4;
+            const textColorHover = marca.cor_texto_hover || '#ffffff';
             
             return (
               <div 
@@ -120,15 +117,24 @@ export default function Marcas() {
                       <div className="absolute inset-0 transition-opacity duration-300" style={{ backgroundColor: `rgba(0,0,0, ${shaderOpacity})` }}></div>
                     </>
                   )}
-                  <span 
-                    className="font-black text-xl tracking-widest relative z-10 px-2 text-center w-full block drop-shadow-sm"
-                    style={{ color: marca.cor_texto || '#153A81' }}
-                  >
-                    {marca.nome}
-                  </span>
+                  
+                  {marca.exibir_logo && marca.logo_url ? (
+                    <div className="relative z-10 w-full h-full flex items-center justify-center p-4">
+                      <img src={marca.logo_url} alt={`${marca.nome} logo`} className="max-w-[80%] max-h-[80%] object-contain drop-shadow-md" />
+                    </div>
+                  ) : (
+                    marca.nome && (
+                      <span 
+                        className="font-black text-xl tracking-widest relative z-10 px-2 text-center w-full block drop-shadow-sm flex items-center justify-center h-full"
+                        style={{ color: marca.cor_texto || '#153A81' }}
+                      >
+                        {marca.nome}
+                      </span>
+                    )
+                  )}
                 </div>
 
-                {/* HOVER EFEITO COM COR DINÂMICA */}
+                {/* HOVER */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 overflow-hidden flex flex-col justify-end p-5">
                   <img src={marca.imagem_url} alt={`${marca.nome} background`} className="absolute inset-0 w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-700" />
                   
@@ -138,10 +144,14 @@ export default function Marcas() {
                   ></div>
                   
                   <div className="relative z-10 flex flex-col items-center text-center mt-auto transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 delay-100">
-                    <h4 className="text-white font-black tracking-widest text-base mb-2 uppercase drop-shadow-md">{marca.nome}</h4>
-                    <div className="w-6 h-1 bg-[#B5D318] rounded-full mb-3 shadow-sm"></div>
+                    {marca.nome && (
+                      <>
+                        <h4 className="font-black tracking-widest text-base mb-2 uppercase drop-shadow-md" style={{ color: textColorHover }}>{marca.nome}</h4>
+                        <div className="w-6 h-1 bg-[#B5D318] rounded-full mb-3 shadow-sm"></div>
+                      </>
+                    )}
                     {marca.descricao && (
-                      <p className="text-white/90 text-xs leading-relaxed line-clamp-4 font-medium drop-shadow">{marca.descricao}</p>
+                      <p className="text-xs leading-relaxed line-clamp-4 font-medium drop-shadow" style={{ color: textColorHover }}>{marca.descricao}</p>
                     )}
                   </div>
                 </div>
@@ -149,6 +159,20 @@ export default function Marcas() {
               </div>
             );
           })}
+        </div>
+      </section>
+
+      {/* NOVO: CTA Marcas Não Encontrada */}
+      <section className="container mx-auto px-4 mt-8 mb-4">
+        <div className="bg-white rounded-[40px] p-10 md:p-14 shadow-sm border border-gray-100 flex flex-col items-center text-center max-w-4xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-black text-[#153A81] mb-4 tracking-tight">Não encontra a marca que procura?</h2>
+          <p className="text-gray-500 text-lg max-w-2xl mb-8 leading-relaxed">
+            O nosso portfólio vai muito além desta seleção. Trabalhamos em parceria com centenas de fabricantes para garantir que tem sempre acesso ao equipamento certo para o seu projeto.
+          </p>
+          <a href="https://wa.me/351912191755" target="_blank" rel="noopener noreferrer" className="bg-[#B5D318] hover:bg-[#a1bc12] text-[#153A81] px-8 py-4 rounded-full font-black tracking-wide transition-all hover:-translate-y-1 shadow-lg flex items-center justify-center gap-2">
+            <span className="material-symbols-outlined text-xl">forum</span>
+            Perguntar por uma Marca
+          </a>
         </div>
       </section>
 
@@ -183,7 +207,7 @@ export default function Marcas() {
         </section>
       )}
 
-      {/* CTA FINAL */}
+      {/* CTA FINAL (Mantido na base) */}
       <section className="container mx-auto px-4 pb-12 mt-8">
         <div className="bg-[#153A81] rounded-[40px] p-10 lg:p-14 flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden shadow-lg">
           <div className="absolute left-0 bottom-0 w-64 h-64 bg-[#B5D318] rounded-full blur-[120px] opacity-20 -translate-x-1/2 translate-y-1/2"></div>

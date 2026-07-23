@@ -20,6 +20,9 @@ export default function AdminMarcas() {
   const [imagemMesFile, setImagemMesFile] = useState<File | null>(null);
   const imagemMesRef = useRef<HTMLInputElement>(null);
 
+  // Estados de Edição da Grelha
+  const [editId, setEditId] = useState<string | null>(null);
+
   // Estados - Grelha de Marcas
   const [nome, setNome] = useState('');
   const [descricao, setDescricao] = useState('');
@@ -28,21 +31,23 @@ export default function AdminMarcas() {
   const [corTexto, setCorTexto] = useState('#153A81');
   const [sombreado, setSombreado] = useState(40);
   
-  // ESTADOS DO LOGÓTIPO CENTRAL
+  // Estados do Logótipo Central
   const [exibirLogo, setExibirLogo] = useState(false);
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const logoInputRef = useRef<HTMLInputElement>(null);
   const [previewLogoUrl, setPreviewLogoUrl] = useState('');
   
-  // ESTADOS DO OVERLAY E IMAGEM DO CARD (Fundo/Hover)
+  // Estados do Overlay Hover
   const [corOverlay, setCorOverlay] = useState('#153A81');
   const [opacidadeOverlay, setOpacidadeOverlay] = useState(80);
+  const [corTextoHover, setCorTextoHover] = useState('#ffffff'); // NOVO ESTADO
   const [imagemGridFile, setImagemGridFile] = useState<File | null>(null);
   const imagemGridRef = useRef<HTMLInputElement>(null);
   const [previewImgUrl, setPreviewImgUrl] = useState('');
 
   const fetchData = async () => {
-    const { data: gridData } = await supabase.from('marcas_grelha').select('*').order('created_at', { ascending: false });
+    // Ordenado de mais antigo para mais recente no painel também
+    const { data: gridData } = await supabase.from('marcas_grelha').select('*').order('created_at', { ascending: true });
     if (gridData) setMarcas(gridData);
     
     const { data: mesData } = await supabase.from('marca_mes').select('*').order('created_at', { ascending: false }).limit(1);
@@ -51,26 +56,25 @@ export default function AdminMarcas() {
 
   useEffect(() => { fetchData(); }, []);
 
-  // Previews de Imagem
   useEffect(() => {
     if (imagemGridFile) {
       const objectUrl = URL.createObjectURL(imagemGridFile);
       setPreviewImgUrl(objectUrl);
       return () => URL.revokeObjectURL(objectUrl);
-    } else {
+    } else if (!editId) {
       setPreviewImgUrl('');
     }
-  }, [imagemGridFile]);
+  }, [imagemGridFile, editId]);
 
   useEffect(() => {
     if (logoFile) {
       const objectUrl = URL.createObjectURL(logoFile);
       setPreviewLogoUrl(objectUrl);
       return () => URL.revokeObjectURL(objectUrl);
-    } else {
+    } else if (!editId) {
       setPreviewLogoUrl('');
     }
-  }, [logoFile]);
+  }, [logoFile, editId]);
 
   const uploadFicheiro = async (file: File, pasta: string) => {
     const nomeFicheiro = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '')}`;
@@ -79,6 +83,80 @@ export default function AdminMarcas() {
     if (error) throw error;
     const { data } = supabase.storage.from('folhetos').getPublicUrl(caminho);
     return data.publicUrl;
+  };
+
+  const resetForm = () => {
+    setNome(''); setDescricao(''); 
+    setImagemGridFile(null); setLogoFile(null);
+    setPreviewImgUrl(''); setPreviewLogoUrl('');
+    setCorFundo('#ffffff'); setCorTexto('#153A81'); setSombreado(40); 
+    setCorOverlay('#153A81'); setOpacidadeOverlay(80); 
+    setCorTextoHover('#ffffff'); setExibirLogo(false); setEditId(null);
+    if (imagemGridRef.current) imagemGridRef.current.value = '';
+    if (logoInputRef.current) logoInputRef.current.value = '';
+  };
+
+  const handleEdit = (marca: any) => {
+    setEditId(marca.id);
+    setNome(marca.nome || '');
+    setDescricao(marca.descricao || '');
+    setTipoFundo(marca.tipo_fundo || 'cor');
+    setCorFundo(marca.cor_fundo || '#ffffff');
+    setCorTexto(marca.cor_texto || '#153A81');
+    setSombreado(marca.sombreado !== undefined ? marca.sombreado : 40);
+    setExibirLogo(marca.exibir_logo || false);
+    setCorOverlay(marca.cor_overlay || '#153A81');
+    setOpacidadeOverlay(marca.opacidade_overlay !== undefined ? marca.opacidade_overlay : 80);
+    setCorTextoHover(marca.cor_texto_hover || '#ffffff');
+    
+    setPreviewImgUrl(marca.imagem_url || '');
+    setPreviewLogoUrl(marca.logo_url || '');
+    
+    setImagemGridFile(null);
+    setLogoFile(null);
+    if (imagemGridRef.current) imagemGridRef.current.value = '';
+    if (logoInputRef.current) logoInputRef.current.value = '';
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleGridSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editId && !imagemGridFile) return alert("Selecione a Imagem do Card (Fundo/Hover).");
+    if (!editId && exibirLogo && !logoFile) return alert("Selecione a imagem do Logótipo Central.");
+    
+    setLoading(true);
+    try {
+      let urlCard = previewImgUrl; // Mantém a url antiga se não houver ficheiro novo
+      let urlLogo = previewLogoUrl;
+      
+      if (imagemGridFile) urlCard = await uploadFicheiro(imagemGridFile, 'grelha');
+      if (exibirLogo && logoFile) urlLogo = await uploadFicheiro(logoFile, 'grelha');
+      
+      const payload = {
+        nome, descricao, tipo_fundo: tipoFundo, cor_fundo: corFundo, cor_texto: corTexto, sombreado,
+        cor_overlay: corOverlay, opacidade_overlay: opacidadeOverlay, cor_texto_hover: corTextoHover,
+        imagem_url: urlCard, logo_url: urlLogo, exibir_logo: exibirLogo
+      };
+
+      if (editId) {
+        await supabase.from('marcas_grelha').update(payload).eq('id', editId);
+        alert("Marca atualizada com sucesso!");
+      } else {
+        await supabase.from('marcas_grelha').insert([payload]);
+        alert("Marca adicionada à grelha!");
+      }
+      
+      resetForm();
+      fetchData();
+    } catch (error: any) { alert(error.message); } finally { setLoading(false); }
+  };
+
+  const apagarMarcaGrelha = async (id: string) => {
+    if(window.confirm("Apagar esta marca?")) {
+      await supabase.from('marcas_grelha').delete().eq('id', id);
+      fetchData();
+    }
   };
 
   const handleMesSubmit = async (e: React.FormEvent) => {
@@ -94,54 +172,6 @@ export default function AdminMarcas() {
       if (imagemMesRef.current) imagemMesRef.current.value = '';
       fetchData();
     } catch (error: any) { alert(error.message); } finally { setLoading(false); }
-  };
-
-  const handleGridSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!imagemGridFile) return alert("Selecione a Imagem do Card (Fundo/Hover).");
-    if (exibirLogo && !logoFile) return alert("Selecione a imagem do Logótipo Central.");
-    
-    setLoading(true);
-    try {
-      const urlCard = await uploadFicheiro(imagemGridFile, 'grelha');
-      let urlLogo = null;
-      
-      if (exibirLogo && logoFile) {
-        urlLogo = await uploadFicheiro(logoFile, 'grelha');
-      }
-
-      await supabase.from('marcas_grelha').insert([{
-        nome, // Como não é obrigatório, pode ir vazio ""
-        descricao, 
-        tipo_fundo: tipoFundo, 
-        cor_fundo: corFundo, 
-        cor_texto: corTexto, 
-        sombreado,
-        cor_overlay: corOverlay, 
-        opacidade_overlay: opacidadeOverlay, 
-        imagem_url: urlCard,
-        logo_url: urlLogo,
-        exibir_logo: exibirLogo
-      }]);
-      
-      alert("Marca adicionada à grelha!");
-      
-      // Limpar campos
-      setNome(''); setDescricao(''); setImagemGridFile(null); setLogoFile(null);
-      setCorFundo('#ffffff'); setCorTexto('#153A81'); setSombreado(40); 
-      setCorOverlay('#153A81'); setOpacidadeOverlay(80); setExibirLogo(false);
-      
-      if (imagemGridRef.current) imagemGridRef.current.value = '';
-      if (logoInputRef.current) logoInputRef.current.value = '';
-      fetchData();
-    } catch (error: any) { alert(error.message); } finally { setLoading(false); }
-  };
-
-  const apagarMarcaGrelha = async (id: string) => {
-    if(window.confirm("Apagar esta marca?")) {
-      await supabase.from('marcas_grelha').delete().eq('id', id);
-      fetchData();
-    }
   };
 
   return (
@@ -172,8 +202,19 @@ export default function AdminMarcas() {
       </div>
 
       {/* FORMULÁRIO 2: GRELHA DE MARCAS */}
-      <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-        <h2 className="text-2xl font-bold text-[#153A81] mb-6">Adicionar Card à Grelha</h2>
+      <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 relative transition-all duration-300">
+        {editId && <div className="absolute top-0 left-0 w-full h-1.5 bg-blue-500 rounded-t-2xl"></div>}
+        
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold text-[#153A81]">
+            {editId ? 'Editar Marca' : 'Adicionar Card à Grelha'}
+          </h2>
+          {editId && (
+            <span className="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+              Modo de Edição
+            </span>
+          )}
+        </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           
@@ -181,7 +222,6 @@ export default function AdminMarcas() {
           <form onSubmit={handleGridSubmit} className="flex flex-col gap-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               
-              {/* CAMPO DO NOME E OPÇÃO DE LOGO (REMOVIDO O REQUIRED DO NOME) */}
               <div className="flex flex-col gap-3 p-4 bg-gray-50 rounded-xl border border-gray-200">
                 <div className="flex justify-between items-center">
                   <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Centro do Cartão</label>
@@ -197,21 +237,19 @@ export default function AdminMarcas() {
                   </div>
                 </div>
                 
-                {/* AQUI: Nome não é mais obrigatório */}
                 <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} className="p-3 border border-gray-300 rounded-xl outline-none focus:border-[#B5D318]" placeholder="Nome da Marca (Opcional)" />
                 
                 {exibirLogo && (
                   <div className="flex flex-col gap-1 mt-2">
                     <label className="text-xs font-semibold text-[#153A81]">Fazer upload do Logótipo (S/ fundo):</label>
-                    <input type="file" accept="image/*" ref={logoInputRef} onChange={(e) => setLogoFile(e.target.files ? e.target.files[0] : null)} required={exibirLogo} className="p-2 border border-gray-300 rounded-xl text-sm bg-white" />
+                    <input type="file" accept="image/*" ref={logoInputRef} onChange={(e) => setLogoFile(e.target.files ? e.target.files[0] : null)} required={!editId && exibirLogo} className="p-2 border border-gray-300 rounded-xl text-sm bg-white" />
                   </div>
                 )}
               </div>
 
-              {/* IMAGEM DO CARD (FUNDO/HOVER) */}
               <div className="flex flex-col gap-2">
                 <label className="text-sm font-semibold">Imagem do Card (Hover / Fundo)</label>
-                <input type="file" accept="image/*" ref={imagemGridRef} onChange={(e) => setImagemGridFile(e.target.files ? e.target.files[0] : null)} required className="p-2 border rounded-xl" />
+                <input type="file" accept="image/*" ref={imagemGridRef} onChange={(e) => setImagemGridFile(e.target.files ? e.target.files[0] : null)} required={!editId} className="p-2 border rounded-xl" />
                 <p className="text-xs text-gray-400 mt-1">Esta imagem cobrirá o cartão inteiro ao passar o rato.</p>
               </div>
             </div>
@@ -257,7 +295,7 @@ export default function AdminMarcas() {
             <div className="bg-blue-50 p-6 rounded-xl border border-blue-100 flex flex-col gap-4">
               <h3 className="font-bold text-[#153A81]">Efeito ao Passar o Rato (Overlay)</h3>
               
-              <div className="flex flex-wrap gap-6 mt-2">
+              <div className="flex flex-wrap gap-6 mt-2 border-b border-blue-200 pb-4">
                 <div className="flex flex-col gap-1">
                   <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Cor Base</label>
                   <input type="color" value={corOverlay} onChange={(e) => setCorOverlay(e.target.value)} className="w-16 h-10 cursor-pointer rounded border" />
@@ -269,6 +307,22 @@ export default function AdminMarcas() {
                   <input type="range" min="0" max="100" value={opacidadeOverlay} onChange={(e) => setOpacidadeOverlay(Number(e.target.value))} className="mt-2" />
                 </div>
               </div>
+
+              {/* OPÇÃO DE COR DO TEXTO NO HOVER */}
+              <div className="flex flex-col gap-2 mt-2">
+                <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Cor do Texto (Hover)</label>
+                <div className="flex gap-4">
+                  <label className="flex items-center gap-2 cursor-pointer text-sm font-medium">
+                    <input type="radio" checked={corTextoHover === '#ffffff'} onChange={() => setCorTextoHover('#ffffff')} className="accent-[#B5D318]" />
+                    Branco
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer text-sm font-medium">
+                    <input type="radio" checked={corTextoHover === '#000000'} onChange={() => setCorTextoHover('#000000')} className="accent-[#B5D318]" />
+                    Preto
+                  </label>
+                </div>
+              </div>
+
             </div>
 
             <div className="flex flex-col gap-2">
@@ -276,9 +330,15 @@ export default function AdminMarcas() {
               <textarea value={descricao} onChange={(e) => setDescricao(e.target.value)} rows={2} className="p-3 border rounded-xl outline-none focus:border-[#B5D318]"></textarea>
             </div>
 
-            <div className="flex justify-end">
-              <button type="submit" disabled={loading} className="bg-[#B5D318] hover:bg-[#a1bc12] text-[#153A81] px-8 py-3 rounded-xl font-bold transition-all shadow-md">
-                Adicionar à Grelha
+            <div className="flex justify-end gap-3">
+              {editId && (
+                <button type="button" onClick={resetForm} className="bg-gray-100 hover:bg-gray-200 text-gray-600 px-6 py-3 rounded-xl font-bold transition-all shadow-sm">
+                  Cancelar Edição
+                </button>
+              )}
+              <button type="submit" disabled={loading} className={`${editId ? 'bg-blue-600 hover:bg-blue-700 text-white' : 'bg-[#B5D318] hover:bg-[#a1bc12] text-[#153A81]'} px-8 py-3 rounded-xl font-bold transition-all shadow-md flex items-center gap-2`}>
+                <span className="material-symbols-outlined">{editId ? 'save' : 'add_circle'}</span> 
+                {editId ? 'Atualizar Marca' : 'Adicionar à Grelha'}
               </button>
             </div>
           </form>
@@ -294,7 +354,6 @@ export default function AdminMarcas() {
                 className={`absolute inset-0 transition-opacity duration-500 group-hover:opacity-0 flex items-center justify-center`}
                 style={tipoFundo === 'cor' ? { backgroundColor: corFundo } : {}}
               >
-                {/* Imagem de Fundo do Card */}
                 {tipoFundo === 'imagem' && previewImgUrl && (
                   <>
                     <img src={previewImgUrl} alt="Preview Background" className="absolute inset-0 w-full h-full object-cover" />
@@ -302,7 +361,6 @@ export default function AdminMarcas() {
                   </>
                 )}
                 
-                {/* Logótipo OU Nome no Centro (Se o nome estiver vazio e for modo texto, não mostra nada) */}
                 {exibirLogo && previewLogoUrl ? (
                   <div className="relative z-10 w-full h-full flex items-center justify-center p-4">
                     <img src={previewLogoUrl} alt="Logo" className="max-w-[80%] max-h-[80%] object-contain drop-shadow-md" />
@@ -318,7 +376,6 @@ export default function AdminMarcas() {
 
               {/* ESTADO AO PASSAR O RATO */}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 overflow-hidden flex flex-col justify-end p-5">
-                  {/* Usa sempre a Imagem do Card (previewImgUrl) para o Hover */}
                   {previewImgUrl && (
                       <img src={previewImgUrl} className="absolute inset-0 w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-700" alt="Hover Background" />
                   )}
@@ -328,15 +385,14 @@ export default function AdminMarcas() {
                   ></div>
                   
                   <div className="relative z-10 flex flex-col items-center text-center mt-auto transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 delay-100">
-                      {/* Título do Hover: Só mostra se houver Nome escrito */}
                       {nome && (
                         <>
-                          <h4 className="text-white font-black tracking-widest text-base mb-2 uppercase drop-shadow-md">{nome}</h4>
+                          <h4 className="font-black tracking-widest text-base mb-2 uppercase drop-shadow-md" style={{ color: corTextoHover }}>{nome}</h4>
                           <div className="w-6 h-1 bg-[#B5D318] rounded-full mb-3 shadow-sm"></div>
                         </>
                       )}
                       {descricao && (
-                        <p className="text-white/90 text-xs leading-relaxed line-clamp-4 font-medium drop-shadow">{descricao}</p>
+                        <p className="text-xs leading-relaxed line-clamp-4 font-medium drop-shadow" style={{ color: corTextoHover }}>{descricao}</p>
                       )}
                   </div>
               </div>
@@ -349,13 +405,19 @@ export default function AdminMarcas() {
 
       <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
         <h2 className="text-xl font-bold mb-4">Marcas Atuais na Grelha</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        <div className="flex flex-wrap gap-4">
           {marcas.map(m => (
-            <div key={m.id} className="border p-4 rounded-xl flex flex-col items-center gap-2 text-center relative hover:border-[#B5D318] transition-colors">
-              <button onClick={() => apagarMarcaGrelha(m.id)} className="absolute top-2 right-2 text-red-500 hover:bg-red-50 rounded-full p-1"><span className="material-symbols-outlined text-sm">close</span></button>
-              {/* Na lista pequena do painel, damos prioridade a mostrar o logo, senão mostramos a imagem de fundo */}
-              <img src={m.logo_url || m.imagem_url} className="h-10 object-contain rounded" alt="logo" />
-              <span className="font-bold text-sm text-[#153A81] truncate w-full">{m.nome || 'Sem nome'}</span>
+            <div key={m.id} className="w-32 border p-4 rounded-xl flex flex-col items-center gap-2 text-center relative hover:border-[#B5D318] transition-colors bg-gray-50">
+              <div className="absolute top-1 right-1 flex gap-1">
+                <button onClick={() => handleEdit(m)} className="text-blue-500 hover:text-blue-700 hover:bg-blue-100 rounded-full p-1 transition-colors" title="Editar">
+                  <span className="material-symbols-outlined text-[16px]">edit</span>
+                </button>
+                <button onClick={() => apagarMarcaGrelha(m.id)} className="text-red-500 hover:text-red-700 hover:bg-red-100 rounded-full p-1 transition-colors" title="Apagar">
+                  <span className="material-symbols-outlined text-[16px]">close</span>
+                </button>
+              </div>
+              <img src={m.logo_url || m.imagem_url} className="h-10 object-contain rounded mt-2" alt="logo" />
+              <span className="font-bold text-xs text-[#153A81] truncate w-full mt-auto">{m.nome || 'Sem nome'}</span>
             </div>
           ))}
         </div>
