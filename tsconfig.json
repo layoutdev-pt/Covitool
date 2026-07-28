@@ -15,9 +15,12 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "baseUrl": ".",
+    
+    /* 1. Remova a linha "baseUrl" */
+    
     "paths": {
-      "@/*": ["src/*"]
+      /* 2. Adicione o ./ antes do src */
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src"]
