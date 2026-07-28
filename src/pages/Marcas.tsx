@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../services/supabase';
-
+import IMG_HERO from '@/assets/fotos/1.webp';
 const gerarGradiente = (hex: string, opacidadePercentual: number) => {
   if(!hex) hex = '#153A81';
   const r = parseInt(hex.slice(1, 3), 16) || 21;
@@ -32,7 +32,7 @@ export default function Marcas() {
   }, []);
 
   return (
-    <main className="flex flex-col gap-16 py-12 bg-gray-50 pt-32 min-h-screen">
+    <div className="flex flex-col gap-16 py-12">
       
       <style>{`
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
@@ -43,11 +43,11 @@ export default function Marcas() {
       {/* Secção Inicial */}
       <section className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-[#153A81] rounded-3xl h-80 flex flex-col justify-end p-10 text-white relative overflow-hidden group">
-            <div className="absolute inset-0 bg-[#153A81]/60 z-10 transition-opacity duration-500 group-hover:bg-[#153A81]/75"></div>
-            <img src="https://images.unsplash.com/photo-1617531653332-bd46c24f2068?auto=format&fit=crop&q=80&w=800" alt="Peças" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 mix-blend-multiply" />
+          <div className="bg-brand-blue rounded-3xl h-80 flex flex-col justify-end p-10 text-white relative overflow-hidden group">
+            <div className="absolute inset-0 bg-brand-blue/60 z-10 transition-opacity duration-500 group-hover:bg-brand-blue/75"></div>
+            <img src={IMG_HERO} alt="Peças" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 mix-blend-multiply" />
             <div className="relative z-20">
-              <span className="inline-block px-3 py-1 bg-[#B5D318] text-[#153A81] text-xs font-black tracking-widest uppercase rounded-full mb-4 shadow-sm">Marcas Certificadas</span>
+              <span className="inline-block px-3 py-1 bg-brand-lime text-brand-blue text-xs font-black tracking-widest uppercase rounded-full mb-4 shadow-sm">Marcas Certificadas</span>
               <h1 className="text-4xl lg:text-5xl font-bold mb-2 tracking-tight">Equipamento Profissional</h1>
               <p className="text-blue-100 font-light max-w-sm">A máxima fiabilidade e precisão, garantidas pelos melhores fabricantes do mercado.</p>
             </div>
@@ -55,26 +55,26 @@ export default function Marcas() {
 
           <div className="flex flex-col gap-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-full">
-              <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 flex flex-col justify-center hover:border-[#B5D318] transition-colors duration-300 group">
-                <div className="text-[#153A81] group-hover:text-[#B5D318] transition-colors mb-4"><span className="material-symbols-outlined text-4xl">verified</span></div>
-                <h3 className="text-lg font-bold text-[#153A81]">Garantia de Fábrica</h3>
+              <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 flex flex-col justify-center hover:border-brand-lime transition-colors duration-300 group">
+                <div className="text-brand-blue group-hover:text-brand-lime transition-colors mb-4"><span className="material-symbols-outlined text-4xl">verified</span></div>
+                <h3 className="text-lg font-bold text-brand-blue">Garantia de Fábrica</h3>
                 <p className="text-sm text-gray-500 mt-2 leading-relaxed">Proteção total em todos os componentes adquiridos.</p>
               </div>
-              <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 flex flex-col justify-center hover:border-[#B5D318] transition-colors duration-300 group">
-                <div className="text-[#153A81] group-hover:text-[#B5D318] transition-colors mb-4"><span className="material-symbols-outlined text-4xl">sell</span></div>
-                <h3 className="text-lg font-bold text-[#153A81]">Melhor Preço</h3>
+              <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 flex flex-col justify-center hover:border-brand-lime transition-colors duration-300 group">
+                <div className="text-brand-blue group-hover:text-brand-lime transition-colors mb-4"><span className="material-symbols-outlined text-4xl">sell</span></div>
+                <h3 className="text-lg font-bold text-brand-blue">Melhor Preço</h3>
                 <p className="text-sm text-gray-500 mt-2 leading-relaxed">Compromisso com a melhor oferta do mercado nacional.</p>
               </div>
             </div>
             
-            <div className="bg-[#153A81] p-6 rounded-3xl shadow-sm flex items-center gap-4 overflow-hidden relative h-20">
-              <div className="z-20 bg-[#153A81] pr-4 py-2 flex items-center h-full">
+            <div className="bg-brand-blue p-6 rounded-3xl shadow-sm flex items-center gap-4 overflow-hidden relative h-20">
+              <div className="z-20 bg-brand-blue pr-4 py-2 flex items-center h-full">
                 <span className="font-bold text-white tracking-wide whitespace-nowrap">Parceiros Oficiais</span>
               </div>
               <div className="flex-1 overflow-hidden relative flex items-center h-full mask-image">
-                <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#153A81] to-transparent z-10 pointer-events-none"></div>
-                <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-[#153A81] to-transparent z-10 pointer-events-none"></div>
-                <div className="flex gap-12 text-[#B5D318] font-black tracking-wider text-sm opacity-90 animate-scroll w-max px-6">
+                <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-brand-blue to-transparent z-10 pointer-events-none"></div>
+                <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-brand-blue to-transparent z-10 pointer-events-none"></div>
+                <div className="flex gap-12 text-brand-lime font-black tracking-wider text-sm opacity-90 animate-scroll w-max px-6">
                   {parceiros.map((marca, index) => <span key={index}>{marca}</span>)}
                   {parceiros.map((marca, index) => <span key={`dup-${index}`}>{marca}</span>)}
                 </div>
@@ -88,7 +88,7 @@ export default function Marcas() {
       <section className="container mx-auto px-4 mt-4">
         <div className="flex flex-wrap gap-3 justify-center">
           {categorias.map((cat) => (
-            <button key={cat} onClick={() => setFiltroAtivo(cat)} className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${filtroAtivo === cat ? 'bg-[#B5D318] text-[#153A81] shadow-md transform scale-105' : 'bg-white text-gray-500 border border-gray-200 hover:border-[#B5D318] hover:text-[#153A81]'}`}>{cat}</button>
+            <button key={cat} onClick={() => setFiltroAtivo(cat)} className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${filtroAtivo === cat ? 'bg-brand-lime text-brand-blue shadow-md transform scale-105' : 'bg-white text-gray-500 border border-gray-200 hover:border-brand-lime hover:text-brand-blue'}`}>{cat}</button>
           ))}
         </div>
       </section>
@@ -103,7 +103,7 @@ export default function Marcas() {
             return (
               <div 
                 key={marca.id} 
-                className="bg-white rounded-3xl shadow-sm border border-gray-100 flex flex-col justify-center items-center hover:shadow-2xl hover:border-[#B5D318] transition-all duration-500 cursor-pointer group relative overflow-hidden h-32 hover:h-64"
+                className="bg-white rounded-3xl shadow-sm border border-gray-100 flex flex-col justify-center items-center hover:shadow-2xl hover:border-brand-lime transition-all duration-500 cursor-pointer group relative overflow-hidden h-32 hover:h-64"
               >
                 
                 {/* REPOUSO */}
@@ -126,7 +126,7 @@ export default function Marcas() {
                     marca.nome && (
                       <span 
                         className="font-black text-xl tracking-widest relative z-10 px-2 text-center w-full block drop-shadow-sm flex items-center justify-center h-full"
-                        style={{ color: marca.cor_texto || '#153A81' }}
+                        style={{ color: marca.cor_texto || 'var(--color-brand-blue)' }}
                       >
                         {marca.nome}
                       </span>
@@ -147,7 +147,7 @@ export default function Marcas() {
                     {marca.nome && (
                       <>
                         <h4 className="font-black tracking-widest text-base mb-2 uppercase drop-shadow-md" style={{ color: textColorHover }}>{marca.nome}</h4>
-                        <div className="w-6 h-1 bg-[#B5D318] rounded-full mb-3 shadow-sm"></div>
+                        <div className="w-6 h-1 bg-brand-lime rounded-full mb-3 shadow-sm"></div>
                       </>
                     )}
                     {marca.descricao && (
@@ -165,11 +165,11 @@ export default function Marcas() {
       {/* NOVO: CTA Marcas Não Encontrada */}
       <section className="container mx-auto px-4 mt-8 mb-4">
         <div className="bg-white rounded-[40px] p-10 md:p-14 shadow-sm border border-gray-100 flex flex-col items-center text-center max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-black text-[#153A81] mb-4 tracking-tight">Não encontra a marca que procura?</h2>
+          <h2 className="text-3xl md:text-4xl font-black text-brand-blue mb-4 tracking-tight">Não encontra a marca que procura?</h2>
           <p className="text-gray-500 text-lg max-w-2xl mb-8 leading-relaxed">
             O nosso portfólio vai muito além desta seleção. Trabalhamos em parceria com centenas de fabricantes para garantir que tem sempre acesso ao equipamento certo para o seu projeto.
           </p>
-          <a href="https://wa.me/351912191755" target="_blank" rel="noopener noreferrer" className="bg-[#B5D318] hover:bg-[#a1bc12] text-[#153A81] px-8 py-4 rounded-full font-black tracking-wide transition-all hover:-translate-y-1 shadow-lg flex items-center justify-center gap-2">
+          <a href="https://wa.me/351912191755" target="_blank" rel="noopener noreferrer" className="bg-brand-lime hover:bg-[#a1bc12] text-brand-blue px-8 py-4 rounded-full font-black tracking-wide transition-all hover:-translate-y-1 shadow-lg flex items-center justify-center gap-2">
             <span className="material-symbols-outlined text-xl">forum</span>
             Perguntar por uma Marca
           </a>
@@ -181,17 +181,17 @@ export default function Marcas() {
         <section className="container mx-auto px-4 mt-8">
           <div className="bg-white rounded-[40px] p-8 lg:p-14 shadow-sm border border-gray-100 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center group">
             <div className="flex flex-col items-start">
-              <span className="px-3 py-1 bg-[#153A81] text-[#B5D318] text-xs font-black uppercase tracking-widest rounded-full mb-6 shadow-sm">
+              <span className="px-3 py-1 bg-brand-blue text-brand-lime text-xs font-black uppercase tracking-widest rounded-full mb-6 shadow-sm">
                 Marca do Mês
               </span>
-              <h2 className="text-4xl lg:text-5xl font-black text-[#153A81] mb-6 tracking-tight">
+              <h2 className="text-4xl lg:text-5xl font-black text-brand-blue mb-6 tracking-tight">
                 {marcaMes.titulo}
               </h2>
               <p className="text-gray-500 text-lg mb-8 leading-relaxed whitespace-pre-line">
                 {marcaMes.descricao}
               </p>
               
-              <Link to="/folhetos" className="px-8 py-4 bg-[#B5D318] text-[#153A81] rounded-full font-bold hover:bg-[#a1bc12] hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex items-center gap-2">
+              <Link to="/folhetos" className="px-8 py-4 bg-brand-lime text-brand-blue rounded-full font-bold hover:bg-[#a1bc12] hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex items-center gap-2">
                 Verificar em folhetos
                 <span className="material-symbols-outlined text-xl">auto_stories</span>
               </Link>
@@ -209,18 +209,18 @@ export default function Marcas() {
 
       {/* CTA FINAL (Mantido na base) */}
       <section className="container mx-auto px-4 pb-12 mt-8">
-        <div className="bg-[#153A81] rounded-[40px] p-10 lg:p-14 flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden shadow-lg">
-          <div className="absolute left-0 bottom-0 w-64 h-64 bg-[#B5D318] rounded-full blur-[120px] opacity-20 -translate-x-1/2 translate-y-1/2"></div>
+        <div className="bg-brand-blue rounded-[40px] p-10 lg:p-14 flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden shadow-lg">
+          <div className="absolute left-0 bottom-0 w-64 h-64 bg-brand-lime rounded-full blur-[120px] opacity-20 -translate-x-1/2 translate-y-1/2"></div>
           <div className="flex flex-col gap-4 max-w-2xl relative z-10">
             <h2 className="text-3xl lg:text-4xl font-bold text-white tracking-tight leading-tight">Venha visitar-nos e conheça a nossa gama completa.</h2>
             <p className="text-blue-100 text-lg font-light leading-relaxed">Temos uma equipa de especialistas pronta para encontrar a solução técnica ideal para o seu negócio.</p>
           </div>
-          <Link to="/sobre-nos#contacto" className="bg-[#B5D318] hover:bg-[#a1bc12] text-[#153A81] px-10 py-4 rounded-full font-black tracking-wide transition-all hover:-translate-y-1 shadow-xl relative z-10 whitespace-nowrap flex items-center justify-center gap-2 shrink-0 w-full md:w-auto">
+          <Link to="/sobre-nos#contacto" className="bg-brand-lime hover:bg-[#a1bc12] text-brand-blue px-10 py-4 rounded-full font-black tracking-wide transition-all hover:-translate-y-1 shadow-xl relative z-10 whitespace-nowrap flex items-center justify-center gap-2 shrink-0 w-full md:w-auto">
             <span className="material-symbols-outlined">support_agent</span> Contactar Agora
           </Link>
         </div>
       </section>
 
-    </main>
+    </div>
   );
 }
