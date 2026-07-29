@@ -5,12 +5,14 @@ import IMG_STOCK from "@/assets/fotos/stock.webp";
 
 const BentoGrid: React.FC = () => {
   return (
-    /* Fundo da section alterado para branco puro */
     <section className="bg-white w-full">
       <div className="max-w-7xl mx-auto px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-6 h-auto md:h-[580px]">
+        {/* CORREÇÃO AQUI: Trocado 'grid-rows-2' por 'md:grid-rows-2' para não forçar as 2 linhas no telemóvel */}
+        <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-6 h-auto md:h-[580px]">
+          
           {/* 1. CARD GRANDE: Marcas de confiança */}
-          <div className="md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-[40px] shadow-sm bg-white border border-gray-100">
+          {/* CORREÇÃO AQUI: Adicionado 'min-h-[350px] md:min-h-0' para dar altura no mobile e 'p-8 md:p-10' para melhor responsividade */}
+          <div className="md:col-span-2 md:row-span-2 min-h-[350px] md:min-h-0 relative group overflow-hidden rounded-[40px] shadow-sm bg-white border border-gray-100">
             <img
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               src={IMG_CONFIANCA}
@@ -21,7 +23,7 @@ const BentoGrid: React.FC = () => {
             <div className="absolute inset-0 bg-gradient-to-t from-[#003dc2]/70 via-[#003dc2]/25 to-transparent"></div>
             <div className="absolute inset-0 bg-black/5"></div>
 
-            <div className="absolute bottom-0 left-0 p-10 z-10">
+            <div className="absolute bottom-0 left-0 p-8 md:p-10 z-10">
               <h3 className="font-h3 text-white mb-3 text-3xl font-bold tracking-tight">
                 Marcas de confiança
               </h3>
@@ -59,7 +61,8 @@ const BentoGrid: React.FC = () => {
           </div>
 
           {/* 4. CARD: MARCAS GLOBAIS */}
-          <div className="md:col-span-1 relative overflow-hidden rounded-[40px] shadow-lg group">
+          {/* CORREÇÃO AQUI: Adicionado 'min-h-[220px] md:min-h-0' */}
+          <div className="md:col-span-1 min-h-[220px] md:min-h-0 relative overflow-hidden rounded-[40px] shadow-lg group">
             <div className="absolute inset-0 bg-brand-blue backdrop-blur-[2px] transition-colors group-hover:bg-brand-bluetext-brand-blue/75"></div>
 
             <div className="absolute inset-0 flex flex-col justify-center items-center p-8 text-center z-10">
@@ -76,7 +79,8 @@ const BentoGrid: React.FC = () => {
           </div>
 
           {/* 5. CARD: STOCK DISPONÍVEL */}
-          <div className="md:col-span-1 relative overflow-hidden rounded-[40px] shadow-sm group">
+          {/* CORREÇÃO AQUI: Adicionado 'min-h-[220px] md:min-h-0' */}
+          <div className="md:col-span-1 min-h-[220px] md:min-h-0 relative overflow-hidden rounded-[40px] shadow-sm group">
             <img
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               src={IMG_STOCK}
@@ -98,6 +102,7 @@ const BentoGrid: React.FC = () => {
               </p>
             </div>
           </div>
+          
         </div>
       </div>
     </section>

@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { supabase } from '../../services/supabase';
 
-// NOVA FUNÇÃO: Extrai o caminho do ficheiro a partir do URL público para o podermos apagar do bucket 'folhetos'
+// Função para extrair o caminho do ficheiro a partir do URL público
 const extrairCaminhoStorage = (url: string) => {
   if (!url) return null;
   const parts = url.split('/public/folhetos/');
   if (parts.length === 2) {
-    return parts[1]; // Retorna a pasta e o ficheiro (ex: capas/123-capa.jpg ou pdfs/123-doc.pdf)
+    return parts[1]; 
   }
   return null;
 };
@@ -19,6 +19,8 @@ export default function AdminFolhetos() {
   const [titulo, setTitulo] = useState('');
   const [resumo, setResumo] = useState('');
   const [tagsInput, setTagsInput] = useState('');
+  const [validade, setValidade] = useState(''); // NOVO: Validade
+  const [tipoIva, setTipoIva] = useState('com_iva'); // NOVO: IVA ('com_iva' ou 'sem_iva')
   
   // Estado para Edição
   const [editId, setEditId] = useState<string | null>(null);
@@ -27,11 +29,9 @@ export default function AdminFolhetos() {
   const [capaFile, setCapaFile] = useState<File | null>(null);
   const [pdfFile, setPdfFile] = useState<File | null>(null);
 
-  // Referências para limpar os inputs de ficheiro após o envio
   const capaInputRef = useRef<HTMLInputElement>(null);
   const pdfInputRef = useRef<HTMLInputElement>(null);
 
-  // Carregar folhetos existentes
   const fetchFolhetos = async () => {
     const { data, error } = await supabase.from('folhetos').select('*').order('created_at', { ascending: false });
     if (error) console.error("Erro ao buscar folhetos:", error);
@@ -42,7 +42,6 @@ export default function AdminFolhetos() {
     fetchFolhetos();
   }, []);
 
-  // Função auxiliar para fazer upload para o Supabase Storage
   const uploadFicheiro = async (file: File, pasta: string) => {
     const nomeFicheiro = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, '')}`;
     const caminho = `${pasta}/${nomeFicheiro}`;
@@ -54,11 +53,12 @@ export default function AdminFolhetos() {
     return publicUrlData.publicUrl;
   };
 
-  // Limpar Formulário e sair do modo edição
   const resetForm = () => {
     setTitulo('');
     setResumo('');
     setTagsInput('');
+    setValidade('');
+    setTipoIva('com_iva');
     setEditId(null);
     setCapaFile(null);
     setPdfFile(null);
@@ -66,11 +66,9 @@ export default function AdminFolhetos() {
     if (pdfInputRef.current) pdfInputRef.current.value = '';
   };
 
-  // Guardar ou Atualizar folheto
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Se não estiver em modo de edição, os ficheiros são obrigatórios
     if (!editId && (!capaFile || !pdfFile)) {
       alert('Por favor, selecione a imagem da capa e o ficheiro PDF.');
       return;
@@ -85,7 +83,6 @@ export default function AdminFolhetos() {
 
       const folhetoAntigo = editId ? folhetos.find(f => f.id === editId) : null;
 
-      // 1. Upload da Capa (Se existir uma nova)
       if (capaFile) {
         urlCapa = await uploadFicheiro(capaFile, 'capas');
         if (editId && folhetoAntigo?.capa_url) {
@@ -94,7 +91,6 @@ export default function AdminFolhetos() {
         }
       }
 
-      // 2. Upload do PDF (Se existir um novo)
       if (pdfFile) {
         urlPdf = await uploadFicheiro(pdfFile, 'pdfs');
         if (editId && folhetoAntigo?.pdf_url) {
@@ -103,31 +99,30 @@ export default function AdminFolhetos() {
         }
       }
 
-      // 3. Apagar os ficheiros antigos substituídos
       if (pathsParaApagar.length > 0) {
         await supabase.storage.from('folhetos').remove(pathsParaApagar);
       }
 
-      // Tratar as tags
       const tagsArray = tagsInput.split(',').map(tag => tag.trim()).filter(tag => tag !== '');
 
-      if (editId) {
-        // MODO ATUALIZAÇÃO
-        const updateData: any = { titulo, resumo, tags: tagsArray };
-        if (urlCapa) updateData.capa_url = urlCapa;
-        if (urlPdf) updateData.pdf_url = urlPdf;
+      const payload: any = { 
+        titulo, 
+        resumo, 
+        tags: tagsArray,
+        validade,
+        tipo_iva: tipoIva
+      };
 
-        const { error } = await supabase.from('folhetos').update(updateData).eq('id', editId);
+      if (urlCapa) payload.capa_url = urlCapa;
+      if (urlPdf) payload.pdf_url = urlPdf;
+
+      if (editId) {
+        const { error } = await supabase.from('folhetos').update(payload).eq('id', editId);
         if (error) throw error;
-        
         alert("Folheto atualizado com sucesso!");
       } else {
-        // MODO INSERÇÃO
-        const { error } = await supabase.from('folhetos').insert([
-          { titulo, resumo, tags: tagsArray, capa_url: urlCapa, pdf_url: urlPdf }
-        ]);
+        const { error } = await supabase.from('folhetos').insert([payload]);
         if (error) throw error;
-        
         alert("Folheto adicionado com sucesso!");
       }
       
@@ -142,14 +137,14 @@ export default function AdminFolhetos() {
     }
   };
 
-  // Iniciar Modo de Edição
   const handleEdit = (folheto: any) => {
     setTitulo(folheto.titulo || '');
     setResumo(folheto.resumo || '');
     setTagsInput(folheto.tags ? folheto.tags.join(', ') : '');
+    setValidade(folheto.validade || '');
+    setTipoIva(folheto.tipo_iva || 'com_iva');
     setEditId(folheto.id);
     
-    // Limpar inputs de ficheiro físicos
     setCapaFile(null);
     setPdfFile(null);
     if (capaInputRef.current) capaInputRef.current.value = '';
@@ -158,11 +153,9 @@ export default function AdminFolhetos() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Apagar folheto
   const handleDelete = async (id: string) => {
     if(window.confirm("Tem a certeza que deseja apagar este folheto? A Capa e o PDF serão eliminados permanentemente do servidor.")) {
       
-      // 1. Procurar o folheto para apagar os ficheiros
       const folheto = folhetos.find(f => f.id === id);
       if (folheto) {
         const pathsParaApagar: string[] = [];
@@ -177,10 +170,16 @@ export default function AdminFolhetos() {
         }
       }
 
-      // 2. Apagar da Base de Dados
       const { error } = await supabase.from('folhetos').delete().eq('id', id);
       if (!error) fetchFolhetos();
     }
+  };
+
+  // Função auxiliar para formatar a data na tabela
+  const formatarData = (dataStr: string) => {
+    if (!dataStr) return '-';
+    const [ano, mes, dia] = dataStr.split('-');
+    return `${dia}/${mes}/${ano}`;
   };
 
   return (
@@ -216,6 +215,27 @@ export default function AdminFolhetos() {
               <input type="text" value={tagsInput} onChange={(e) => setTagsInput(e.target.value)} required className="p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#B5D318] outline-none transition-all" placeholder="Ex: Motor, Suspensão, Novidade" />
             </div>
 
+            {/* NOVOS CAMPOS: Validade e IVA */}
+            <div className="flex flex-col gap-2">
+              <label className="text-sm font-semibold text-gray-700">Válido até (Opcional)</label>
+              <input type="date" value={validade} onChange={(e) => setValidade(e.target.value)} className="p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#B5D318] outline-none transition-all text-gray-600" />
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <label className="text-sm font-semibold text-gray-700">Tipo de Preço</label>
+              <div className="flex gap-6 mt-2 p-1">
+                <label className="flex items-center gap-2 cursor-pointer text-sm font-medium text-gray-700">
+                  <input type="radio" checked={tipoIva === 'com_iva'} onChange={() => setTipoIva('com_iva')} className="accent-[#B5D318] w-4 h-4" />
+                  Preços Com IVA
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer text-sm font-medium text-gray-700">
+                  <input type="radio" checked={tipoIva === 'sem_iva'} onChange={() => setTipoIva('sem_iva')} className="accent-[#B5D318] w-4 h-4" />
+                  Preços Sem IVA
+                </label>
+              </div>
+            </div>
+
+            {/* Ficheiros */}
             <div className="flex flex-col gap-2">
               <label className="text-sm font-semibold text-gray-700">
                 Imagem da Capa {editId && <span className="text-gray-400 font-normal">(Opcional)</span>}
@@ -279,6 +299,7 @@ export default function AdminFolhetos() {
               <tr className="border-b border-gray-200 text-gray-500 text-sm">
                 <th className="pb-4 font-medium pl-2">Capa</th>
                 <th className="pb-4 font-medium">Título</th>
+                <th className="pb-4 font-medium">Condições</th>
                 <th className="pb-4 font-medium">Tags</th>
                 <th className="pb-4 font-medium text-right pr-2">Ações</th>
               </tr>
@@ -290,6 +311,21 @@ export default function AdminFolhetos() {
                     <img src={folheto.capa_url} alt="Capa" className="w-12 h-16 object-cover rounded-md border border-gray-200 shadow-sm" />
                   </td>
                   <td className="py-4 font-bold text-[#153A81]">{folheto.titulo}</td>
+                  
+                  {/* Coluna Condições (Validade e IVA) */}
+                  <td className="py-4">
+                    <div className="flex flex-col gap-1 text-xs">
+                      {folheto.validade ? (
+                        <span className="text-gray-500"><b className="text-gray-700">Até:</b> {formatarData(folheto.validade)}</span>
+                      ) : (
+                        <span className="text-gray-400 italic">Sem data limite</span>
+                      )}
+                      <span className={`font-bold ${folheto.tipo_iva === 'sem_iva' ? 'text-orange-500' : 'text-green-600'}`}>
+                        {folheto.tipo_iva === 'sem_iva' ? 'Sem IVA' : 'Com IVA'}
+                      </span>
+                    </div>
+                  </td>
+
                   <td className="py-4">
                     <div className="flex flex-wrap gap-1">
                       {folheto.tags?.map((tag: string) => (
@@ -309,7 +345,7 @@ export default function AdminFolhetos() {
               ))}
               {folhetos.length === 0 && (
                 <tr>
-                  <td colSpan={4} className="py-8 text-center text-gray-500 font-medium bg-gray-50 rounded-lg">Nenhum folheto publicado ainda.</td>
+                  <td colSpan={5} className="py-8 text-center text-gray-500 font-medium bg-gray-50 rounded-lg">Nenhum folheto publicado ainda.</td>
                 </tr>
               )}
             </tbody>

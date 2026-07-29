@@ -84,14 +84,7 @@ export default function Marcas() {
         </div>
       </section>
 
-      {/* Secção de Filtros */}
-      <section className="container mx-auto px-4 mt-4">
-        <div className="flex flex-wrap gap-3 justify-center">
-          {categorias.map((cat) => (
-            <button key={cat} onClick={() => setFiltroAtivo(cat)} className={`px-6 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${filtroAtivo === cat ? 'bg-brand-lime text-brand-blue shadow-md transform scale-105' : 'bg-white text-gray-500 border border-gray-200 hover:border-brand-lime hover:text-brand-blue'}`}>{cat}</button>
-          ))}
-        </div>
-      </section>
+      
 
       {/* GRELHA DE MARCAS */}
       <section className="container mx-auto px-4">

@@ -1,5 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { supabase } from '../services/supabase'; // Ajusta o caminho para o teu ficheiro supabase.ts
+import { supabase } from '../services/supabase'; 
+
+// Função auxiliar para formatar a data (AAAA-MM-DD para DD/MM/AAAA)
+const formatarData = (dataStr: string) => {
+  if (!dataStr) return '';
+  const [ano, mes, dia] = dataStr.split('-');
+  return `${dia}/${mes}/${ano}`;
+};
 
 export default function Folhetos() {
   const [folhetos, setFolhetos] = useState<any[]>([]);
@@ -96,7 +103,7 @@ export default function Folhetos() {
                     {/* Capa do Folheto */}
                     <div className="relative aspect-[3/4] bg-[#f8f9fa] overflow-hidden p-6 flex items-center justify-center">
                       <img 
-                        src={folheto.capa_url} // A ler da coluna capa_url
+                        src={folheto.capa_url}
                         alt={`Capa de ${folheto.titulo}`} 
                         className="w-full h-full object-cover rounded-xl shadow-md group-hover:scale-105 group-hover:rotate-1 transition-transform duration-500"
                       />
@@ -125,6 +132,21 @@ export default function Folhetos() {
                       <h3 className="font-bold text-xl text-gray-900 mb-3 leading-tight group-hover:text-[#153A81] transition-colors">
                         {folheto.titulo}
                       </h3>
+
+                      {/* NOVO: Condições (Validade e IVA) */}
+                      <div className="flex flex-wrap items-center gap-3 mb-4 text-[11px] uppercase tracking-wider">
+                        <span className={`px-2 py-1 rounded-md font-bold shadow-sm ${folheto.tipo_iva === 'sem_iva' ? 'bg-orange-100 text-orange-700 border border-orange-200' : 'bg-green-100 text-green-700 border border-green-200'}`}>
+                          {folheto.tipo_iva === 'sem_iva' ? 'Preços S/ IVA' : 'Preços C/ IVA'}
+                        </span>
+                        
+                        {folheto.validade && (
+                          <span className="text-gray-500 font-bold flex items-center gap-1 bg-gray-100 px-2 py-1 rounded-md border border-gray-200 shadow-sm">
+                            <span className="material-symbols-outlined text-[14px]">event</span>
+                            Até {formatarData(folheto.validade)}
+                          </span>
+                        )}
+                      </div>
+
                       <p className="text-gray-500 text-sm leading-relaxed mb-6 flex-grow">
                         {folheto.resumo}
                       </p>
