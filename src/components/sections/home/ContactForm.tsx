@@ -154,7 +154,7 @@ const ContactForm: React.FC = () => {
             </h3>
             
             <p className="text-gray-500 text-lg leading-relaxed mb-8">
-              A sua mensagem foi enviada com sucesso. A nossa equipa de especialistas vai analisar o seu pedido e entrará em contacto consigo muito em breve.
+             Mensagem enviada com sucesso! Entraremos em contacto consigo brevemente.
             </p>
             
             <button 
