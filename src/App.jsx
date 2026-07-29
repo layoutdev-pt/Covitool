@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer'; // Importação do Footer
+import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 import Marcas from './pages/Marcas';
 import SobreNos from './pages/SobreNos';
@@ -11,6 +12,9 @@ import AdminFolhetos from './pages/admin/AdminFolhetos';
 import AdminProdutos from './pages/admin/AdminProdutos'; 
 import AdminDestaque from './pages/admin/AdminDestaque';
 import AdminMarcas from './pages/admin/AdminMarcas'; 
+import Termos from './pages/TermosCondicoes';
+import Cookies from './pages/PoliticaCookies';
+import Privacidade from './pages/PoliticaPrivacidade';
 
 // Layout Público (Com Header e Footer)
 const PublicLayout = () => (
@@ -26,6 +30,7 @@ const PublicLayout = () => (
 function App() {
   return (
     <BrowserRouter>
+    <ScrollToTop />
       <Routes>
         
         {/* Rotas Públicas */}
@@ -34,6 +39,9 @@ function App() {
           <Route path="/marcas" element={<Marcas />} />
           <Route path="/sobre-nos" element={<SobreNos />} />
           <Route path="/folhetos" element={<Folhetos />} />
+          <Route path="/termos-e-condicoes" element={<Termos />} />
+          <Route path="/politica-de-cookies" element={<Cookies />} />
+          <Route path="/politica-de-privacidade" element={<Privacidade />} />
         </Route>
 
         {/* Rotas de Administração */}
