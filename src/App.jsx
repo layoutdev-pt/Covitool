@@ -16,6 +16,8 @@ import Termos from './pages/TermosCondicoes';
 import Cookies from './pages/PoliticaCookies';
 import Privacidade from './pages/PoliticaPrivacidade';
 
+import WhatsAppButton from './components/WhatsAppButton';
+
 // Layout Público (Com Header e Footer)
 const PublicLayout = () => (
   <div className="flex flex-col min-h-screen">
@@ -24,6 +26,7 @@ const PublicLayout = () => (
       <Outlet />
     </main>
     <Footer /> {/* O Footer entra aqui, logo a seguir ao conteúdo principal! */}
+    <WhatsAppButton />
   </div>
 );
 
