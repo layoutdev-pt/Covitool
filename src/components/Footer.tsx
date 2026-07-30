@@ -29,9 +29,28 @@ export default function Footer() {
           </ul>
         </div>
       </div>
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-xs text-blue-300">
-        <p>© 2026 Covitool. Todos os direitos reservados.</p>
-        <div className="flex flex-wrap gap-4 mt-4 md:mt-0 justify-center">
+      
+      {/* Secção Inferior (Copyright, Créditos e Links Legais) */}
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-xs text-blue-300 gap-6 md:gap-0">
+        
+        {/* Lado Esquerdo: Copyright e Assinatura */}
+        <div className="flex flex-col items-center md:items-start gap-1 text-center md:text-left">
+          <p>© 2026 Covitool. Todos os direitos reservados.</p>
+          <p>
+            Desenvolvido por:{' '}
+            <a 
+              href="https://layoutagency.pt/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-white hover:text-[#B5D318] font-bold transition-colors"
+            >
+              Layout Agency
+            </a>
+          </p>
+        </div>
+        
+        {/* Lado Direito: Links Legais */}
+        <div className="flex flex-wrap gap-4 justify-center">
           <Link to="/termos-e-condicoes" className="hover:text-white transition-colors">Termos e Condições</Link>
           <Link to="/politica-de-privacidade" className="hover:text-white transition-colors">Política de Privacidade</Link>
           <Link to="/politica-de-cookies" className="hover:text-white transition-colors">Política de Cookies</Link>
