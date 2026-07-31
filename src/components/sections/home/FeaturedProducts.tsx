@@ -162,4 +162,4 @@ const FeaturedProducts: React.FC = () => {
   );
 };
 
-export default FeaturedProducts;
+export default FeaturedProducts; 
