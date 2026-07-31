@@ -19,8 +19,8 @@ export default function AdminFolhetos() {
   const [titulo, setTitulo] = useState('');
   const [resumo, setResumo] = useState('');
   const [tagsInput, setTagsInput] = useState('');
-  const [validade, setValidade] = useState(''); // NOVO: Validade
-  const [tipoIva, setTipoIva] = useState('com_iva'); // NOVO: IVA ('com_iva' ou 'sem_iva')
+  const [validade, setValidade] = useState(''); 
+  const [tipoIva, setTipoIva] = useState('nao_especificado'); // NOVO: 3 opções ('com_iva', 'sem_iva', 'nao_especificado')
   
   // Estado para Edição
   const [editId, setEditId] = useState<string | null>(null);
@@ -58,7 +58,7 @@ export default function AdminFolhetos() {
     setResumo('');
     setTagsInput('');
     setValidade('');
-    setTipoIva('com_iva');
+    setTipoIva('nao_especificado'); // Reset para a nova opção neutra
     setEditId(null);
     setCapaFile(null);
     setPdfFile(null);
@@ -142,7 +142,7 @@ export default function AdminFolhetos() {
     setResumo(folheto.resumo || '');
     setTagsInput(folheto.tags ? folheto.tags.join(', ') : '');
     setValidade(folheto.validade || '');
-    setTipoIva(folheto.tipo_iva || 'com_iva');
+    setTipoIva(folheto.tipo_iva || 'nao_especificado');
     setEditId(folheto.id);
     
     setCapaFile(null);
@@ -175,7 +175,6 @@ export default function AdminFolhetos() {
     }
   };
 
-  // Função auxiliar para formatar a data na tabela
   const formatarData = (dataStr: string) => {
     if (!dataStr) return '-';
     const [ano, mes, dia] = dataStr.split('-');
@@ -185,7 +184,6 @@ export default function AdminFolhetos() {
   return (
     <div className="flex flex-col gap-8 pb-12">
       
-      {/* Secção do Formulário */}
       <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 transition-all duration-300 relative">
         {editId && (
           <div className="absolute top-0 left-0 w-full h-1.5 bg-blue-500 rounded-t-2xl"></div>
@@ -215,7 +213,6 @@ export default function AdminFolhetos() {
               <input type="text" value={tagsInput} onChange={(e) => setTagsInput(e.target.value)} required className="p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#B5D318] outline-none transition-all" placeholder="Ex: Motor, Suspensão, Novidade" />
             </div>
 
-            {/* NOVOS CAMPOS: Validade e IVA */}
             <div className="flex flex-col gap-2">
               <label className="text-sm font-semibold text-gray-700">Válido até (Opcional)</label>
               <input type="date" value={validade} onChange={(e) => setValidade(e.target.value)} className="p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#B5D318] outline-none transition-all text-gray-600" />
@@ -223,19 +220,22 @@ export default function AdminFolhetos() {
 
             <div className="flex flex-col gap-2">
               <label className="text-sm font-semibold text-gray-700">Tipo de Preço</label>
-              <div className="flex gap-6 mt-2 p-1">
+              <div className="flex gap-4 mt-2 p-1 flex-wrap">
+                <label className="flex items-center gap-2 cursor-pointer text-sm font-medium text-gray-700">
+                  <input type="radio" checked={tipoIva === 'nao_especificado'} onChange={() => setTipoIva('nao_especificado')} className="accent-[#B5D318] w-4 h-4" />
+                  Não Especificado
+                </label>
                 <label className="flex items-center gap-2 cursor-pointer text-sm font-medium text-gray-700">
                   <input type="radio" checked={tipoIva === 'com_iva'} onChange={() => setTipoIva('com_iva')} className="accent-[#B5D318] w-4 h-4" />
-                  Preços Com IVA
+                  Com IVA
                 </label>
                 <label className="flex items-center gap-2 cursor-pointer text-sm font-medium text-gray-700">
                   <input type="radio" checked={tipoIva === 'sem_iva'} onChange={() => setTipoIva('sem_iva')} className="accent-[#B5D318] w-4 h-4" />
-                  Preços Sem IVA
+                  Sem IVA
                 </label>
               </div>
             </div>
 
-            {/* Ficheiros */}
             <div className="flex flex-col gap-2">
               <label className="text-sm font-semibold text-gray-700">
                 Imagem da Capa {editId && <span className="text-gray-400 font-normal">(Opcional)</span>}
@@ -290,7 +290,6 @@ export default function AdminFolhetos() {
         </form>
       </div>
 
-      {/* Lista de Folhetos Existentes */}
       <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
         <h2 className="text-xl font-bold text-gray-800 mb-6">Folhetos Publicados</h2>
         <div className="overflow-x-auto">
@@ -312,7 +311,6 @@ export default function AdminFolhetos() {
                   </td>
                   <td className="py-4 font-bold text-[#153A81]">{folheto.titulo}</td>
                   
-                  {/* Coluna Condições (Validade e IVA) */}
                   <td className="py-4">
                     <div className="flex flex-col gap-1 text-xs">
                       {folheto.validade ? (
@@ -320,9 +318,15 @@ export default function AdminFolhetos() {
                       ) : (
                         <span className="text-gray-400 italic">Sem data limite</span>
                       )}
-                      <span className={`font-bold ${folheto.tipo_iva === 'sem_iva' ? 'text-orange-500' : 'text-green-600'}`}>
-                        {folheto.tipo_iva === 'sem_iva' ? 'Sem IVA' : 'Com IVA'}
-                      </span>
+                      
+                      {/* Mostrar o texto do IVA consoante a escolha */}
+                      {folheto.tipo_iva === 'nao_especificado' || !folheto.tipo_iva ? (
+                        <span className="font-bold text-gray-400">Não especificado</span>
+                      ) : (
+                        <span className={`font-bold ${folheto.tipo_iva === 'sem_iva' ? 'text-orange-500' : 'text-green-600'}`}>
+                          {folheto.tipo_iva === 'sem_iva' ? 'Sem IVA' : 'Com IVA'}
+                        </span>
+                      )}
                     </div>
                   </td>
 

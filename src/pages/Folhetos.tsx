@@ -135,9 +135,13 @@ export default function Folhetos() {
 
                       {/* NOVO: Condições (Validade e IVA) */}
                       <div className="flex flex-wrap items-center gap-3 mb-4 text-[11px] uppercase tracking-wider">
-                        <span className={`px-2 py-1 rounded-md font-bold shadow-sm ${folheto.tipo_iva === 'sem_iva' ? 'bg-orange-100 text-orange-700 border border-orange-200' : 'bg-green-100 text-green-700 border border-green-200'}`}>
-                          {folheto.tipo_iva === 'sem_iva' ? 'Preços S/ IVA' : 'Preços C/ IVA'}
-                        </span>
+                        
+                        {/* Só mostra a etiqueta do IVA se NÃO for "nao_especificado" */}
+                        {folheto.tipo_iva && folheto.tipo_iva !== 'nao_especificado' && (
+                          <span className={`px-2 py-1 rounded-md font-bold shadow-sm ${folheto.tipo_iva === 'sem_iva' ? 'bg-orange-100 text-orange-700 border border-orange-200' : 'bg-green-100 text-green-700 border border-green-200'}`}>
+                            {folheto.tipo_iva === 'sem_iva' ? 'Preços S/ IVA' : 'Preços C/ IVA'}
+                          </span>
+                        )}
                         
                         {folheto.validade && (
                           <span className="text-gray-500 font-bold flex items-center gap-1 bg-gray-100 px-2 py-1 rounded-md border border-gray-200 shadow-sm">
