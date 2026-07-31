@@ -35,10 +35,8 @@ const FeaturedProducts: React.FC = () => {
   const handleMouseDown = (e: React.MouseEvent) => {
     if (!carouselRef.current) return;
     isDragging.current = true;
-    // Captura a posição inicial do clique e a posição atual do scroll
     startX.current = e.pageX - carouselRef.current.offsetLeft;
     scrollLeft.current = carouselRef.current.scrollLeft;
-    // Desativa o "snap" temporariamente para um deslize perfeito com o rato
     carouselRef.current.style.scrollSnapType = 'none';
   };
 
@@ -54,18 +52,16 @@ const FeaturedProducts: React.FC = () => {
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDragging.current || !carouselRef.current) return;
-    e.preventDefault(); // Previne comportamentos padrão indesejados
+    e.preventDefault(); 
     
-    // Calcula a distância do movimento
     const x = e.pageX - carouselRef.current.offsetLeft;
-    const walk = (x - startX.current) * 1.5; // Multiplicador para a velocidade do arrasto
+    const walk = (x - startX.current) * 1.5; 
     carouselRef.current.scrollLeft = scrollLeft.current - walk;
   };
 
   return (
     <section className="bg-[#f8f9fa] py-24 overflow-hidden">
       
-      {/* CSS embutido para esconder a barra de scroll padrão */}
       <style>{`
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
@@ -84,9 +80,9 @@ const FeaturedProducts: React.FC = () => {
             </h2>
           </div>
 
-          {/* Dica visual para usar o carrossel */}
-          {produtos.length > 3 && (
-            <div className="hidden md:flex items-center gap-2 text-gray-400 bg-white px-4 py-2 rounded-full shadow-sm border border-gray-100">
+          {/* Dica visual para usar o carrossel corrigida para Mobile e Desktop */}
+          {produtos.length > 1 && (
+            <div className={`items-center gap-2 text-gray-400 bg-white px-4 py-2 rounded-full shadow-sm border border-gray-100 w-fit ${produtos.length > 3 ? 'flex' : 'flex md:hidden'}`}>
               <span className="material-symbols-outlined text-sm">swipe</span>
               <span className="text-xs font-bold uppercase tracking-wider">Deslize para ver mais</span>
             </div>
@@ -125,7 +121,6 @@ const FeaturedProducts: React.FC = () => {
               return (
                 <div key={produto.id} className="w-[85vw] sm:w-[320px] md:w-[380px] snap-start shrink-0 bg-white rounded-[32px] p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group">
                   
-                  {/* Impedir que o rato "puxe" a imagem como um ficheiro fantasma e cancele o arrasto do container */}
                   <div className="bg-gray-100 rounded-2xl h-64 mb-6 overflow-hidden flex items-center justify-center p-4 pointer-events-none">
                     <img 
                       src={produto.imagem_url} 
@@ -134,7 +129,6 @@ const FeaturedProducts: React.FC = () => {
                     />
                   </div>
                   
-                  {/* Título e Marca */}
                   <div className={`flex flex-col ${!temDescricao ? 'mb-6 flex-grow' : 'mb-3'}`}>
                     <h3 className="font-bold text-xl text-gray-900 group-hover:text-[#153A81] transition-colors leading-tight line-clamp-2">
                       {produto.titulo}
@@ -147,14 +141,12 @@ const FeaturedProducts: React.FC = () => {
                     )}
                   </div>
                   
-                  {/* Descrição Condicional */}
                   {temDescricao && (
                     <p className="text-gray-500 text-sm leading-relaxed mb-6 flex-grow line-clamp-3">
                       {produto.descricao}
                     </p>
                   )}
                   
-                  {/* Rodapé Condicional (Preço) */}
                   <div className={`flex items-center mt-auto pt-5 border-t border-gray-100 ${temPreco ? 'justify-between' : 'justify-end'}`}>
                     {temPreco && (
                       <span className="text-[#153A81] font-black text-2xl">{produto.preco}</span>
