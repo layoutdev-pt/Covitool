@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="col-span-1 md:col-span-2">
           <img src="/logo.png" alt="Covitool" className="h-10 mb-6" />
           <p className="text-blue-200 leading-relaxed max-w-sm">
-            A sua parceira de confiança em ferragens e ferramentas industriais. Experiência e rigor desde 2007.
+            A sua parceria de confiança em Máquinas, ferramentas e acessórios industriais. Experiência e rigor desde 2007.
           </p>
         </div>
         <div>
@@ -53,6 +53,7 @@ export default function Footer() {
         <div className="flex flex-wrap gap-4 justify-center">
           <Link to="/termos-e-condicoes" className="hover:text-white transition-colors">Termos e Condições</Link>
           <Link to="/politica-de-privacidade" className="hover:text-white transition-colors">Política de Privacidade</Link>
+          <Link to="/politica-de-cookies" className="hover:text-white transition-colors">Política de Cookies</Link>
           <button 
             onClick={() => window.dispatchEvent(new Event('openCookieBanner'))} 
             className="hover:text-white transition-colors"

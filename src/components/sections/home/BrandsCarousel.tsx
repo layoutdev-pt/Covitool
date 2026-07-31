@@ -44,7 +44,7 @@ const BrandsCarousel: React.FC = () => {
         {/* Contentor que vai ser animado na totalidade (-50%) */}
         <div 
           className="flex w-max"
-          style={{ animation: 'scroll 60s linear infinite' }}
+          style={{ animation: 'scroll 75s linear infinite' }}
         >
           {/* Primeira lista de marcas */}
           <div className="flex shrink-0 items-center">

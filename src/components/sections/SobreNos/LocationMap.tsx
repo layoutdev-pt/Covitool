@@ -53,9 +53,15 @@ export default function LocationMap() {
         </div>
 
         {/* Horários */}
-        <div className="flex justify-between items-center text-xs text-blue-200 border-t border-white/20 pt-6 relative z-10 font-medium tracking-wide">
-          <span>Seg - Sex: 09:00 - 18:30</span>
-          <span>Sábado: 09:00 - 13:00</span>
+        <div className="flex flex-col gap-2 text-xs text-blue-200 border-t border-white/20 pt-6 relative z-10 font-medium tracking-wide">
+          <div className="flex justify-between items-center">
+            <span>Segunda a Sexta-feira</span>
+            <span className="text-right">08:30 às 12:30<br/>14:30 às 18:00</span>
+          </div>
+          <div className="flex justify-between items-center text-blue-300">
+            <span>Sábado e Domingo</span>
+            <span>Encerrados</span>
+          </div>
         </div>
 
       </div>
