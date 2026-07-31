@@ -53,7 +53,12 @@ export default function Footer() {
         <div className="flex flex-wrap gap-4 justify-center">
           <Link to="/termos-e-condicoes" className="hover:text-white transition-colors">Termos e Condições</Link>
           <Link to="/politica-de-privacidade" className="hover:text-white transition-colors">Política de Privacidade</Link>
-          <Link to="/politica-de-cookies" className="hover:text-white transition-colors">Política de Cookies</Link>
+          <button 
+            onClick={() => window.dispatchEvent(new Event('openCookieBanner'))} 
+            className="hover:text-white transition-colors"
+          >
+            Configurações de Cookies
+          </button>
           <a href="https://www.livroreclamacoes.pt/" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">Livro de Reclamações</a>
         </div>
       </div>

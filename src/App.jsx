@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer'; // Importação do Footer
+import CookieBanner from './components/CookieBanner';
 import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 import Marcas from './pages/Marcas';
@@ -27,6 +28,7 @@ const PublicLayout = () => (
     </main>
     <Footer /> {/* O Footer entra aqui, logo a seguir ao conteúdo principal! */}
     <WhatsAppButton />
+    <CookieBanner />
   </div>
 );
 

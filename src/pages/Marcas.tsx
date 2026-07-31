@@ -17,7 +17,7 @@ export default function Marcas() {
   const [marcaMes, setMarcaMes] = useState<any>(null);
   
   const categorias = ['Todas', 'Motor', 'Travagem', 'Suspensão', 'Iluminação', 'Óleos e Fluidos'];
-  const parceiros = ['BOSCH', 'BREMBO', 'CASTROL', 'MAGNETI', 'MANN', 'VALEO', 'SACHS', 'SKF'];
+  const parceiros = ['WERKU', 'STANLEY', 'SKIL', 'KAERCHER', 'GEDORE', 'DEWALT', 'CHEMITOOL', 'BOSCH', 'BETA', 'AEG', '3M'];
 
   useEffect(() => {
     const fetchData = async () => {

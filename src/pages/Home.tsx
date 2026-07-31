@@ -1,5 +1,6 @@
 import React from 'react';
 import Hero from '../components/sections/home/Hero';
+import BrandsCarousel from '@/components/sections/home/BrandsCarousel';
 import BentoGrid from '../components/sections/home/BentoGrid';
 import FeaturedProducts from '../components/sections/home/FeaturedProducts';
 import CustomerJourney from '../components/sections/home/CustomerJourney';
@@ -10,6 +11,7 @@ const Home: React.FC = () => {
   return (
     <div className="w-full">
       <Hero />
+      <BrandsCarousel />
       <BentoGrid />
       <FeaturedProducts />
       <CustomerJourney />
