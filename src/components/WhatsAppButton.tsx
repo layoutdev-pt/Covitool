@@ -15,12 +15,12 @@ export default function WhatsAppButton() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end font-manrope">
+    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end font-manrope pointer-events-none">
       
       {/* Card Flutuante */}
       <div 
         className={`mb-4 w-72 sm:w-80 bg-brand-blue rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 origin-bottom-right ${
-          isOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4 pointer-events-none'
+          isOpen ? 'opacity-100 scale-100 translate-y-0 pointer-events-auto' : 'opacity-0 scale-95 translate-y-4 pointer-events-none'
         }`}
       >
         {/* Cabeçalho Verde */}
@@ -51,7 +51,7 @@ export default function WhatsAppButton() {
             href="https://wa.link/024kt6" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="w-full flex items-center justify-between bg-white/10 hover:bg-white/15 transition-colors rounded-xl p-4 border border-white/10"
+            className="w-full flex items-center justify-between bg-white/10 hover:bg-white/15 transition-colors rounded-xl p-4 border border-white/10 pointer-events-auto"
           >
             <div className="flex items-center gap-3">
               <WhatsAppIcon className="w-6 h-6 text-brand-lime" />
@@ -65,7 +65,7 @@ export default function WhatsAppButton() {
       {/* Botão Flutuante (FAB) */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-14 h-14 bg-brand-lime rounded-full shadow-[0_4px_20px_rgba(181,211,24,0.4)] flex items-center justify-center text-white hover:scale-105 transition-transform duration-300 z-50 relative"
+        className="w-14 h-14 bg-brand-lime rounded-full shadow-[0_4px_20px_rgba(181,211,24,0.4)] flex items-center justify-center text-white hover:scale-105 transition-transform duration-300 z-50 relative pointer-events-auto"
       >
         <div className={`absolute transition-all duration-300 ${isOpen ? 'opacity-0 rotate-90 scale-50' : 'opacity-100 rotate-0 scale-100'}`}>
           <WhatsAppIcon className="w-8 h-8" />
