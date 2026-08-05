@@ -93,7 +93,7 @@ export default function LocationMap() {
           allowFullScreen={true}
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
-          className="grayscale opacity-90 contrast-125 hover:grayscale-0 transition-all duration-1000"
+          className="lg:grayscale opacity-90 contrast-125 hover:grayscale-0 transition-all duration-1000"
         ></iframe>
 
         {/* Card Flutuante - Obter Direções */}

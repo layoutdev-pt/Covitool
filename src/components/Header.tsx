@@ -32,12 +32,12 @@ const Header: React.FC = () => {
     const isActive = location.pathname === path;
     if (isMobile) {
       return isActive
-        ? "text--brand-blue text-3xl font-black tracking-tight"
-        : "text-gray-400 hover:text--brand-blue transition-colors text-3xl font-bold tracking-tight";
+        ? "text-brand-blue text-3xl font-black tracking-tight"
+        : "text-gray-400 hover:text-brand-blue transition-colors text-3xl font-bold tracking-tight";
     }
     return isActive
-      ? "text--brand-blue border-b-[3px] border-brand-lime pb-1 text-base font-black tracking-tight"
-      : "text--brand-blue hover:text-brand-lime transition-colors text-base font-bold tracking-tight";
+      ? "text-brand-blue border-b-[3px] border-brand-lime pb-1 text-base font-black tracking-tight"
+      : "text-brand-blue hover:text-brand-lime transition-colors text-base font-bold tracking-tight";
   };
 
   return (
@@ -103,7 +103,7 @@ const Header: React.FC = () => {
 
           {/* Novo Bloco de Contacto à Direita (Desktop) */}
           <div className="hidden lg:flex flex-col items-end shrink-0">
-            <span className="font-black text--brand-blue text-lg tracking-tight">
+            <span className="font-black text-brand-blue text-lg tracking-tight">
               +351 275 322 030
             </span>
             <span className="text-[10px] text-gray-500 font-semibold">
@@ -118,13 +118,13 @@ const Header: React.FC = () => {
             aria-label="Menu"
           >
             <span
-              className={`block w-6 h-0.5 bg--brand-blue transition-all duration-300 ease-in-out ${isMenuOpen ? "rotate-45 translate-y-2" : ""}`}
+              className={`block w-6 h-0.5 bg-brand-blue transition-all duration-300 ease-in-out ${isMenuOpen ? "rotate-45 translate-y-2" : ""}`}
             />
             <span
-              className={`block w-6 h-0.5 bg--brand-blue transition-all duration-300 ease-in-out ${isMenuOpen ? "opacity-0" : "opacity-100"}`}
+              className={`block w-6 h-0.5 bg-brand-blue transition-all duration-300 ease-in-out ${isMenuOpen ? "opacity-0" : "opacity-100"}`}
             />
             <span
-              className={`block w-6 h-0.5 bg--brand-blue transition-all duration-300 ease-in-out ${isMenuOpen ? "-rotate-45 -translate-y-2" : ""}`}
+              className={`block w-6 h-0.5 bg-brand-blue transition-all duration-300 ease-in-out ${isMenuOpen ? "-rotate-45 -translate-y-2" : ""}`}
             />
           </button>
         </div>
@@ -190,7 +190,7 @@ const Header: React.FC = () => {
             <span className="text-gray-500 text-sm font-semibold mb-1">
               Apoio ao Cliente
             </span>
-            <span className="font-black text--brand-blue text-2xl tracking-tight mb-1">
+            <span className="font-black text-brand-blue text-2xl tracking-tight mb-1">
               +351 275 322 030
             </span>
             <span className="text-xs text-gray-400 font-medium text-center">
