@@ -130,7 +130,7 @@ const ContactForm: React.FC = () => {
               required
               checked={aceitaTermos}
               onChange={(e) => setAceitaTermos(e.target.checked)}
-              className="mt-1 w-4 h-4 accent-[#B5D318] cursor-pointer shrink-0"
+              className="mt-1 w-4 h-4 accent-brand-lime cursor-pointer shrink-0"
             />
             <label
               htmlFor="termos"
@@ -162,8 +162,8 @@ const ContactForm: React.FC = () => {
                 !aceitaTermos
                   ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                   : isSubmitting
-                    ? "bg-[#0d2657] text-[#B5D318] opacity-90 cursor-wait"
-                    : "bg-brand-blue hover:bg-[#0d2657] text-[#B5D318] hover:-translate-y-1"
+                    ? "bg-[#0d2657] text-brand-lime opacity-90 cursor-wait"
+                    : "bg-brand-blue hover:bg-[#0d2657] text-brand-lime hover:-translate-y-1"
               }`}
               type="submit"
               disabled={!aceitaTermos || isSubmitting}
@@ -189,7 +189,7 @@ const ContactForm: React.FC = () => {
           <div className="bg-white rounded-[32px] p-8 md:p-12 max-w-lg w-full shadow-2xl flex flex-col items-center text-center transform scale-100 animate-in zoom-in-95 duration-300">
             {/* Ícone de Sucesso */}
             <div className="w-20 h-20 bg-brand-lime/20 rounded-full flex items-center justify-center mb-6">
-              <span className="material-symbols-outlined text-5xl text-[#B5D318]">
+              <span className="material-symbols-outlined text-5xl text-brand-lime">
                 check_circle
               </span>
             </div>

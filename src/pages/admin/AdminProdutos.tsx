@@ -181,7 +181,7 @@ export default function AdminProdutos() {
         )}
 
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-[#153A81]">
+          <h2 className="text-2xl font-bold text-brand-blue">
             {editId ? "Editar Produto" : "Adicionar Produto à Home"}
           </h2>
           {editId && (
@@ -202,7 +202,7 @@ export default function AdminProdutos() {
                 value={titulo}
                 onChange={(e) => setTitulo(e.target.value)}
                 required
-                className="p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#B5D318] focus:border-[#153A81] outline-none transition-all"
+                className="p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-lime focus:border-brand-blue outline-none transition-all"
                 placeholder="Ex: Discos de Travão Cerâmicos"
               />
             </div>
@@ -215,7 +215,7 @@ export default function AdminProdutos() {
                 type="text"
                 value={marca}
                 onChange={(e) => setMarca(e.target.value)}
-                className="p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#B5D318] focus:border-[#153A81] outline-none transition-all"
+                className="p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-lime focus:border-brand-blue outline-none transition-all"
                 placeholder="Ex: BOSCH, BREMBO, etc."
               />
             </div>
@@ -228,7 +228,7 @@ export default function AdminProdutos() {
                 type="text"
                 value={preco}
                 onChange={(e) => setPreco(e.target.value)}
-                className="p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#B5D318] outline-none transition-all"
+                className="p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-lime outline-none transition-all"
                 placeholder="Ex: 489,00 € (Opcional)"
               />
             </div>
@@ -248,7 +248,7 @@ export default function AdminProdutos() {
                   setImagemFile(e.target.files ? e.target.files[0] : null)
                 }
                 required={!editId}
-                className="p-2.5 border border-gray-300 rounded-xl text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand-lime/20 file:text-[#153A81] hover:file:bg-[#B5D318]/30 transition-all cursor-pointer"
+                className="p-2.5 border border-gray-300 rounded-xl text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand-lime/20 file:text-brand-blue hover:file:bg-brand-lime/30 transition-all cursor-pointer"
               />
             </div>
           </div>
@@ -261,7 +261,7 @@ export default function AdminProdutos() {
               value={descricao}
               onChange={(e) => setDescricao(e.target.value)}
               rows={2}
-              className="p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#B5D318] outline-none resize-none"
+              className="p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-brand-lime outline-none resize-none"
               placeholder="Breve descrição (Opcional)"
             ></textarea>
           </div>
@@ -280,7 +280,7 @@ export default function AdminProdutos() {
             <button
               type="submit"
               disabled={loading}
-              className={`${editId ? "bg-blue-600 hover:bg-blue-700 text-white" : "bg-[#153A81] hover:bg-[#0d2657] text-[#B5D318]"} px-8 py-3.5 rounded-xl font-bold transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-md`}
+              className={`${editId ? "bg-blue-600 hover:bg-blue-700 text-white" : "bg-brand-blue hover:bg-[#0d2657] text-brand-lime"} px-8 py-3.5 rounded-xl font-bold transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-md`}
             >
               {loading ? (
                 <>
@@ -331,7 +331,7 @@ export default function AdminProdutos() {
                       className="w-16 h-16 object-cover rounded-xl border border-gray-200 shadow-sm mix-blend-multiply"
                     />
                   </td>
-                  <td className="py-4 font-bold text-[#153A81]">
+                  <td className="py-4 font-bold text-brand-blue">
                     {produto.titulo}
                   </td>
                   <td className="py-4 font-semibold text-gray-500">

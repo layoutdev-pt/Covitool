@@ -68,7 +68,7 @@ const CustomerJourney: React.FC = () => {
         {/* Timeline Container */}
         <div className="relative max-w-4xl mx-auto">
           {/* Linha Vertical Central (Fica à esquerda nos telemóveis e ao centro nos PCs) */}
-          <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-[#B5D318] to-transparent md:-translate-x-1/2 rounded-full opacity-50"></div>
+          <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-brand-lime to-transparent md:-translate-x-1/2 rounded-full opacity-50"></div>
 
           <div className="flex flex-col gap-12 md:gap-24 relative">
             {passos.map((passo, index) => {
@@ -84,9 +84,9 @@ const CustomerJourney: React.FC = () => {
                   className="relative flex flex-col md:flex-row items-center w-full opacity-0 translate-y-16 transition-all duration-1000 ease-out group"
                 >
                   {/* Ícone no centro da linha */}
-                  <div className="absolute left-8 md:left-1/2 -translate-x-1/2 flex items-center justify-center w-16 h-16 rounded-full bg-white border-4 border-brand-blue group-hover:border-[#B5D318] z-20 transition-colors duration-500 shadow-xl">
+                  <div className="absolute left-8 md:left-1/2 -translate-x-1/2 flex items-center justify-center w-16 h-16 rounded-full bg-white border-4 border-brand-blue group-hover:border-brand-lime z-20 transition-colors duration-500 shadow-xl">
                     <div className="absolute inset-0 bg-brand-lime rounded-full blur-xl opacity-0 group-hover:opacity-40 transition-opacity duration-500"></div>
-                    <span className="material-symbols-outlined text-brand-blue group-hover:text-[#B5D318] text-3xl transition-colors relative z-10">
+                    <span className="material-symbols-outlined text-brand-blue group-hover:text-brand-lime text-3xl transition-colors relative z-10">
                       {passo.icone}
                     </span>
                   </div>
@@ -96,11 +96,11 @@ const CustomerJourney: React.FC = () => {
                     className={`w-full md:w-1/2 pl-24 md:pl-0 flex ${isEven ? "md:justify-end md:pr-16" : "md:justify-start md:pl-16 md:ml-auto"}`}
                   >
                     <div
-                      className={`bg-white p-8 rounded-3xl shadow-sm border border-gray-100 group-hover:shadow-xl group-hover:border-[#B5D318]/50 transition-all duration-300 w-full max-w-md relative ${isEven ? "md:text-right" : "md:text-left"}`}
+                      className={`bg-white p-8 rounded-3xl shadow-sm border border-gray-100 group-hover:shadow-xl group-hover:border-brand-lime/50 transition-all duration-300 w-full max-w-md relative ${isEven ? "md:text-right" : "md:text-left"}`}
                     >
                       {/* Pequena seta indicadora a apontar para a linha temporal (Apenas visível em PCs) */}
                       <div
-                        className={`hidden md:block absolute top-1/2 -translate-y-1/2 w-4 h-4 bg-white border-t border-r border-gray-100 transform ${isEven ? "right-0 translate-x-[8px] rotate-45 group-hover:border-[#B5D318]/50 group-hover:border-b-0 group-hover:border-l-0" : "left-0 -translate-x-[8px] -rotate-[135deg] group-hover:border-[#B5D318]/50 group-hover:border-b-0 group-hover:border-l-0"} transition-colors duration-300 z-10`}
+                        className={`hidden md:block absolute top-1/2 -translate-y-1/2 w-4 h-4 bg-white border-t border-r border-gray-100 transform ${isEven ? "right-0 translate-x-[8px] rotate-45 group-hover:border-brand-lime/50 group-hover:border-b-0 group-hover:border-l-0" : "left-0 -translate-x-[8px] -rotate-[135deg] group-hover:border-brand-lime/50 group-hover:border-b-0 group-hover:border-l-0"} transition-colors duration-300 z-10`}
                       ></div>
 
                       <h4 className="text-brand-blue text-2xl font-bold mb-3 relative z-10">

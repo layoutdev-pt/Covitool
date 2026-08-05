@@ -68,7 +68,7 @@ export default function Folhetos() {
       {/* Loading State */}
       {loading ? (
         <div className="flex flex-col items-center justify-center py-20 text-brand-blue">
-          <span className="material-symbols-outlined animate-spin text-5xl mb-4 text-[#B5D318]">
+          <span className="material-symbols-outlined animate-spin text-5xl mb-4 text-brand-lime">
             refresh
           </span>
           <p className="font-bold text-lg">A carregar catálogos...</p>
@@ -84,7 +84,7 @@ export default function Folhetos() {
                 className={`px-6 py-3 rounded-full text-sm font-bold transition-all duration-300 shadow-sm ${
                   tagAtiva === tag
                     ? "bg-brand-lime text-brand-blue scale-105 shadow-md"
-                    : "bg-white text-gray-600 border border-gray-200 hover:border-[#B5D318] hover:text-brand-blue"
+                    : "bg-white text-gray-600 border border-gray-200 hover:border-brand-lime hover:text-brand-blue"
                 }`}
               >
                 {tag}
@@ -111,7 +111,7 @@ export default function Folhetos() {
                 {folhetosFiltrados.map((folheto) => (
                   <div
                     key={folheto.id}
-                    className="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 flex flex-col group hover:shadow-xl hover:border-[#B5D318] transition-all duration-300"
+                    className="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 flex flex-col group hover:shadow-xl hover:border-brand-lime transition-all duration-300"
                   >
                     {/* Capa do Folheto */}
                     <div className="relative aspect-[3/4] bg-[#f8f9fa] overflow-hidden p-6 flex items-center justify-center">
@@ -166,25 +166,18 @@ export default function Folhetos() {
 
                       {/* NOVO: Condições (Validade e IVA) */}
                       <div className="flex flex-wrap items-center gap-3 mb-4 text-[11px] uppercase tracking-wider">
-<<<<<<< HEAD
-                        <span
-                          className={`px-2 py-1 rounded-md font-bold shadow-sm ${folheto.tipo_iva === "sem_iva" ? "bg-orange-100 text-orange-700 border border-orange-200" : "bg-green-100 text-green-700 border border-green-200"}`}
-                        >
-                          {folheto.tipo_iva === "sem_iva"
-                            ? "Preços S/ IVA"
-                            : "Preços C/ IVA"}
-                        </span>
-
-=======
-                        
                         {/* Só mostra a etiqueta do IVA se NÃO for "nao_especificado" */}
-                        {folheto.tipo_iva && folheto.tipo_iva !== 'nao_especificado' && (
-                          <span className={`px-2 py-1 rounded-md font-bold shadow-sm ${folheto.tipo_iva === 'sem_iva' ? 'bg-orange-100 text-orange-700 border border-orange-200' : 'bg-green-100 text-green-700 border border-green-200'}`}>
-                            {folheto.tipo_iva === 'sem_iva' ? 'Preços S/ IVA' : 'Preços C/ IVA'}
-                          </span>
-                        )}
-                        
->>>>>>> 5f1359c4d2ed0c75a11becd7a6025aa87c674e72
+                        {folheto.tipo_iva &&
+                          folheto.tipo_iva !== "nao_especificado" && (
+                            <span
+                              className={`px-2 py-1 rounded-md font-bold shadow-sm ${folheto.tipo_iva === "sem_iva" ? "bg-orange-100 text-orange-700 border border-orange-200" : "bg-green-100 text-green-700 border border-green-200"}`}
+                            >
+                              {folheto.tipo_iva === "sem_iva"
+                                ? "Preços S/ IVA"
+                                : "Preços C/ IVA"}
+                            </span>
+                          )}
+
                         {folheto.validade && (
                           <span className="text-gray-500 font-bold flex items-center gap-1 bg-gray-100 px-2 py-1 rounded-md border border-gray-200 shadow-sm">
                             <span className="material-symbols-outlined text-[14px]">

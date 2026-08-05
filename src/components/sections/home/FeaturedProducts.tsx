@@ -96,7 +96,7 @@ const FeaturedProducts: React.FC = () => {
         {/* Estado de Carregamento */}
         {loading ? (
           <div className="flex flex-col items-center justify-center py-12 text-brand-blue">
-            <span className="material-symbols-outlined animate-spin text-5xl mb-4 text-[#B5D318]">
+            <span className="material-symbols-outlined animate-spin text-5xl mb-4 text-brand-limee">
               refresh
             </span>
             <p className="font-bold text-lg">A carregar destaques...</p>
@@ -151,7 +151,7 @@ const FeaturedProducts: React.FC = () => {
                     </h3>
 
                     {temMarca && (
-                      <span className="text-[#B5D318] font-black text-sm uppercase tracking-widest mt-2 block">
+                      <span className="text-brand-lime font-black text-sm uppercase tracking-widest mt-2 block">
                         {produto.marca}
                       </span>
                     )}

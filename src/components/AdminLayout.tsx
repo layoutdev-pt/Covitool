@@ -51,7 +51,7 @@ const AdminLayout: React.FC = () => {
           <div className="absolute top-0 right-0 w-40 h-40 bg-brand-lime rounded-full blur-[80px] opacity-20 -translate-y-1/2 translate-x-1/2"></div>
 
           <div className="w-20 h-20 bg-brand-blue rounded-full flex items-center justify-center mx-auto mb-6 relative z-10 shadow-lg">
-            <span className="material-symbols-outlined text-[#B5D318] text-4xl">
+            <span className="material-symbols-outlined text-brand-limeee text-4xl">
               lock
             </span>
           </div>
@@ -74,7 +74,7 @@ const AdminLayout: React.FC = () => {
               className={`p-4 border-2 rounded-2xl outline-none transition-all text-center tracking-widest font-bold ${
                 error
                   ? "border-red-400 focus:border-red-500 bg-red-50"
-                  : "border-gray-200 focus:border-[#B5D318] bg-gray-50"
+                  : "border-gray-200 focus:border-brand-lime bg-gray-50"
               }`}
             />
             {error && (
@@ -111,12 +111,12 @@ const AdminLayout: React.FC = () => {
       <aside className="w-64 bg-white border-r border-gray-200 flex flex-col shadow-sm z-20">
         <div className="p-6 border-b border-gray-100 flex items-center gap-3">
           <div className="w-8 h-8 bg-brand-blue rounded-lg flex items-center justify-center">
-            <span className="material-symbols-outlined text-[#B5D318] text-lg">
+            <span className="material-symbols-outlined text-brand-lime text-lg">
               settings
             </span>
           </div>
           <h1 className="text-xl font-black text-brand-blue tracking-tighter">
-            Admin <span className="text-[#B5D318]">Panel</span>
+            Admin <span className="text-brand-lime">Panel</span>
           </h1>
         </div>
 

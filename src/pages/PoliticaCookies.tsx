@@ -47,7 +47,7 @@ export default function PoliticaCookies() {
               </li>
             </ul>
 
-            <h3 className="text-xl font-bold text-[#153A81] mt-8 mb-3">
+            <h3 className="text-xl font-bold text-brand-blue mt-8 mb-3">
               3. Que Cookies utilizamos?
             </h3>
             <p>
@@ -78,7 +78,7 @@ export default function PoliticaCookies() {
               </li>
             </ul>
 
-            <h3 className="text-xl font-bold text-[#153A81] mt-8 mb-3">
+            <h3 className="text-xl font-bold text-brand-blue mt-8 mb-3">
               4. Gestão e Desativação de Cookies
             </h3>
             <p>
