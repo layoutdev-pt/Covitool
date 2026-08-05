@@ -141,14 +141,14 @@ const ContactForm: React.FC = () => {
               a nossa{" "}
               <Link
                 to="/politica-de-privacidade"
-                className="text-[#153A81] font-bold hover:underline"
+                className="text-brand-blue font-bold hover:underline"
               >
                 Política de Privacidade
               </Link>{" "}
               e{" "}
               <Link
                 to="/termos-e-condicoes"
-                className="text-[#153A81] font-bold hover:underline"
+                className="text-brand-blue font-bold hover:underline"
               >
                 Termos e Condições
               </Link>
@@ -163,7 +163,7 @@ const ContactForm: React.FC = () => {
                   ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                   : isSubmitting
                     ? "bg-[#0d2657] text-[#B5D318] opacity-90 cursor-wait"
-                    : "bg-[#153A81] hover:bg-[#0d2657] text-[#B5D318] hover:-translate-y-1"
+                    : "bg-brand-blue hover:bg-[#0d2657] text-[#B5D318] hover:-translate-y-1"
               }`}
               type="submit"
               disabled={!aceitaTermos || isSubmitting}
@@ -185,7 +185,7 @@ const ContactForm: React.FC = () => {
 
       {/* POP-UP DE SUCESSO (MODAL) */}
       {showSuccessModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#153A81]/40 backdrop-blur-sm transition-all animate-in fade-in duration-300">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-brand-blue/40 backdrop-blur-sm transition-all animate-in fade-in duration-300">
           <div className="bg-white rounded-[32px] p-8 md:p-12 max-w-lg w-full shadow-2xl flex flex-col items-center text-center transform scale-100 animate-in zoom-in-95 duration-300">
             {/* Ícone de Sucesso */}
             <div className="w-20 h-20 bg-brand-lime/20 rounded-full flex items-center justify-center mb-6">
@@ -194,7 +194,7 @@ const ContactForm: React.FC = () => {
               </span>
             </div>
 
-            <h3 className="text-3xl font-black text-[#153A81] mb-4 tracking-tight">
+            <h3 className="text-3xl font-black text-brand-blue mb-4 tracking-tight">
               Mensagem Recebida!
             </h3>
 
@@ -205,7 +205,7 @@ const ContactForm: React.FC = () => {
 
             <button
               onClick={() => setShowSuccessModal(false)}
-              className="bg-[#153A81] hover:bg-[#0d2657] text-white font-bold py-4 px-10 rounded-full transition-all hover:shadow-lg w-full"
+              className="bg-brand-blue hover:bg-[#0d2657] text-white font-bold py-4 px-10 rounded-full transition-all hover:shadow-lg w-full"
             >
               Concluir
             </button>

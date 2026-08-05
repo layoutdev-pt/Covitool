@@ -189,7 +189,7 @@ export default function Marcas() {
                 <span className="material-symbols-outlined text-xl">auto_stories</span>
               </Link>
             </div>
-            <div className="bg-[#f0f2f5] h-72 lg:h-[400px] rounded-3xl overflow-hidden relative flex items-center justify-center p-8">
+            <div className="bg-[#f0f2f5] h-72 lg:h-100 rounded-3xl overflow-hidden relative flex items-center justify-center p-8">
                <img 
                 src={marcaMes.imagem_url} 
                 alt={marcaMes.titulo} 

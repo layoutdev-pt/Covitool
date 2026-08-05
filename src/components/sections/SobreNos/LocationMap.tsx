@@ -4,7 +4,7 @@ export default function LocationMap() {
   return (
     <div className="flex flex-col lg:flex-row w-full max-w-7xl mx-auto rounded-3xl overflow-hidden shadow-xl border border-gray-100">
       {/* Lado Esquerdo - Informações de Contacto (Azul Marinho) */}
-      <div className="bg-[#153A81] text-white p-8 lg:p-12 flex flex-col justify-between w-full lg:w-1/3 relative overflow-hidden">
+      <div className="bg-brand-blue text-white p-8 lg:p-12 flex flex-col justify-between w-full lg:w-1/3 relative overflow-hidden">
         {/* Detalhe de luz verde no fundo para dar dinâmica */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-brand-lime rounded-full blur-[120px] opacity-20 -translate-y-1/2 translate-x-1/3"></div>
 
@@ -19,8 +19,8 @@ export default function LocationMap() {
 
         <div className="flex flex-col gap-4 mb-10 relative z-10">
           {/* Morada */}
-          <div className="bg-white/10 backdrop-blur-sm p-5 rounded-2xl border border-white/10 flex items-start gap-4 hover:border-[#B5D318]/50 transition-colors">
-            <div className="text-[#B5D318] mt-1">
+          <div className="bg-white/10 backdrop-blur-sm p-5 rounded-2xl border border-white/10 flex items-start gap-4 hover:border-brand-lime/50 transition-colors">
+            <div className="text-brand-lime mt-1">
               <span className="material-symbols-outlined text-2xl">
                 location_on
               </span>
@@ -36,14 +36,14 @@ export default function LocationMap() {
           </div>
 
           {/* Botão de Telefone - Destaque em Verde Lima */}
-          <button className="bg-brand-lime hover:bg-[#a1bc12] text-[#153A81] transition-all duration-300 p-5 rounded-2xl flex items-center justify-between group shadow-lg hover:-translate-y-1 cursor-pointer">
+          <button className="bg-brand-lime hover:bg-[#a1bc12] text-brand-blue transition-all duration-300 p-5 rounded-2xl flex items-center justify-between group shadow-lg hover:-translate-y-1 cursor-pointer">
             <div className="flex items-center gap-4">
               <span className="material-symbols-outlined text-2xl">call</span>
               <div className="flex flex-col items-start">
                 <span className="font-black text-lg tracking-wide">
                   +351 275 322 030
                 </span>
-                <span className="text-[10px] font-bold text-[#153A81]/70 leading-none mt-1">
+                <span className="text-[10px] font-bold text-brand-blue/70 leading-none mt-1">
                   (Chamada para rede fixa nacional)
                 </span>
               </div>
@@ -54,8 +54,8 @@ export default function LocationMap() {
           </button>
 
           {/* Email */}
-          <div className="bg-white/10 backdrop-blur-sm p-5 rounded-2xl border border-white/10 flex items-center gap-4 hover:border-[#B5D318]/50 transition-colors">
-            <div className="text-[#B5D318]">
+          <div className="bg-white/10 backdrop-blur-sm p-5 rounded-2xl border border-white/10 flex items-center gap-4 hover:border-brand-lime/50 transition-colors">
+            <div className="text-brand-lime">
               <span className="material-symbols-outlined text-2xl">mail</span>
             </div>
             <span className="text-blue-100 text-sm font-medium">
@@ -99,19 +99,19 @@ export default function LocationMap() {
         {/* Card Flutuante - Obter Direções */}
         <div className="absolute bottom-6 right-6 bg-white p-5 rounded-2xl shadow-xl z-10 w-72 border border-gray-100">
           <div className="flex items-center gap-4 mb-4">
-            <div className="bg-[#153A81] text-[#B5D318] p-2.5 rounded-full flex items-center justify-center">
+            <div className="bg-brand-blue text-brand-lime p-2.5 rounded-full flex items-center justify-center">
               <span className="material-symbols-outlined">directions_car</span>
             </div>
             <div>
               <p className="text-xs text-gray-500 font-medium mb-0.5">
                 Tempo de Viagem
               </p>
-              <p className="font-bold text-[#153A81] text-sm">
+              <p className="font-bold text-brand-blue text-sm">
                 Parque Ind. Covilhã
               </p>
             </div>
           </div>
-          <button className="w-full bg-[#153A81] hover:bg-[#0d2657] text-white text-sm font-bold py-3 rounded-xl transition-colors shadow-md">
+          <button className="w-full bg-brand-blue hover:bg-[#0d2657] text-white text-sm font-bold py-3 rounded-xl transition-colors shadow-md">
             Obter Direções
           </button>
         </div>

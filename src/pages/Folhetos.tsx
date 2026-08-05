@@ -53,7 +53,7 @@ export default function Folhetos() {
   return (
     <main className="flex flex-col gap-12 pb-16 bg-gray-50 min-h-screen">
       {/* Cabeçalho da Página em Azul Marinho */}
-      <section className="bg-[#153A81] pt-40 pb-20 px-4 text-center text-white flex flex-col items-center relative overflow-hidden">
+      <section className="bg-brand-blue pt-40 pb-20 px-4 text-center text-white flex flex-col items-center relative overflow-hidden">
         <div className="absolute top-0 right-0 w-80 h-80 bg-brand-lime rounded-full blur-[140px] opacity-20"></div>
 
         <h1 className="text-4xl md:text-5xl font-black mb-6 relative z-10 tracking-tight">
@@ -67,7 +67,7 @@ export default function Folhetos() {
 
       {/* Loading State */}
       {loading ? (
-        <div className="flex flex-col items-center justify-center py-20 text-[#153A81]">
+        <div className="flex flex-col items-center justify-center py-20 text-brand-blue">
           <span className="material-symbols-outlined animate-spin text-5xl mb-4 text-[#B5D318]">
             refresh
           </span>
@@ -83,8 +83,8 @@ export default function Folhetos() {
                 onClick={() => setTagAtiva(tag)}
                 className={`px-6 py-3 rounded-full text-sm font-bold transition-all duration-300 shadow-sm ${
                   tagAtiva === tag
-                    ? "bg-brand-lime text-[#153A81] scale-105 shadow-md"
-                    : "bg-white text-gray-600 border border-gray-200 hover:border-[#B5D318] hover:text-[#153A81]"
+                    ? "bg-brand-lime text-brand-blue scale-105 shadow-md"
+                    : "bg-white text-gray-600 border border-gray-200 hover:border-[#B5D318] hover:text-brand-blue"
                 }`}
               >
                 {tag}
@@ -122,12 +122,12 @@ export default function Folhetos() {
                       />
 
                       {/* Overlay com botões */}
-                      <div className="absolute inset-0 bg-[#153A81]/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4 backdrop-blur-sm z-10">
+                      <div className="absolute inset-0 bg-brand-blue/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4 backdrop-blur-sm z-10">
                         <a
                           href={folheto.pdf_url}
                           target="_blank"
                           rel="noreferrer"
-                          className="w-14 h-14 bg-white rounded-full flex items-center justify-center text-[#153A81] hover:scale-110 hover:bg-gray-100 transition-transform shadow-lg"
+                          className="w-14 h-14 bg-white rounded-full flex items-center justify-center text-brand-blue hover:scale-110 hover:bg-gray-100 transition-transform shadow-lg"
                           title="Ver Online"
                         >
                           <span className="material-symbols-outlined text-2xl">
@@ -137,7 +137,7 @@ export default function Folhetos() {
                         <a
                           href={folheto.pdf_url}
                           download
-                          className="w-14 h-14 bg-brand-lime rounded-full flex items-center justify-center text-[#153A81] hover:scale-110 hover:bg-[#a1bc12] transition-transform shadow-lg"
+                          className="w-14 h-14 bg-brand-lime rounded-full flex items-center justify-center text-brand-blue hover:scale-110 hover:bg-[#a1bc12] transition-transform shadow-lg"
                           title="Download PDF"
                         >
                           <span className="material-symbols-outlined text-2xl">
@@ -153,19 +153,20 @@ export default function Folhetos() {
                         {folheto.tags?.map((tag: string) => (
                           <span
                             key={tag}
-                            className="px-2.5 py-1 bg-[#153A81]/5 text-[#153A81] text-xs font-bold rounded-md border border-[#153A81]/10 uppercase tracking-wider"
+                            className="px-2.5 py-1 bg-brand-blue/5 text-brand-blue text-xs font-bold rounded-md border border-brand-blue/10 uppercase tracking-wider"
                           >
                             {tag}
                           </span>
                         ))}
                       </div>
 
-                      <h3 className="font-bold text-xl text-gray-900 mb-3 leading-tight group-hover:text-[#153A81] transition-colors">
+                      <h3 className="font-bold text-xl text-gray-900 mb-3 leading-tight group-hover:text-brand-blue transition-colors">
                         {folheto.titulo}
                       </h3>
 
                       {/* NOVO: Condições (Validade e IVA) */}
                       <div className="flex flex-wrap items-center gap-3 mb-4 text-[11px] uppercase tracking-wider">
+<<<<<<< HEAD
                         <span
                           className={`px-2 py-1 rounded-md font-bold shadow-sm ${folheto.tipo_iva === "sem_iva" ? "bg-orange-100 text-orange-700 border border-orange-200" : "bg-green-100 text-green-700 border border-green-200"}`}
                         >
@@ -174,6 +175,16 @@ export default function Folhetos() {
                             : "Preços C/ IVA"}
                         </span>
 
+=======
+                        
+                        {/* Só mostra a etiqueta do IVA se NÃO for "nao_especificado" */}
+                        {folheto.tipo_iva && folheto.tipo_iva !== 'nao_especificado' && (
+                          <span className={`px-2 py-1 rounded-md font-bold shadow-sm ${folheto.tipo_iva === 'sem_iva' ? 'bg-orange-100 text-orange-700 border border-orange-200' : 'bg-green-100 text-green-700 border border-green-200'}`}>
+                            {folheto.tipo_iva === 'sem_iva' ? 'Preços S/ IVA' : 'Preços C/ IVA'}
+                          </span>
+                        )}
+                        
+>>>>>>> 5f1359c4d2ed0c75a11becd7a6025aa87c674e72
                         {folheto.validade && (
                           <span className="text-gray-500 font-bold flex items-center gap-1 bg-gray-100 px-2 py-1 rounded-md border border-gray-200 shadow-sm">
                             <span className="material-symbols-outlined text-[14px]">
@@ -192,7 +203,7 @@ export default function Folhetos() {
                         href={folheto.pdf_url}
                         target="_blank"
                         rel="noreferrer"
-                        className="mt-auto w-full py-3.5 border-2 border-gray-100 bg-gray-50 text-center rounded-xl font-bold text-gray-600 group-hover:bg-[#153A81] group-hover:border-[#153A81] group-hover:text-white transition-all flex items-center justify-center gap-2"
+                        className="mt-auto w-full py-3.5 border-2 border-gray-100 bg-gray-50 text-center rounded-xl font-bold text-gray-600 group-hover:bg-brand-blue group-hover:border-brand-blue group-hover:text-white transition-all flex items-center justify-center gap-2"
                       >
                         <span className="material-symbols-outlined text-xl">
                           auto_stories

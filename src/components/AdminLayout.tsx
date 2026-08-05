@@ -55,7 +55,7 @@ const AdminLayout: React.FC = () => {
               lock
             </span>
           </div>
-          <h2 className="text-3xl font-black text-[#153A81] mb-2 relative z-10 tracking-tight">
+          <h2 className="text-3xl font-black text-brand-blue mb-2 relative z-10 tracking-tight">
             Acesso Restrito
           </h2>
           <p className="text-gray-500 mb-8 font-medium relative z-10">
@@ -85,13 +85,13 @@ const AdminLayout: React.FC = () => {
 
             <button
               type="submit"
-              className="w-full bg-brand-lime hover:bg-[#a1bc12] text-[#153A81] font-black py-4 rounded-2xl transition-all shadow-md hover:-translate-y-1 mt-2"
+              className="w-full bg-brand-lime hover:bg-[#a1bc12] text-brand-blue font-black py-4 rounded-2xl transition-all shadow-md hover:-translate-y-1 mt-2"
             >
               Entrar no Painel
             </button>
             <Link
               to="/"
-              className="text-gray-400 hover:text-[#153A81] text-sm mt-4 transition-colors font-semibold flex items-center justify-center gap-1"
+              className="text-gray-400 hover:text-brand-blue text-sm mt-4 transition-colors font-semibold flex items-center justify-center gap-1"
             >
               <span className="material-symbols-outlined text-sm">
                 arrow_back
@@ -110,12 +110,12 @@ const AdminLayout: React.FC = () => {
       {/* Sidebar Lateral */}
       <aside className="w-64 bg-white border-r border-gray-200 flex flex-col shadow-sm z-20">
         <div className="p-6 border-b border-gray-100 flex items-center gap-3">
-          <div className="w-8 h-8 bg-[#153A81] rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-brand-blue rounded-lg flex items-center justify-center">
             <span className="material-symbols-outlined text-[#B5D318] text-lg">
               settings
             </span>
           </div>
-          <h1 className="text-xl font-black text-[#153A81] tracking-tighter">
+          <h1 className="text-xl font-black text-brand-blue tracking-tighter">
             Admin <span className="text-[#B5D318]">Panel</span>
           </h1>
         </div>
@@ -129,8 +129,8 @@ const AdminLayout: React.FC = () => {
                 to={item.path}
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-colors font-semibold ${
                   isActive
-                    ? "bg-[#153A81] text-white shadow-md"
-                    : "text-gray-500 hover:bg-gray-100 hover:text-[#153A81]"
+                    ? "bg-brand-blue text-white shadow-md"
+                    : "text-gray-500 hover:bg-gray-100 hover:text-brand-blue"
                 }`}
               >
                 <span className="material-symbols-outlined">{item.icon}</span>
@@ -155,14 +155,14 @@ const AdminLayout: React.FC = () => {
       {/* Área de Conteúdo Principal */}
       <main className="flex-1 overflow-y-auto bg-gray-50 relative">
         <header className="bg-white/80 backdrop-blur-md border-b border-gray-200 p-6 flex justify-between items-center sticky top-0 z-10">
-          <h2 className="text-xl font-bold text-[#153A81]">
+          <h2 className="text-xl font-bold text-brand-blue">
             Gestão de Conteúdo
           </h2>
           <div className="flex items-center gap-3">
             <span className="text-sm font-semibold text-gray-500">
               Modo Administrador
             </span>
-            <div className="w-10 h-10 bg-brand-lime text-[#153A81] rounded-full flex items-center justify-center font-black shadow-sm">
+            <div className="w-10 h-10 bg-brand-lime text-brand-blue rounded-full flex items-center justify-center font-black shadow-sm">
               AD
             </div>
           </div>

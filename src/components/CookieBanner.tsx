@@ -35,7 +35,7 @@ const CookieBanner: React.FC = () => {
             aceita a sua utilização.
             <Link
               to="/politica-de-cookies"
-              className="text-[#153A81] hover:underline font-bold ml-1"
+              className="text-brand-blue hover:underline font-bold ml-1"
             >
               Saber mais.
             </Link>
@@ -44,7 +44,7 @@ const CookieBanner: React.FC = () => {
         <div className="flex-shrink-0">
           <button
             onClick={acceptCookies}
-            className="bg-brand-lime hover:bg-[#a1bc12] text-[#153A81] px-8 py-3 rounded-full font-bold transition-all shadow-md hover:-translate-y-1 whitespace-nowrap"
+            className="bg-brand-lime hover:bg-[#a1bc12] text-brand-blue px-8 py-3 rounded-full font-bold transition-all shadow-md hover:-translate-y-1 whitespace-nowrap"
           >
             Compreendi
           </button>

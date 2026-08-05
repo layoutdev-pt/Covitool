@@ -32,12 +32,12 @@ const Header: React.FC = () => {
     const isActive = location.pathname === path;
     if (isMobile) {
       return isActive
-        ? "text-[#153A81] text-3xl font-black tracking-tight"
-        : "text-gray-400 hover:text-[#153A81] transition-colors text-3xl font-bold tracking-tight";
+        ? "text--brand-blue text-3xl font-black tracking-tight"
+        : "text-gray-400 hover:text--brand-blue transition-colors text-3xl font-bold tracking-tight";
     }
     return isActive
-      ? "text-[#153A81] border-b-[3px] border-[#B5D318] pb-1 text-base font-black tracking-tight"
-      : "text-[#153A81] hover:text-[#B5D318] transition-colors text-base font-bold tracking-tight";
+      ? "text--brand-blue border-b-[3px] border-[#B5D318] pb-1 text-base font-black tracking-tight"
+      : "text--brand-blue hover:text-[#B5D318] transition-colors text-base font-bold tracking-tight";
   };
 
   return (
@@ -75,7 +75,7 @@ const Header: React.FC = () => {
 
           {/* Novo Bloco de Contacto à Direita (Desktop) */}
           <div className="hidden lg:flex flex-col items-end shrink-0">
-            <span className="font-black text-[#153A81] text-lg tracking-tight">+351 275 322 030</span>
+            <span className="font-black text--brand-blue text-lg tracking-tight">+351 275 322 030</span>
             <span className="text-[10px] text-gray-500 font-semibold">(Chamada para rede fixa nacional)</span>
           </div>
 
@@ -85,9 +85,9 @@ const Header: React.FC = () => {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Menu"
           >
-            <span className={`block w-6 h-0.5 bg-[#153A81] transition-all duration-300 ease-in-out ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
-            <span className={`block w-6 h-0.5 bg-[#153A81] transition-all duration-300 ease-in-out ${isMenuOpen ? 'opacity-0' : 'opacity-100'}`} />
-            <span className={`block w-6 h-0.5 bg-[#153A81] transition-all duration-300 ease-in-out ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+            <span className={`block w-6 h-0.5 bg--brand-blue transition-all duration-300 ease-in-out ${isMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+            <span className={`block w-6 h-0.5 bg--brand-blue transition-all duration-300 ease-in-out ${isMenuOpen ? 'opacity-0' : 'opacity-100'}`} />
+            <span className={`block w-6 h-0.5 bg--brand-blue transition-all duration-300 ease-in-out ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
           </button>
         </div>
       </header>
@@ -124,7 +124,7 @@ const Header: React.FC = () => {
         >
           <div className="bg-[#f8f9fa] border border-gray-100 rounded-3xl p-6 flex flex-col items-center shadow-sm">
             <span className="text-gray-500 text-sm font-semibold mb-1">Apoio ao Cliente</span>
-            <span className="font-black text-[#153A81] text-2xl tracking-tight mb-1">+351 275 322 030</span>
+            <span className="font-black text--brand-blue text-2xl tracking-tight mb-1">+351 275 322 030</span>
             <span className="text-xs text-gray-400 font-medium text-center">(Chamada para rede fixa nacional)</span>
           </div>
         </div>

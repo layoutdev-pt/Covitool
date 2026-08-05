@@ -56,7 +56,7 @@ const CustomerJourney: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
         {/* Cabeçalho */}
         <div className="text-center mb-24">
-          <h2 className="text-[#153A81] text-4xl font-extrabold tracking-tight">
+          <h2 className="text-brand-blue text-4xl font-extrabold tracking-tight">
             Como Trabalhamos
           </h2>
           <p className="text-gray-500 max-w-2xl mx-auto mt-4 text-lg">
@@ -84,9 +84,9 @@ const CustomerJourney: React.FC = () => {
                   className="relative flex flex-col md:flex-row items-center w-full opacity-0 translate-y-16 transition-all duration-1000 ease-out group"
                 >
                   {/* Ícone no centro da linha */}
-                  <div className="absolute left-8 md:left-1/2 -translate-x-1/2 flex items-center justify-center w-16 h-16 rounded-full bg-white border-4 border-[#153A81] group-hover:border-[#B5D318] z-20 transition-colors duration-500 shadow-xl">
+                  <div className="absolute left-8 md:left-1/2 -translate-x-1/2 flex items-center justify-center w-16 h-16 rounded-full bg-white border-4 border-brand-blue group-hover:border-[#B5D318] z-20 transition-colors duration-500 shadow-xl">
                     <div className="absolute inset-0 bg-brand-lime rounded-full blur-xl opacity-0 group-hover:opacity-40 transition-opacity duration-500"></div>
-                    <span className="material-symbols-outlined text-[#153A81] group-hover:text-[#B5D318] text-3xl transition-colors relative z-10">
+                    <span className="material-symbols-outlined text-brand-blue group-hover:text-[#B5D318] text-3xl transition-colors relative z-10">
                       {passo.icone}
                     </span>
                   </div>
@@ -103,7 +103,7 @@ const CustomerJourney: React.FC = () => {
                         className={`hidden md:block absolute top-1/2 -translate-y-1/2 w-4 h-4 bg-white border-t border-r border-gray-100 transform ${isEven ? "right-0 translate-x-[8px] rotate-45 group-hover:border-[#B5D318]/50 group-hover:border-b-0 group-hover:border-l-0" : "left-0 -translate-x-[8px] -rotate-[135deg] group-hover:border-[#B5D318]/50 group-hover:border-b-0 group-hover:border-l-0"} transition-colors duration-300 z-10`}
                       ></div>
 
-                      <h4 className="text-[#153A81] text-2xl font-bold mb-3 relative z-10">
+                      <h4 className="text-brand-blue text-2xl font-bold mb-3 relative z-10">
                         {passo.titulo}
                       </h4>
                       <p className="text-gray-500 leading-relaxed relative z-10">
