@@ -31,15 +31,15 @@ const BrandsCarousel: React.FC = () => {
   return (
     <section className="py-12 bg-white overflow-hidden border-b border-gray-100">
       <div className="container mx-auto px-4 mb-10 text-center">
-        <h2 className="text-2xl md:text-3xl font-black text-[#153A81] uppercase tracking-wider">
+        <h2 className="text-2xl md:text-3xl font-black text-brand-blue uppercase tracking-wider">
           Trabalhamos com as melhores marcas
         </h2>
       </div>
       
       <div className="relative w-full overflow-hidden">
         {/* Gradients para suavizar a entrada e saída (fades laterais) */}
-        <div className="absolute inset-y-0 left-0 w-16 md:w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-        <div className="absolute inset-y-0 right-0 w-16 md:w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute inset-y-0 left-0 w-16 md:w-32 bg-linear-to-r from-white to-transparent z-10 pointer-events-none"></div>
+        <div className="absolute inset-y-0 right-0 w-16 md:w-32 bg-linear-to-l from-white to-transparent z-10 pointer-events-none"></div>
         
         {/* Contentor que vai ser animado na totalidade (-50%) */}
         <div 
@@ -85,7 +85,7 @@ const BrandsCarousel: React.FC = () => {
       <div className="container mx-auto px-4 mt-10 flex justify-center">
         <Link 
           to="/marcas" 
-          className="inline-flex items-center gap-2 bg-[#B5D318] hover:bg-[#a1bc12] text-[#153A81] px-8 py-3 rounded-full font-bold text-lg transition-all shadow-md hover:-translate-y-1"
+          className="inline-flex items-center gap-2 bg-brand-lime hover:bg-[#a1bc12] text-brand-blue px-8 py-3 rounded-full font-bold text-lg transition-all shadow-md hover:-translate-y-1"
         >
           Ver Todas as Marcas
           <span className="material-symbols-outlined text-xl">arrow_forward</span>

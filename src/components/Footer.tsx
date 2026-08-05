@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
-    <footer className="bg-[#153A81] text-white pt-16 pb-8 px-4">
+    <footer className="bg-brand-blue text-white pt-16 pb-8 px-4">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-12 border-b border-white/10 pb-12">
         <div className="col-span-1 md:col-span-2">
           <img src="/logo.png" alt="Covitool" className="h-10 mb-6" />
@@ -12,7 +12,7 @@ export default function Footer() {
           </p>
         </div>
         <div>
-          <h4 className="font-bold text-[#B5D318] mb-6">A Empresa</h4>
+          <h4 className="font-bold text-brand-lime mb-6">A Empresa</h4>
           <ul className="flex flex-col gap-3 text-sm text-blue-100">
             <li><Link to="/" className="hover:text-white transition-colors">Início</Link></li>
             <li><Link to="/marcas" className="hover:text-white transition-colors">Marcas</Link></li>
@@ -21,10 +21,10 @@ export default function Footer() {
           </ul>
         </div>
         <div>
-          <h4 className="font-bold text-[#B5D318] mb-6">Contactos</h4>
+          <h4 className="font-bold text-brand-lime mb-6">Contactos</h4>
           <ul className="flex flex-col gap-3 text-sm text-blue-100">
             <li>Parque Industrial da Covilhã<br/>Lote C4-B, 6200-027</li>
-            <li>+351 275 322 030<br/><span className="text-[10px] text-[#B5D318]/70">(Chamada para rede fixa nacional)</span></li>
+            <li>+351 275 322 030<br/><span className="text-[10px] text-brand-lime/70">(Chamada para rede fixa nacional)</span></li>
             <li>covitool@sapo.pt</li>
           </ul>
         </div>
@@ -42,7 +42,7 @@ export default function Footer() {
               href="https://layoutagency.pt/" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="text-white hover:text-[#B5D318] font-bold transition-colors"
+              className="text-white hover:text-brand-lime font-bold transition-colors"
             >
               Layout Agency
             </a>
