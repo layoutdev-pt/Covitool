@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /admin
+Disallow: /api
+Allow: /assets/
+Allow: /*.css$
+Allow: /*.js$
+Sitemap: https://covitool.pt/sitemap.xml

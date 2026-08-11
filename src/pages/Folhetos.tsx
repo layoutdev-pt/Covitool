@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { supabase } from "../services/supabase";
+import SEOMetadata from '../components/SEOMetadata';
 
 // Função auxiliar para formatar a data (AAAA-MM-DD para DD/MM/AAAA)
 const formatarData = (dataStr: string) => {
@@ -23,7 +24,7 @@ export default function Folhetos() {
         .order("created_at", { ascending: false });
 
       if (error) {
-        console.error("Erro ao carregar folhetos:", error);
+        console.error("Erro a carregar folhetos:", error);
       } else {
         setFolhetos(data || []);
       }
@@ -52,6 +53,11 @@ export default function Folhetos() {
 
   return (
     <main className="flex flex-col gap-12 pb-16 bg-gray-50 min-h-screen">
+      <SEOMetadata 
+        title="Folhetos e Catálogos | Covitool" 
+        description="Consulta e download de folhetos promocionais e catálogos técnicos de produtos disponíveis." 
+        canonical="https://covitool.pt/folhetos" 
+      />
       {/* Cabeçalho da Página em Azul Marinho */}
       <section className="bg-brand-blue pt-40 pb-20 px-4 text-center text-white flex flex-col items-center relative overflow-hidden">
         <div className="absolute top-0 right-0 w-80 h-80 bg-brand-lime rounded-full blur-[140px] opacity-20"></div>

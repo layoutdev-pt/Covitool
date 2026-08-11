@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Outlet, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer'; // Importação do Footer
 import CookieBanner from './components/CookieBanner';
@@ -19,6 +20,22 @@ import Privacidade from './pages/PoliticaPrivacidade';
 
 import WhatsAppButton from './components/WhatsAppButton';
 
+// Hook interno para notificar o Puppeteer
+function PrerenderNotifier() {
+  const location = useLocation();
+
+  useEffect(() => {
+    // Aguarda o próximo ciclo de renderização e repaint para despachar o evento
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        document.dispatchEvent(new Event('prerender-trigger'));
+      });
+    });
+  }, [location.pathname]);
+
+  return null;
+}
+
 // Layout Público (Com Header e Footer)
 const PublicLayout = () => (
   <div className="flex flex-col min-h-screen">
@@ -35,7 +52,8 @@ const PublicLayout = () => (
 function App() {
   return (
     <BrowserRouter>
-    <ScrollToTop />
+      <ScrollToTop />
+      <PrerenderNotifier />
       <Routes>
         
         {/* Rotas Públicas */}

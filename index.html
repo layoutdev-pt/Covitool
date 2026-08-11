@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-PT">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/logo_menor.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Metadados Base (Serão lidos como fallback ou para a Homepage) -->
     <title>Covitool | Peças de Alta Performance</title>
+    <meta name="description" content="Catálogo de peças de alta performance e ferramentas na Covitool. Consulte as nossas marcas e folhetos online." />
+    <link rel="canonical" href="https://covitool.pt/" />
 
     <!-- Google Fonts: Manrope -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,10 +17,52 @@
     
     <!-- Google Material Symbols -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=block" />
+
+    <!-- Schema Markup (JSON-LD) Otimizado com Hierarquia -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "name": "Covitool",
+            "url": "https://covitool.pt/"
+          },
+          {
+            "@type": "ItemList",
+            "itemListElement": [
+              {
+                "@type": "SiteNavigationElement",
+                "position": 1,
+                "name": "Home",
+                "url": "https://covitool.pt/"
+              },
+              {
+                "@type": "SiteNavigationElement",
+                "position": 2,
+                "name": "Marcas",
+                "url": "https://covitool.pt/marcas"
+              },
+              {
+                "@type": "SiteNavigationElement",
+                "position": 3,
+                "name": "Sobre Nós",
+                "url": "https://covitool.pt/sobre-nos"
+              },
+              {
+                "@type": "SiteNavigationElement",
+                "position": 4,
+                "name": "Folhetos",
+                "url": "https://covitool.pt/folhetos"
+              }
+            ]
+          }
+        ]
+      }
+    </script>
   </head>
   <body class="bg-surface text-on-surface">
     <div id="root"></div>
-    <!-- O Vite usa este script para injetar o seu código React -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

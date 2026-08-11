@@ -1,4 +1,5 @@
 import React from 'react';
+import SEOMetadata from '../components/SEOMetadata';
 import Hero from '../components/sections/home/Hero';
 import BrandsCarousel from '@/components/sections/home/BrandsCarousel';
 import BentoGrid from '../components/sections/home/BentoGrid';
@@ -10,6 +11,11 @@ import LocationMap from '../components/sections/SobreNos/LocationMap'; // Ajusta
 const Home: React.FC = () => {
   return (
     <div className="w-full">
+      <SEOMetadata 
+        title="Covitool | Peças de Alta Performance" 
+        description="Catálogo de peças de alta performance e ferramentas na Covitool. Consulte as nossas marcas e folhetos online." 
+        canonical="https://covitool.pt/" 
+      />
       <Hero />
       <BrandsCarousel />
       <BentoGrid />

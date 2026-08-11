@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../services/supabase';
+import SEOMetadata from '../components/SEOMetadata';
 import IMG_HERO from '@/assets/fotos/1.webp';
 const gerarGradiente = (hex: string, opacidadePercentual: number) => {
   if(!hex) hex = '#153A81';
@@ -25,14 +26,19 @@ export default function Marcas() {
       const { data: gridData } = await supabase.from('marcas_grelha').select('*').order('created_at', { ascending: true });
       if (gridData) setMarcasGrid(gridData);
 
-      const { data: mesData } = await supabase.from('marca_mes').select('*').order('created_at', { ascending: false }).limit(1);
-      if (mesData && mesData.length > 0) setMarcaMes(mesData[0]);
+      const { data: mesData } = await supabase.from('marca_mes').select('*').order('created_at', { ascending: false }).limit(1).single();
+      if (mesData) setMarcaMes(mesData);
     };
     fetchData();
   }, []);
 
   return (
     <div className="flex flex-col gap-16 py-12">
+      <SEOMetadata 
+        title="Marcas Parceiras | Covitool" 
+        description="Conheça as marcas de excelência representadas e distribuídas pela Covitool." 
+        canonical="https://covitool.pt/marcas" 
+      />
       
       <style>{`
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }

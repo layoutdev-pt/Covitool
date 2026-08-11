@@ -1,0 +1,9 @@
+# Covitool - Estrutura de Páginas Públicas
+
+- [Home](https://covitool.pt/): Página inicial do Covitool, apresentando os destaques de peças de alta performance e navegação principal.
+- [Marcas](https://covitool.pt/marcas): Catálogo das marcas de excelência representadas e distribuídas pela Covitool.
+- [Sobre Nós](https://covitool.pt/sobre-nos): Informação institucional detalhada sobre a história, missão e valores da Covitool.
+- [Folhetos](https://covitool.pt/folhetos): Consulta e download de folhetos promocionais e catálogos técnicos de produtos disponíveis.
+- [Termos e Condições](https://covitool.pt/termos-e-condicoes): Condições legais e termos de utilização aplicáveis aos serviços e website da Covitool.
+- [Política de Cookies](https://covitool.pt/politica-de-cookies): Informações pormenorizadas sobre o uso de cookies e a recolha de dados de navegação no site.
+- [Política de Privacidade](https://covitool.pt/politica-de-privacidade): Declaração e garantias sobre a recolha, tratamento e proteção de dados pessoais dos nossos utilizadores.

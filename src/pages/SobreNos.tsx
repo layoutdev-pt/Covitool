@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import LocationMap from '../components/sections/SobreNos/LocationMap'; // Ajusta o caminho se necessário
 import ContactForm from '../components/sections/home/ContactForm'; // Ajusta o caminho se necessário
+import SEOMetadata from '../components/SEOMetadata';
 
 // Novas secções modulares
 import HeroSobreNos from '../components/sections/SobreNos/HeroSobreNos';
@@ -23,7 +24,7 @@ export default function SobreNos() {
         if (element) {
           element.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-      }, 100);
+      }, 300);
     } else {
       // Se não houver #, garante que a página abre sempre no topo
       window.scrollTo(0, 0);
@@ -32,6 +33,11 @@ export default function SobreNos() {
 
   return (
     <div className="flex flex-col gap-16 pb-12">
+      <SEOMetadata 
+        title="Sobre Nós | Covitool" 
+        description="Informação institucional sobre a história, missão e valores da Covitool." 
+        canonical="https://covitool.pt/sobre-nos" 
+      />
       <HeroSobreNos />
       <HistoriaSobreNos />
       <EstatisticasSobreNos />
