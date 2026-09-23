@@ -1,9 +1,35 @@
-# Covitool - Estrutura de Páginas Públicas
+# Sobre a Covitool
 
-- [Home](https://covitool.pt/): Página inicial do Covitool, apresentando os destaques de peças de alta performance e navegação principal.
-- [Marcas](https://covitool.pt/marcas): Catálogo das marcas de excelência representadas e distribuídas pela Covitool.
-- [Sobre Nós](https://covitool.pt/sobre-nos): Informação institucional detalhada sobre a história, missão e valores da Covitool.
-- [Folhetos](https://covitool.pt/folhetos): Consulta e download de folhetos promocionais e catálogos técnicos de produtos disponíveis.
-- [Termos e Condições](https://covitool.pt/termos-e-condicoes): Condições legais e termos de utilização aplicáveis aos serviços e website da Covitool.
-- [Política de Cookies](https://covitool.pt/politica-de-cookies): Informações pormenorizadas sobre o uso de cookies e a recolha de dados de navegação no site.
-- [Política de Privacidade](https://covitool.pt/politica-de-privacidade): Declaração e garantias sobre a recolha, tratamento e proteção de dados pessoais dos nossos utilizadores.
+A Covitool é uma empresa e loja de ferramentas com forte foco no setor B2B, atuando como um fornecedor de excelência de peças de alta performance e ferramentas profissionais para empresas de construção civil, obras públicas, indústria, oficinas e também para clientes particulares (B2C).
+
+## Missão e Diferenciação
+A Covitool garante a máxima fiabilidade nos seus produtos, oferecendo proteção total em todos os componentes adquiridos (Garantia de Fábrica) e o compromisso com a melhor oferta do mercado nacional (Melhor Preço). A equipa de especialistas da Covitool está sempre pronta para encontrar a solução técnica ideal para cada negócio e projeto.
+
+## Marcas Representadas
+Trabalhamos em parceria com centenas de fabricantes. Representamos e distribuímos algumas das melhores e mais fiáveis marcas do mercado, incluindo:
+- WERKU
+- STANLEY
+- SKIL
+- KÄRCHER
+- GEDORE
+- DEWALT
+- CHEMITOOL
+- BOSCH
+- BETA
+- AEG
+- 3M
+
+## Contactos e Localização
+- **Telefone:** +351 275 322 030 (Chamada para rede fixa nacional)
+- **Email:** covitool@sapo.pt
+- **Morada:** Parque Industrial da Covilhã, Lote C4-B, 6200-027 Covilhã, Portugal
+
+## Navegação Oficial
+Para consultar mais detalhes em tempo real, pode visitar as seguintes secções oficiais do nosso website:
+- [Página Inicial - Catálogo Principal](https://covitool.pt/)
+- [Marcas Oficiais Parceiras](https://covitool.pt/marcas)
+- [A Nossa História e Instalações](https://covitool.pt/sobre-nos)
+- [Catálogos e Folhetos Técnicos em PDF](https://covitool.pt/folhetos)
+- [Termos e Condições](https://covitool.pt/termos-e-condicoes)
+- [Política de Privacidade](https://covitool.pt/politica-de-privacidade)
+- [Política de Cookies](https://covitool.pt/politica-de-cookies)

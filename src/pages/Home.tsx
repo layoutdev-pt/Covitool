@@ -12,8 +12,8 @@ const Home: React.FC = () => {
   return (
     <div className="w-full">
       <SEOMetadata 
-        title="Covitool | Peças de Alta Performance" 
-        description="Catálogo de peças de alta performance e ferramentas na Covitool. Consulte as nossas marcas e folhetos online." 
+        title="Covitool | Ferramentas para Construção e Obras Públicas" 
+        description="Fornecedor B2B de excelência em ferramentas e peças de alta performance para empresas de construção de obras públicas e particulares." 
         canonical="https://covitool.pt/" 
       />
       <Hero />

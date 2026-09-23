@@ -35,8 +35,8 @@ export default function Marcas() {
   return (
     <div className="flex flex-col gap-16 py-12">
       <SEOMetadata 
-        title="Marcas Parceiras | Covitool" 
-        description="Conheça as marcas de excelência representadas e distribuídas pela Covitool." 
+        title="Marcas de Ferramentas para Construção e Obras Públicas | Covitool" 
+        description="Explore as melhores marcas de ferramentas e equipamento profissional distribuídas pela Covitool para o setor B2B e construção de obras públicas." 
         canonical="https://covitool.pt/marcas" 
       />
       

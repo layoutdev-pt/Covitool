@@ -54,8 +54,8 @@ export default function Folhetos() {
   return (
     <main className="flex flex-col gap-12 pb-16 bg-gray-50 min-h-screen">
       <SEOMetadata 
-        title="Folhetos e Catálogos | Covitool" 
-        description="Consulta e download de folhetos promocionais e catálogos técnicos de produtos disponíveis." 
+        title="Catálogos de Ferramentas para Obras Públicas | Covitool" 
+        description="Faça o download dos catálogos técnicos e folhetos promocionais das melhores marcas de ferramentas B2B para a indústria e construção de obras públicas." 
         canonical="https://covitool.pt/folhetos" 
       />
       {/* Cabeçalho da Página em Azul Marinho */}

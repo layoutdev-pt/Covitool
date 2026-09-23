@@ -9,6 +9,8 @@ interface SEOMetadataProps {
 }
 
 const SEOMetadata: React.FC<SEOMetadataProps> = ({ title, description, canonical, ogImage }) => {
+  const image = ogImage || 'https://covitool.pt/logo.png';
+
   return (
     <Helmet>
       <title>{title}</title>
@@ -20,7 +22,13 @@ const SEOMetadata: React.FC<SEOMetadataProps> = ({ title, description, canonical
       <meta property="og:description" content={description} />
       <meta property="og:url" content={canonical} />
       <meta property="og:type" content="website" />
-      {ogImage && <meta property="og:image" content={ogImage} />}
+      <meta property="og:image" content={image} />
+
+      {/* Twitter Tags */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={image} />
     </Helmet>
   );
 };

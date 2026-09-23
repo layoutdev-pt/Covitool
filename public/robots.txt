@@ -4,4 +4,17 @@ Disallow: /api
 Allow: /assets/
 Allow: /*.css$
 Allow: /*.js$
+
+# Permissões explícitas para Motores IA (AEO)
+User-agent: GPTBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+
 Sitemap: https://covitool.pt/sitemap.xml

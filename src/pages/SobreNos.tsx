@@ -34,8 +34,8 @@ export default function SobreNos() {
   return (
     <div className="flex flex-col gap-16 pb-12">
       <SEOMetadata 
-        title="Sobre Nós | Covitool" 
-        description="Informação institucional sobre a história, missão e valores da Covitool." 
+        title="Sobre Nós | Fornecedor de Ferramentas para Obras Públicas | Covitool" 
+        description="Conheça a história e valores da Covitool, o seu parceiro de confiança e fornecedor B2B de ferramentas para empresas de construção civil e obras públicas." 
         canonical="https://covitool.pt/sobre-nos" 
       />
       <HeroSobreNos />
