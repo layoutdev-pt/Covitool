@@ -228,7 +228,7 @@ export default function AdminDestaque() {
               <label className="text-sm font-semibold text-gray-700">
                 Título
               </label>
-              <input-brand-blue
+              <input
                 type="text"
                 value={titulo}
                 onChange={(e) => setTitulo(e.target.value)}
