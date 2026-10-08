@@ -2,6 +2,8 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { fileURLToPath, URL } from 'node:url'
+import fs from 'node:fs'
+import path from 'node:path'
 import prerender from '@prerenderer/rollup-plugin'
 import PuppeteerRenderer from '@prerenderer/renderer-puppeteer'
 
@@ -17,6 +19,19 @@ const getLaunchOptions = async () => {
   };
 };
 
+// Com o Vite 8 (rolldown) o plugin de prerender perde o index.html da raiz: apaga o original
+// e o ficheiro novo com o mesmo nome é descartado. Geramos a home com outro nome e
+// depois de escrita a build movemo-la para index.html
+const HOME_TEMP = 'index.prerender.html';
+const moverHomePrerender = () => ({
+  name: 'mover-home-prerender',
+  apply: 'build',
+  writeBundle(options) {
+    const temp = path.join(options.dir, HOME_TEMP);
+    if (fs.existsSync(temp)) fs.renameSync(temp, path.join(options.dir, 'index.html'));
+  },
+});
+
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
   plugins: [
@@ -30,7 +45,11 @@ export default defineConfig(async () => ({
         renderAfterDocumentEvent: 'prerender-trigger',
         launchOptions: await getLaunchOptions(),
       }),
+      postProcess(renderedRoute) {
+        if (renderedRoute.route === '/') renderedRoute.outputPath = HOME_TEMP;
+      },
     }),
+    moverHomePrerender(),
   ],
   resolve: {
     alias: {
