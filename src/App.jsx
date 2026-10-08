@@ -17,6 +17,7 @@ import AdminMarcas from './pages/admin/AdminMarcas';
 import Termos from './pages/TermosCondicoes';
 import Cookies from './pages/PoliticaCookies';
 import Privacidade from './pages/PoliticaPrivacidade';
+import NaoEncontrado from './pages/NaoEncontrado';
 
 import WhatsAppButton from './components/WhatsAppButton';
 
@@ -65,6 +66,7 @@ function App() {
           <Route path="/termos-e-condicoes" element={<Termos />} />
           <Route path="/politica-de-cookies" element={<Cookies />} />
           <Route path="/politica-de-privacidade" element={<Privacidade />} />
+          <Route path="*" element={<NaoEncontrado />} />
         </Route>
 
         {/* Rotas de Administração */}
